@@ -11,9 +11,9 @@ func Serve(engine *gin.Engine) {
 	{
 		mkdoc.GET("/api/:id", endpoint.GetApiInfo)
 		mkdoc.GET("/api/", endpoint.GetApiList)
-		mkdoc.PUT("/api/", endpoint.UpdateApi)
+		mkdoc.PUT("/api/:id", endpoint.UpdateApi)
 		mkdoc.POST("/api/", endpoint.CreateApi)
-		mkdoc.DELETE("/api/", endpoint.DeleteApi)
+		mkdoc.DELETE("/api/:id", endpoint.DeleteApi)
 	}
 
 }

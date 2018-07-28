@@ -40,11 +40,11 @@ func (bf *BaseFunc) FindList() interface{} {
 	}
 }
 
-func (bf *BaseFunc) update(id int, data map[string]interface{}) interface{} {
+func (bf *BaseFunc) Update(id uint, data interface{}) interface{} {
 	if bf.Mod == nil {
 		return nil
 	}
-	if err := app.Db.Model(bf.Mod).Where("id = ?", id).Updates(data).Error; err == nil {
+	if err := app.Db.Model(bf.Mod).Updates(data).Error; err == nil {
 		return bf.Mod
 	} else {
 		log.Print(err)
@@ -52,7 +52,7 @@ func (bf *BaseFunc) update(id int, data map[string]interface{}) interface{} {
 	}
 }
 
-func (bf *BaseFunc) delete(id int) interface{} {
+func (bf *BaseFunc) Delete(id int) interface{} {
 	if bf.Mod == nil {
 		return nil
 	}
@@ -64,12 +64,12 @@ func (bf *BaseFunc) delete(id int) interface{} {
 	}
 }
 
-func (bf *BaseFunc) create(data map[string]interface{}) interface{} {
+func (bf *BaseFunc) Create(data interface{}) interface{} {
 	if bf.Mod == nil {
 		return nil
 	}
-	if err := app.Db.Create(bf.Mod).Error; err == nil {
-		return bf.Mod
+	if err := app.Db.Create(data).Error; err == nil {
+		return data
 	} else {
 		log.Print(err)
 		return nil

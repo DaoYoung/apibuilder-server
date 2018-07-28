@@ -1,5 +1,5 @@
-hash: 66f747b14e5bea20bd0941a88c8d8f5c784dc357ee183a1d830c4fd9484b59a3
-updated: 2018-07-27T17:09:13.6702542+08:00
+hash: 5022914b6a4df180ba79d2a345782e71a3c235831e5982cd93f3cf1a04d5ae1c
+updated: 2018-07-27T23:06:29.4976+08:00
 imports:
 - name: github.com/gin-contrib/sse
   version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
@@ -12,10 +12,12 @@ imports:
   version: 93b26e6a70e37abb14f2f88194949312b0592a84
   subpackages:
   - proto
+- name: github.com/jinzhu/gorm
+  version: 6ed508ec6a4ecb3531899a69cbc746ccf65a4166
 - name: github.com/mattn/go-isatty
   version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
 - name: github.com/ugorji/go
-  version: 2e1067cd04ec91c6fdf491ac8028c9d3aea73ab4
+  version: 0e8ffdb13c81bdb48fa80a963cf83f10a0f5a496
   subpackages:
   - codec
 - name: golang.org/x/sys/unix

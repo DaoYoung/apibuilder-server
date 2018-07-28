@@ -1,0 +1,7 @@
+appname: test
+
+db:
+  name:     apibuilder
+  user:     root
+  password: root
+  port:     3306

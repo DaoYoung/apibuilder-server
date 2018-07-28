@@ -2,3 +2,5 @@ package: apibuilder-server
 import:
 - package: github.com/gin-gonic/gin
   version: ^1.2.0
+- package: github.com/jinzhu/gorm
+  version: v1.9.1

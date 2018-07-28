@@ -35,7 +35,8 @@ func UpdateApi(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 	}
-	info := mod.Update(reqInfo.ID, &reqInfo)
+	id, _ := strconv.Atoi(c.Param("id"))
+	info := mod.Update(id, &reqInfo)
 	c.JSON(http.StatusResetContent, info)
 }
 func DeleteApi(c *gin.Context) {

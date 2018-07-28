@@ -40,11 +40,11 @@ func (bf *BaseFunc) FindList() interface{} {
 	}
 }
 
-func (bf *BaseFunc) Update(id uint, data interface{}) interface{} {
+func (bf *BaseFunc) Update(id int, data interface{}) interface{} {
 	if bf.Mod == nil {
 		return nil
 	}
-	if err := app.Db.Model(bf.Mod).Updates(data).Error; err == nil {
+	if err := app.Db.Model(bf.Mod).Where("id = ?", id).Updates(data).Error; err == nil {
 		return bf.Mod
 	} else {
 		log.Print(err)

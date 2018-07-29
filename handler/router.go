@@ -16,7 +16,10 @@ func Serve(engine *gin.Engine) {
 		mkdoc.DELETE("/api/:id", endpoint.ApiAction("delete"))
 
 		mkdoc.POST("/api/:id/commit", endpoint.CreateApi)
-		mkdoc.POST("/api/:id/commit", endpoint.CreateApi)
+		mkdoc.POST("/api/:id/note", endpoint.CreateApi)
+		
+		mkdoc.POST("/task/:id/translate", endpoint.CreateApi)
+		mkdoc.POST("/task/:id/test", endpoint.CreateApi)
 
 		mkdoc.GET("/module/", endpoint.ModuleAction("list"))
 		mkdoc.GET("/module/:id", endpoint.ModuleAction("info"))

@@ -52,8 +52,6 @@ func CurdAction(ba *BaseAction, funcName string) func(c *gin.Context) {
 	switch funcName {
 	case "info":
 		return ba.Info
-	case "list":
-		return ba.List
 	case "create":
 		return ba.Create
 	case "update":

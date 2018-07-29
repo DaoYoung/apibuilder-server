@@ -17,7 +17,7 @@ func Serve(engine *gin.Engine) {
 
 		mkdoc.POST("/api/:id/commit", endpoint.CreateApi)
 		mkdoc.POST("/api/:id/note", endpoint.CreateApi)
-		
+
 		mkdoc.POST("/task/:id/translate", endpoint.CreateApi)
 		mkdoc.POST("/task/:id/test", endpoint.CreateApi)
 

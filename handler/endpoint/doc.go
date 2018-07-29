@@ -5,13 +5,31 @@ import (
 	"net/http"
 	"apibuilder-server/model"
 	"strconv"
-)
+	"log"
+			)
 
 func GetApiInfo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	mod := model.GetApiModel()
-	info := mod.ByID(id)
-	c.JSON(http.StatusOK, info)
+	info, err := mod.ByID(id)
+	if err == nil {
+		//res := info.(*model.Api)
+		//var dataContent map[string]interface{}
+		//if er := json.Unmarshal([]byte(res.ResponseContent), &dataContent); er == nil {
+		//	res.ResponseContentJson = dataContent
+		//}
+		//var dataParam map[string]interface{}
+		//if er := json.Unmarshal([]byte(res.RequestParam), &dataParam); er == nil {
+		//	res.RequestParamJson = dataParam
+		//}
+		//var dataHeader map[string]interface{}
+		//if er := json.Unmarshal([]byte(res.RequestHeader), &dataHeader); er == nil {
+		//	res.RequestHeaderJson = dataHeader
+		//}
+		c.JSON(http.StatusOK, info)
+	}else {
+		c.JSON(http.StatusOK, err)
+	}
 }
 func GetApiList(c *gin.Context) {
 	mod := model.GetApiModel()
@@ -44,4 +62,19 @@ func DeleteApi(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	mod.Delete(id)
 	c.JSON(http.StatusNoContent, gin.H{"id": id})
+}
+
+func ApiAction(str string) func(c *gin.Context) {
+	ba := new(BaseAction)
+	ba.Mod = model.GetApiModel()
+
+	return CurdAction(ba, str)
+}
+
+func ModuleAction(str string) func(c *gin.Context) {
+	log.Print(str)
+	ba := new(BaseAction)
+	ba.Mod = model.GetModuleModel()
+
+	return CurdAction(ba, str)
 }

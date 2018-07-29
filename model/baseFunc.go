@@ -3,6 +3,7 @@ package model
 import (
 	"apibuilder-server/app"
 	"log"
+		"errors"
 )
 
 type BaseFunc struct {
@@ -10,19 +11,16 @@ type BaseFunc struct {
 	ModSlice interface{}
 }
 
-func (bf *BaseFunc) ByID(id int) interface{} {
+func (bf *BaseFunc) ByID(id int) (interface{}, error){
 	if bf.Mod == nil {
-		return nil
+		return nil, errors.New("model not defined")
 	}
-
-
 	obj := bf.Mod
 	if err := app.Db.Where("id = ?", id).Last(obj).Error; err == nil {
-		//log.Print(obj)
-		return obj
+		return obj, nil
 	} else {
 		log.Print(err)
-		return nil
+		return nil, err
 	}
 }
 

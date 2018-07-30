@@ -4,6 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+const (
+	API_STATUS_DRAFT   int = 0
+	API_STATUS_PUBLISH int = 1
+)
+
 type Api struct {
 	gorm.Model
 	TaskId          int    `json:"task_id"`
@@ -16,6 +21,10 @@ type Api struct {
 	RequestHeader   JSON   `json:"request_header"`
 	ResponseContent JSON   `json:"response_content"`
 	Status          int    `json:"status"`
+	CommitMessage   string `gorm:"-" json:"commit_message"`
+	CommitJson   JSON `gorm:"-" json:"commit_json"`
+	CommitTaskId    int    `gorm:"-" json:"commit_task_id"`
+	CommitAuthorId        int    `gorm:"-" json:"commit_author_id"`
 }
 
 func GetApiModel() *BaseFunc {

@@ -15,11 +15,11 @@ func Serve(engine *gin.Engine) {
 		mkdoc.POST("/api/", endpoint.CreateApi)
 		mkdoc.DELETE("/api/:id", endpoint.ApiAction("delete"))
 
-		mkdoc.POST("/api/:id/commit", endpoint.CreateApi)
-		mkdoc.POST("/api/:id/note", endpoint.CreateApi)
+		mkdoc.POST("/api/:id/commit", endpoint.CreateApi)//在已发布接口基础上修改结构
+		mkdoc.POST("/api/:id/note", endpoint.CreateApi)//注释接口参数
 
-		mkdoc.POST("/task/:id/translate", endpoint.CreateApi)
-		mkdoc.POST("/task/:id/test", endpoint.CreateApi)
+		mkdoc.POST("/task/:id/translate", endpoint.CreateApi)//变更任务对接人，进度
+		mkdoc.POST("/task/:id/test", endpoint.CreateApi)//测试
 
 		mkdoc.GET("/module/", endpoint.ModuleAction("list"))
 		mkdoc.GET("/module/:id", endpoint.ModuleAction("info"))

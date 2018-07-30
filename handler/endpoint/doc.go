@@ -5,10 +5,9 @@ import (
 	"net/http"
 	"apibuilder-server/model"
 	"strconv"
-	"log"
 	"reflect"
 	"encoding/json"
-	"fmt"
+	"log"
 )
 
 //api curd 对象
@@ -62,7 +61,7 @@ func CommitApi(c *gin.Context) {
 		c.JSON(http.StatusForbidden, "Api must published")
 	}
 	commitAdd(api, &commitForm) //commit LOG AND NOTICE
-	info := mod.Update(id, &reqInfo)
+	info := mod.Update(id, &commitForm)
 	c.JSON(http.StatusResetContent, info)
 }
 func RebuildApi(c *gin.Context) {
@@ -75,62 +74,66 @@ func NoteApi(c *gin.Context) {
 func RenderApi(c *gin.Context) {
 
 }
-func compareApi(apiOld *model.Api, fieldName string, newVal interface{}){
-	m := []byte{}
-	err := json.Unmarshal(m, apiOld)
-	if err != nil {
-		fmt.Println("Umarshal failed:", err)
-		return
+func compareApi(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
+	v := reflect.ValueOf(*apiOld)
+	switch newVal.Kind() {
+	case reflect.Int:
+		return v.FieldByName(fieldName).Int() == newVal.Int(), v.FieldByName(fieldName).Int()
+	case reflect.String:
+		return v.FieldByName(fieldName).String() == newVal.String(), v.FieldByName(fieldName).String()
 	}
+	return true, nil
 }
 func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) (*model.Api, error) {
-	commitInfo := new(model.ApiCommit)
+
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
 	chs := make(map[string]interface{})
 	for i := 0; i < count; i++ {
-		val := v.Field(i)
 		if t.Field(i).Name == "CommitMessage" || t.Field(i).Name == "CommitTaskId" || t.Field(i).Name == "CommitAuthorId" || t.Field(i).Name == "CommitJson" {
 			continue
 		}
+		val := v.Field(i)
+		flag, oldval := compareApi(apiOld, t.Field(i).Name, val)
 		switch val.Kind() {
 		case reflect.Int:
-			if val.Int() != 0 && valo.Int() != val.Int() {
+			if val.Int() != 0 && !flag {
 				chint := new(model.CommitChange)
-				chint.Before = valo.Int()
+				chint.Before = oldval
 				chint.After = val.Int()
 				chs[t.Field(i).Name] = *chint
-				log.Println(t.Field(i).Name)
 			}
 		case reflect.String:
-			if val.String() != "" && valo.String() != val.String() {
+			if val.String() != "" && !flag {
 				chstr := new(model.CommitChange)
-				chstr.Before = valo.String()
+				chstr.Before = oldval
 				chstr.After = val.String()
 				chs[t.Field(i).Name] = *chstr
-				log.Println(t.Field(i).Name)
-			}
-		case reflect.Slice: //json被当作slice
-			if v.Field(i).Len() != 0 {
-				if len(apiNew.CommitJson) > 0 {
-					chs[t.Field(i).Name] = apiNew.CommitJson
-					log.Println(t.Field(i).Name)
-				}
-
 			}
 		}
 	}
-	if len(chs) == 0 {
-		return nil
+	if len(comForm.CommitHeader) > 0 {
+		chs["request_header"] = comForm.CommitHeader
 	}
+	if len(comForm.CommitParam) > 0 {
+		chs["request_param"] = comForm.CommitParam
+	}
+	if len(comForm.CommitContent) > 0 {
+		chs["response_content"] = comForm.CommitContent
+	}
+	if len(chs) == 0 {
+		log.Println("no change updated")
+		return nil, nil
+	}
+	commitInfo := new(model.ApiCommit)
 	commitInfo.Changes, _ = json.Marshal(chs)
 	commitInfo.ApiId = int(apiOld.ID)
-	commitInfo.TaskId = apiNew.CommitTaskId
-	commitInfo.CommitMessage = apiNew.CommitMessage
-	commitInfo.AuthorId = apiNew.CommitAuthorId
+	commitInfo.TaskId = comForm.CommitTaskId
+	commitInfo.CommitMessage = comForm.CommitMessage
+	commitInfo.AuthorId = comForm.CommitAuthorId
 	mod := model.GetCommitModel()
 	mod.Create(commitInfo)
-	model.CreateLog(apiNew.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
-	return nil
+	model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
+	return nil, nil
 }

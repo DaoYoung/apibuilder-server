@@ -33,9 +33,11 @@ type ApiCommitForm struct {
 	RequestHeader   JSON   `json:"request_header"`
 	ResponseContent JSON   `json:"response_content"`
 	CommitMessage   string `gorm:"-" json:"commit_message"`
-	CommitJson   JSON `gorm:"-" json:"commit_json"`
+	CommitParam     JSON   `gorm:"-" json:"commit_param"`
+	CommitHeader    JSON   `gorm:"-" json:"commit_header"`
+	CommitContent   JSON   `gorm:"-" json:"commit_content"`
 	CommitTaskId    int    `gorm:"-" json:"commit_task_id"`
-	CommitAuthorId        int    `gorm:"-" json:"commit_author_id"`
+	CommitAuthorId  int    `gorm:"-" json:"commit_author_id"`
 }
 
 func GetApiModel() *BaseFunc {

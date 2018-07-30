@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.13-log - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win64
+-- 服务器版本:                        8.0.11 - MySQL Community Server - GPL
+-- 服务器操作系统:                      Linux
 -- HeidiSQL 版本:                  9.5.0.5196
 -- --------------------------------------------------------
 
@@ -13,7 +13,7 @@
 
 
 -- 导出 apibuilder 的数据库结构
-CREATE DATABASE IF NOT EXISTS `apibuilder` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `apibuilder` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `apibuilder`;
 
 -- 导出  表 apibuilder.apis 结构
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `apis` (
   `task_id` int(10) NOT NULL,
   `module_id` int(10) NOT NULL,
   `author_id` int(10) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `request_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `request_method` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'get',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'get',
   `request_param` json DEFAULT NULL,
   `request_header` json DEFAULT NULL,
   `response_content` json DEFAULT NULL,
@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS `apis` (
 -- 正在导出表  apibuilder.apis 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `apis` DISABLE KEYS */;
 INSERT INTO `apis` (`id`, `task_id`, `module_id`, `author_id`, `title`, `request_url`, `request_method`, `request_param`, `request_header`, `response_content`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-29 18:10:30', '2018-07-29 18:10:30', NULL);
+	(1, 1, 1, 1, 'bbb', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"name": "json-dft", "Content-Type": "application/json-dft"}', 1, '2018-07-29 18:10:30', '2018-07-30 19:18:17', NULL);
 /*!40000 ALTER TABLE `apis` ENABLE KEYS */;
 
--- 导出  表 apibuilder.api_comits 结构
-CREATE TABLE IF NOT EXISTS `api_comits` (
+-- 导出  表 apibuilder.api_commits 结构
+CREATE TABLE IF NOT EXISTS `api_commits` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `api_id` int(10) NOT NULL DEFAULT '0',
   `author_id` int(10) NOT NULL DEFAULT '0',
@@ -53,16 +53,55 @@ CREATE TABLE IF NOT EXISTS `api_comits` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_comits 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `api_comits` DISABLE KEYS */;
-/*!40000 ALTER TABLE `api_comits` ENABLE KEYS */;
+-- 正在导出表  apibuilder.api_commits 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `api_commits` DISABLE KEYS */;
+INSERT INTO `api_commits` (`id`, `api_id`, `author_id`, `task_id`, `changes`, `commit_message`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 0, 0, '{"Title": {"after": "bbb", "before": "aaa"}, "ResponseContent": {"change_json": null}}', '', '2018-07-30 17:22:24', '2018-07-30 17:22:24', NULL),
+	(2, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 17:26:10', '2018-07-30 17:26:10', NULL),
+	(3, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 17:27:14', '2018-07-30 17:27:14', NULL),
+	(4, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 17:33:36', '2018-07-30 17:33:36', NULL),
+	(5, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "AuthorId": {"after": 1, "before": 1}}', '', '2018-07-30 17:34:17', '2018-07-30 17:34:17', NULL),
+	(6, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "AuthorId": {"after": 1, "before": 1}}', '', '2018-07-30 17:34:54', '2018-07-30 17:34:54', NULL),
+	(7, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "AuthorId": {"after": 1, "before": 1}}', '', '2018-07-30 17:35:14', '2018-07-30 17:35:14', NULL),
+	(8, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "TaskId": {"after": 1, "before": 1}, "AuthorId": {"after": 1, "before": 1}}', '', '2018-07-30 17:35:50', '2018-07-30 17:35:50', NULL),
+	(9, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "CommitTaskId": {"after": 2, "before": 0}, "CommitMessage": {"after": "修改bug", "before": ""}, "CommitAuthorId": {"after": 2, "before": 0}}', '', '2018-07-30 18:18:14', '2018-07-30 18:18:14', NULL),
+	(10, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 18:20:25', '2018-07-30 18:20:25', NULL),
+	(11, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 18:21:10', '2018-07-30 18:21:10', NULL),
+	(12, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 18:21:37', '2018-07-30 18:21:37', NULL),
+	(13, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}}', '', '2018-07-30 18:22:29', '2018-07-30 18:22:29', NULL),
+	(14, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "CommitJson": {"name": {"after": "json", "before": "json-dft"}}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '', '2018-07-30 18:32:12', '2018-07-30 18:32:12', NULL),
+	(15, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "CommitJson": {"name": {"after": "json", "before": "json-dft"}}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 18:35:55', '2018-07-30 18:35:55', NULL),
+	(16, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 18:37:12', '2018-07-30 18:37:12', NULL),
+	(17, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL);
+/*!40000 ALTER TABLE `api_commits` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.api_logs 结构
+CREATE TABLE IF NOT EXISTS `api_logs` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `api_id` int(10) NOT NULL DEFAULT '0',
+  `from_user_id` int(10) NOT NULL DEFAULT '0',
+  `type` smallint(3) NOT NULL DEFAULT '0' COMMENT '1发布 2修改 3对接 4测试 5移交 6重构 7注释',
+  `status` int(10) NOT NULL DEFAULT '0' COMMENT '0待确认 1已确认',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  apibuilder.api_logs 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `api_logs` DISABLE KEYS */;
+INSERT INTO `api_logs` (`id`, `user_id`, `api_id`, `from_user_id`, `type`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 1, 0, 1, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
+	(2, 2, 1, 0, 2, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL);
+/*!40000 ALTER TABLE `api_logs` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_models 结构
 CREATE TABLE IF NOT EXISTS `api_models` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -77,10 +116,10 @@ CREATE TABLE IF NOT EXISTS `api_notes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `api_id` int(10) DEFAULT NULL,
   `author_id` int(10) NOT NULL,
-  `fkey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fkey_parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fkey_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_parent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` int(10) NOT NULL DEFAULT '0',
   `parent_model_id` int(10) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -111,24 +150,6 @@ INSERT INTO `api_notes` (`id`, `api_id`, `author_id`, `fkey`, `fkey_parent`, `fk
 	(13, 0, 1, 'Merchant.grade', 'Merchant', '0Merchant.grade', '等级', 0, 1, 1, 0, '2017-07-06 11:55:33', '2017-07-06 11:55:33');
 /*!40000 ALTER TABLE `api_notes` ENABLE KEYS */;
 
--- 导出  表 apibuilder.api_users 结构
-CREATE TABLE IF NOT EXISTS `api_users` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) NOT NULL DEFAULT '0',
-  `api_id` int(10) NOT NULL DEFAULT '0',
-  `from_user_id` int(10) NOT NULL DEFAULT '0',
-  `type` smallint(3) NOT NULL DEFAULT '0' COMMENT '1修改 2对接 3测试 4移交',
-  `status` int(10) NOT NULL DEFAULT '0' COMMENT '0待确认 1已确认',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  apibuilder.api_users 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `api_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `api_users` ENABLE KEYS */;
-
 -- 导出  表 apibuilder.modules 结构
 CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -155,9 +176,9 @@ INSERT INTO `modules` (`id`, `title`, `mixid`, `pid`, `author_id`, `created_at`,
 -- 导出  表 apibuilder.users 结构
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varbinary(50) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

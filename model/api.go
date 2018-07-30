@@ -21,6 +21,17 @@ type Api struct {
 	RequestHeader   JSON   `json:"request_header"`
 	ResponseContent JSON   `json:"response_content"`
 	Status          int    `json:"status"`
+}
+
+type ApiCommitForm struct {
+	TaskId          int    `json:"task_id"`
+	ModuleId        int    `json:"module_id"`
+	Title           string `json:"title"`
+	RequestUrl      string `json:"request_url"`
+	RequestMethod   string `json:"request_method"`
+	RequestParam    JSON   `json:"request_param"`
+	RequestHeader   JSON   `json:"request_header"`
+	ResponseContent JSON   `json:"response_content"`
 	CommitMessage   string `gorm:"-" json:"commit_message"`
 	CommitJson   JSON `gorm:"-" json:"commit_json"`
 	CommitTaskId    int    `gorm:"-" json:"commit_task_id"`

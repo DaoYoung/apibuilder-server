@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 const (
 	APILOG_TYPE_PUBLISH   int = 1
 	APILOG_TYPE_COMMIT int = 2
-	APILOG_TYPE_TRANSLATE int = 3
+	APILOG_TYPE_RENDER int = 3
 	APILOG_TYPE_TEST int = 4
 	APILOG_TYPE_HANDOVER int = 5
 	APILOG_TYPE_REBUILD int = 6

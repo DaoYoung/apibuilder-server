@@ -8,67 +8,95 @@ import (
 	"log"
 	"reflect"
 	"encoding/json"
+	"fmt"
 )
 
-func CreateApi(c *gin.Context) {
-	mod := model.GetApiModel()
-	var reqInfo model.Api
-	err := c.BindJSON(&reqInfo)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-	}
-	info := mod.Create(&reqInfo)
-	c.JSON(http.StatusCreated, info)
+//api curd 对象
+func ApiAction(str string) func(c *gin.Context) {
+	ba := new(BaseAction)
+	ba.Mod = model.GetApiModel()
+	return CurdAction(ba, str)
 }
-func UpdateApi(c *gin.Context) {
+
+//Module curd 对象
+func ModuleAction(str string) func(c *gin.Context) {
+	ba := new(BaseAction)
+	ba.Mod = model.GetModuleModel()
+	return CurdAction(ba, str)
+}
+
+func PublishApi(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
 	mod := model.GetApiModel()
-	var reqInfo model.Api
-	err := c.BindJSON(&reqInfo)
+	row, err := mod.ByID(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, err)
+		return
+	}
+	api := row.(*model.Api)
+	if api.Status == model.API_STATUS_PUBLISH {
+		c.JSON(http.StatusForbidden, "Api has published")
+	} else {
+		info := mod.Update(id, model.Api{Status: model.API_STATUS_PUBLISH})
+		model.CreateLog(api.AuthorId, 0, int(api.ID), model.APILOG_TYPE_PUBLISH, model.API_STATUS_PUBLISH)
+		//todo notice others
+		c.JSON(http.StatusOK, info)
+	}
+}
+func CommitApi(c *gin.Context) {
+	mod := model.GetApiModel()
+	var commitForm model.ApiCommitForm
+	err := c.BindJSON(&commitForm)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-	log.Println(reqInfo)
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	row, err := mod.ByID(id)
 	if err != nil {
-		c.JSON(http.StatusOK, err)
+		c.JSON(http.StatusNotFound, err)
+		return
 	}
-
 	api := row.(*model.Api)
-	if api.Status == model.API_STATUS_DRAFT && reqInfo.Status == model.API_STATUS_PUBLISH {
-		model.CreateLog(api.AuthorId, 0, int(api.ID), model.API_STATUS_PUBLISH, model.API_STATUS_PUBLISH)
-		//Publish LOG AND NOTICE
+	if api.Status == model.API_STATUS_DRAFT {
+		c.JSON(http.StatusForbidden, "Api must published")
 	}
-
-	if api.Status == model.API_STATUS_PUBLISH {
-		commitAdd(api, &reqInfo, c) //commit LOG AND NOTICE
-	}
-
+	commitAdd(api, &commitForm) //commit LOG AND NOTICE
 	info := mod.Update(id, &reqInfo)
-
 	c.JSON(http.StatusResetContent, info)
 }
+func RebuildApi(c *gin.Context) {
 
-func commitAdd(apiOld *model.Api, apiNew *model.Api, c *gin.Context) error {
+}
+func NoteApi(c *gin.Context) {
+
+}
+
+func RenderApi(c *gin.Context) {
+
+}
+func compareApi(apiOld *model.Api, fieldName string, newVal interface{}){
+	m := []byte{}
+	err := json.Unmarshal(m, apiOld)
+	if err != nil {
+		fmt.Println("Umarshal failed:", err)
+		return
+	}
+}
+func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) (*model.Api, error) {
 	commitInfo := new(model.ApiCommit)
-
-	vo := reflect.ValueOf(*apiOld)
-	v := reflect.ValueOf(*apiNew)
-	t := reflect.TypeOf(*apiNew)
+	v := reflect.ValueOf(*comForm)
+	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
 	chs := make(map[string]interface{})
-
 	for i := 0; i < count; i++ {
 		val := v.Field(i)
-		valo := vo.Field(i)
-		if  valo == val || t.Field(i).Name == "CommitMessage" || t.Field(i).Name == "CommitTaskId" || t.Field(i).Name == "CommitAuthorId" || t.Field(i).Name == "CommitJson" {
+		if t.Field(i).Name == "CommitMessage" || t.Field(i).Name == "CommitTaskId" || t.Field(i).Name == "CommitAuthorId" || t.Field(i).Name == "CommitJson" {
 			continue
 		}
 		switch val.Kind() {
 		case reflect.Int:
-			if val.Int() != 0 {
+			if val.Int() != 0 && valo.Int() != val.Int() {
 				chint := new(model.CommitChange)
 				chint.Before = valo.Int()
 				chint.After = val.Int()
@@ -76,7 +104,7 @@ func commitAdd(apiOld *model.Api, apiNew *model.Api, c *gin.Context) error {
 				log.Println(t.Field(i).Name)
 			}
 		case reflect.String:
-			if val.String() != "" {
+			if val.String() != "" && valo.String() != val.String() {
 				chstr := new(model.CommitChange)
 				chstr.Before = valo.String()
 				chstr.After = val.String()
@@ -96,7 +124,7 @@ func commitAdd(apiOld *model.Api, apiNew *model.Api, c *gin.Context) error {
 	if len(chs) == 0 {
 		return nil
 	}
-	commitInfo.Changes,_ =  json.Marshal(chs)
+	commitInfo.Changes, _ = json.Marshal(chs)
 	commitInfo.ApiId = int(apiOld.ID)
 	commitInfo.TaskId = apiNew.CommitTaskId
 	commitInfo.CommitMessage = apiNew.CommitMessage
@@ -105,21 +133,4 @@ func commitAdd(apiOld *model.Api, apiNew *model.Api, c *gin.Context) error {
 	mod.Create(commitInfo)
 	model.CreateLog(apiNew.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
 	return nil
-}
-
-//api curd 对象
-func ApiAction(str string) func(c *gin.Context) {
-	ba := new(BaseAction)
-	ba.Mod = model.GetApiModel()
-
-	return CurdAction(ba, str)
-}
-
-//Module curd 对象
-func ModuleAction(str string) func(c *gin.Context) {
-	log.Print(str)
-	ba := new(BaseAction)
-	ba.Mod = model.GetModuleModel()
-
-	return CurdAction(ba, str)
 }

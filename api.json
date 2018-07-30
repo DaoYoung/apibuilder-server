@@ -1,0 +1,360 @@
+{
+  "front-version": "2.18.0",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Project",
+      "id": "289c5017-91c2-4561-bcc6-a37ade21e013",
+      "lastModified": "2018-07-29T18:10:45.664+08:00",
+      "name": "apibuilder"
+    },
+    {
+      "type": "Scenario",
+      "id": "dee09f50-f69e-4021-8612-e3f1ed539f6e",
+      "lastModified": "2018-07-29T16:58:14.447+08:00",
+      "name": "文档化接口",
+      "requestOrder": [
+        "接口详情",
+        "接口列表",
+        "接口新增",
+        "接口删除",
+        "接口更新",
+        "模块详情",
+        "模块创建",
+        "模块列表"
+      ],
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/api/2"
+      },
+      "id": "67824af8-9b47-44d0-8873-ba07f460dbb5",
+      "lastModified": "2018-07-29T17:18:03.130+08:00",
+      "name": "接口详情",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/api/"
+      },
+      "id": "551510cf-c012-4f29-815e-fc92977ac9d2",
+      "lastModified": "2018-07-28T22:35:37.894+08:00",
+      "name": "接口列表",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"task_id\":1,\n  \"module_id\":1,\n  \"title\":\"test\",\n  \"request_url\":\"/doc/api/\",\n  \"request_method\":\"get\",\n  \"request_param\":{\n    \"Content-Type\":\"application/json-dft\"\n  },\n  \"request_header\": {\n    \"Content-Type\":\"application/json-dft\"\n  },\n  \"response_content\":{\n    \"Content-Type\":\"application/json-dft\"\n  }\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/api/"
+      },
+      "id": "59a8c372-8f51-47b8-9113-38d341ceda0a",
+      "lastModified": "2018-07-29T18:10:45.665+08:00",
+      "name": "接口新增",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\":1,\n  \"task_idsdf\":18\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/api/1"
+      },
+      "id": "47f870c4-1ccf-4b88-98fd-0cea0aece733",
+      "lastModified": "2018-07-28T23:22:05.169+08:00",
+      "name": "接口删除",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": null,
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"task_id\":18\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/api/1"
+      },
+      "id": "3784bd74-e4e4-4433-b720-70aaae001586",
+      "lastModified": "2018-07-28T23:24:16.693+08:00",
+      "name": "接口更新",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"task_id\":8\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/module/1"
+      },
+      "id": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
+      "lastModified": "2018-07-29T16:43:11.609+08:00",
+      "name": "模块详情",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"kai\",\n  \"author_id\":1\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/module/"
+      },
+      "id": "c9134fbc-cd47-46e3-bb52-a4aba739c3f3",
+      "lastModified": "2018-07-29T16:57:57.654+08:00",
+      "name": "模块创建",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"kai\",\n  \"author_id\":1\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/module/"
+      },
+      "id": "a7ca88cf-2c06-4d18-a51d-738fe5362b9c",
+      "lastModified": "2018-07-29T16:58:14.448+08:00",
+      "name": "模块列表",
+      "headers": [],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "dee09f50-f69e-4021-8612-e3f1ed539f6e"
+    }
+  ]
+}

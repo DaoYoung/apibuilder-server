@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"encoding/json"
 )
 
 type ApiCommit struct {
@@ -21,9 +20,9 @@ func GetCommitModel() *BaseFunc {
 	return bf
 }
 
-func CreateCommit(chs map[string]interface{}, msg string, taskId int , apiId int, authorId int) (interface{}, error) {
+func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) (interface{}, error) {
 	commitInfo := new(ApiCommit)
-	commitInfo.Changes, _ = json.Marshal(chs)
+	commitInfo.Changes = chs
 	commitInfo.CommitMessage = msg
 	commitInfo.ApiId = apiId
 	commitInfo.TaskId = taskId

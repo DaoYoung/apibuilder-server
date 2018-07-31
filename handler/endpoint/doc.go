@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"reflect"
 	"errors"
+	"encoding/json"
 )
 
 func PublishApi(c *gin.Context) {
@@ -63,14 +64,39 @@ func CommitApi(c *gin.Context) {
 	}
 }
 func RebuildApi(c *gin.Context) {
-
+	mod := model.GetApiModel()
+	var apiForm model.Api
+	err := c.BindJSON(&apiForm)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	id, _ := strconv.Atoi(c.Param("id"))
+	row, err := mod.ByID(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, err.Error())
+		return
+	}
+	api := row.(*model.Api)
+	if api.Status == model.API_STATUS_DRAFT {
+		c.JSON(http.StatusForbidden, "Api must published")
+	}
+	err = rebuildLog(api, &apiForm)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	info,err := mod.Update(id, &apiForm)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		c.JSON(http.StatusOK, info)
+	}
 }
 func NoteApi(c *gin.Context) {
 
 }
-func RenderApi(c *gin.Context) {
 
-}
 func compareApi(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
 	v := reflect.ValueOf(*apiOld)
 	switch newVal.Kind() {
@@ -121,11 +147,24 @@ func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 	if len(chs) == 0 {
 		return errors.New("no change updated")
 	}
-	_, err := model.CreateCommit(chs, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
+	changes, _ := json.Marshal(chs)
+	_, err := model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
 	if err != nil {
 		return err
 	}
 	_, err = model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func rebuildLog(apiOld *model.Api, comForm *model.Api)error {
+	changes, _ := json.Marshal(apiOld)
+	_, err := model.CreateCommit(changes, "rebuild", comForm.TaskId , int(apiOld.ID), comForm.AuthorId)
+	if err != nil {
+		return err
+	}
+	_, err = model.CreateLog(comForm.AuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_REBUILD, model.API_STATUS_PUBLISH)
 	if err != nil {
 		return err
 	}

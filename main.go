@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"apibuilder-server/app"
+	"apibuilder-server/handler/endpoint"
 )
 
 
@@ -16,7 +17,9 @@ func main() {
 	if err := app.InitDb(); err != nil {
 		log.Fatal(err)
 	}
-	r := gin.Default()
+	r := gin.New()
+	r.Use(gin.Logger())
+	r.Use(endpoint.Recovery())
 	handler.Serve(r)
 	// Listen and serve on 0.0.0.0:8080
 	r.Run(":8080")

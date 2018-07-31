@@ -10,60 +10,43 @@ type BaseFunc struct {
 	ModSlice interface{}
 }
 
-func (bf *BaseFunc) ByID(id int) (interface{}, error){
-	if bf.Mod == nil {
-		return nil, errors.New("model not defined")
-	}
+func (bf *BaseFunc) ByID(id int) interface{}{
 	obj := bf.Mod
 	if err := app.Db.Where("id = ?", id).Last(obj).Error; err == nil {
-		return obj, nil
+		return obj
 	} else {
-		return nil, err
+		panic(NotFoundDaoError(errors.New("ByID:" + string(id) +" not found ")))
 	}
 }
 
-func (bf *BaseFunc) FindList() (interface{}, error) {
-	if bf.ModSlice == nil {
-		return nil, errors.New("model not defined")
-	}
-
+func (bf *BaseFunc) FindList() interface{} {
 	if err := app.Db.Find(bf.ModSlice).Error; err == nil {
-		//log.Print(obj)
-		return bf.ModSlice, nil
+		return bf.ModSlice
 	} else {
-		return nil, err
+		panic(QueryDaoError(err))
 	}
 }
 
-func (bf *BaseFunc) Update(id int, data interface{}) (interface{}, error) {
-	if bf.Mod == nil {
-		return nil, errors.New("model not defined")
-	}
+func (bf *BaseFunc) Update(id int, data interface{}) interface{} {
 	if err := app.Db.Model(bf.Mod).Where("id = ?", id).Updates(data).Error; err == nil {
-		return bf.Mod, nil
+		return bf.ByID(id)
 	} else {
-		return nil, err
+		panic(QueryDaoError(err))
 	}
 }
 
-func (bf *BaseFunc) Delete(id int) (interface{}, error) {
-	if bf.Mod == nil {
-		return nil, errors.New("model not defined")
-	}
+func (bf *BaseFunc) Delete(id int) interface{} {
 	if err := app.Db.Where("id = ?", id).Delete(bf.Mod).Error; err == nil {
-		return bf.Mod, nil
+		return bf.Mod
 	} else {
-		return nil, err
+		panic(QueryDaoError(err))
 	}
 }
 
-func (bf *BaseFunc) Create(data interface{}) (interface{}, error) {
-	if bf.Mod == nil {
-		return nil, errors.New("model not defined")
-	}
+func (bf *BaseFunc) Create(data interface{}) interface{} {
 	if err := app.Db.Create(data).Error; err == nil {
-		return data, nil
+		return data
 	} else {
-		return nil, err
+		panic(QueryDaoError(err))
 	}
 }

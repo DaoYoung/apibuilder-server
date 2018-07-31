@@ -33,12 +33,15 @@ CREATE TABLE IF NOT EXISTS `apis` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.apis 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.apis 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `apis` DISABLE KEYS */;
 INSERT INTO `apis` (`id`, `task_id`, `module_id`, `author_id`, `title`, `request_url`, `request_method`, `request_param`, `request_header`, `response_content`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 1, 1, 1, 'bbb', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"name": "json-dft", "Content-Type": "application/json-dft"}', 1, '2018-07-29 18:10:30', '2018-07-30 19:18:17', NULL);
+	(1, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 1, '2018-07-29 18:10:30', '2018-07-31 20:48:09', NULL),
+	(2, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 1, '2018-07-31 13:38:27', '2018-07-31 14:00:24', NULL),
+	(3, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-31 15:04:35', '2018-07-31 15:04:35', NULL),
+	(4, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-31 20:43:49', '2018-07-31 20:43:49', NULL);
 /*!40000 ALTER TABLE `apis` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_commits 结构
@@ -53,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `api_commits` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  apibuilder.api_commits 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `api_commits` DISABLE KEYS */;
@@ -74,7 +77,9 @@ INSERT INTO `api_commits` (`id`, `api_id`, `author_id`, `task_id`, `changes`, `c
 	(14, 1, 0, 0, '{"Title": {"after": "bbb", "before": "bbb"}, "CommitJson": {"name": {"after": "json", "before": "json-dft"}}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '', '2018-07-30 18:32:12', '2018-07-30 18:32:12', NULL),
 	(15, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "CommitJson": {"name": {"after": "json", "before": "json-dft"}}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 18:35:55', '2018-07-30 18:35:55', NULL),
 	(16, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 18:37:12', '2018-07-30 18:37:12', NULL),
-	(17, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL);
+	(17, 1, 2, 2, '{"Title": {"after": "bbb", "before": "bbb"}, "ResponseContent": {"name": {"after": "json", "before": "json-dft"}}}', '修改bug', '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
+	(18, 1, 2, 2, '{"Title": {"after": "bbb1", "before": "bbb"}}', '修改bug', '2018-07-31 20:47:26', '2018-07-31 20:47:26', NULL),
+	(19, 1, 1, 1, '{"ID": 1, "title": "bbb1", "status": 1, "task_id": 1, "CreatedAt": "2018-07-29T18:10:30+08:00", "DeletedAt": null, "UpdatedAt": "2018-07-31T20:47:26+08:00", "author_id": 1, "module_id": 1, "request_url": "/doc/api/", "request_param": {"Content-Type": "application/json-dft"}, "request_header": {"Content-Type": "application/json-dft"}, "request_method": "get", "response_content": {"name": "json-dft", "Content-Type": "application/json-dft"}}', 'rebuild', '2018-07-31 20:48:08', '2018-07-31 20:48:08', NULL);
 /*!40000 ALTER TABLE `api_commits` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_logs 结构
@@ -89,13 +94,16 @@ CREATE TABLE IF NOT EXISTS `api_logs` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  apibuilder.api_logs 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `api_logs` DISABLE KEYS */;
 INSERT INTO `api_logs` (`id`, `user_id`, `api_id`, `from_user_id`, `type`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, 0, 1, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
-	(2, 2, 1, 0, 2, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL);
+	(2, 2, 1, 0, 2, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
+	(3, 1, 2, 0, 1, 1, '2018-07-31 14:00:24', '2018-07-31 14:00:24', NULL),
+	(4, 2, 1, 0, 2, 1, '2018-07-31 20:47:26', '2018-07-31 20:47:26', NULL),
+	(5, 1, 1, 0, 6, 1, '2018-07-31 20:48:09', '2018-07-31 20:48:09', NULL);
 /*!40000 ALTER TABLE `api_logs` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_models 结构
@@ -154,23 +162,24 @@ INSERT INTO `api_notes` (`id`, `api_id`, `author_id`, `fkey`, `fkey_parent`, `fk
 CREATE TABLE IF NOT EXISTS `modules` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `mixid` varchar(255) NOT NULL,
-  `pid` int(10) NOT NULL DEFAULT '0',
+  `spid` varchar(255) DEFAULT NULL COMMENT '所有父级ID列',
+  `pid` int(10) NOT NULL DEFAULT '0' COMMENT '上级ID',
   `author_id` int(10) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  apibuilder.modules 的数据：~5 rows (大约)
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
-INSERT INTO `modules` (`id`, `title`, `mixid`, `pid`, `author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '用户中心', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),
 	(2, '版本', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),
 	(3, '模块', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),
 	(4, '接口', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),
-	(5, 'kai', '', 0, 1, '2018-07-29 16:57:27', '2018-07-29 16:57:27', NULL);
+	(5, 'kai', '', 0, 1, '2018-07-29 16:57:27', '2018-07-29 16:57:27', NULL),
+	(6, 'kai', NULL, 0, 1, '2018-07-31 13:39:13', '2018-07-31 13:39:13', NULL);
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.users 结构

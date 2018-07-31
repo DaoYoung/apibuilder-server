@@ -9,30 +9,29 @@ import (
 	"errors"
 	"encoding/json"
 )
-
+//todo 提炼valid
+//todo 优化return
 func PublishApi(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	mod := model.GetApiModel()
-	row, err := mod.ByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, "Json content error")
-		return
-	}
+	row := mod.ByID(id)
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_PUBLISH {
+
 		c.JSON(http.StatusForbidden, "Api has published")
 	} else {
-		info,err := mod.Update(id, model.Api{Status: model.API_STATUS_PUBLISH})
-		if err != nil {
-			c.JSON(http.StatusBadRequest, err.Error())
-		} else {
-			model.CreateLog(api.AuthorId, 0, int(api.ID), model.APILOG_TYPE_PUBLISH, model.API_STATUS_PUBLISH)
-			//todo notice others
-			c.JSON(http.StatusOK, info)
-		}
+		info := mod.Update(id, model.Api{Status: model.API_STATUS_PUBLISH})
+		model.CreateLog(api.AuthorId, 0, int(api.ID), model.APILOG_TYPE_PUBLISH, model.API_STATUS_PUBLISH)
+		//todo notice others
+		c.JSON(http.StatusOK, info)
 
 	}
 }
+
+func NoteApi(c *gin.Context) {
+
+}
+
 func CommitApi(c *gin.Context) {
 	mod := model.GetApiModel()
 	var commitForm model.ApiCommitForm
@@ -42,72 +41,20 @@ func CommitApi(c *gin.Context) {
 		return
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	row, err := mod.ByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, err.Error())
-		return
-	}
+	row := mod.ByID(id)
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_DRAFT {
 		c.JSON(http.StatusForbidden, "Api must published")
 	}
-	err = commitAdd(api, &commitForm) //commit LOG AND NOTICE
+	err = commitLog(api, &commitForm) //commit LOG AND NOTICE
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	info,err := mod.Update(id, &commitForm)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusOK, info)
-	}
+	info := mod.Update(id, &commitForm)
+	c.JSON(http.StatusOK, info)
 }
-func RebuildApi(c *gin.Context) {
-	mod := model.GetApiModel()
-	var apiForm model.Api
-	err := c.BindJSON(&apiForm)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
-	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	row, err := mod.ByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, err.Error())
-		return
-	}
-	api := row.(*model.Api)
-	if api.Status == model.API_STATUS_DRAFT {
-		c.JSON(http.StatusForbidden, "Api must published")
-	}
-	err = rebuildLog(api, &apiForm)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
-	}
-	info,err := mod.Update(id, &apiForm)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusOK, info)
-	}
-}
-func NoteApi(c *gin.Context) {
-
-}
-
-func compareApi(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
-	v := reflect.ValueOf(*apiOld)
-	switch newVal.Kind() {
-	case reflect.Int:
-		return v.FieldByName(fieldName).Int() == newVal.Int(), v.FieldByName(fieldName).Int()
-	case reflect.String:
-		return v.FieldByName(fieldName).String() == newVal.String(), v.FieldByName(fieldName).String()
-	}
-	return true, nil
-}
-func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) error {
+func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
@@ -117,7 +64,7 @@ func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 			continue
 		}
 		val := v.Field(i)
-		flag, oldval := compareApi(apiOld, t.Field(i).Name, val)
+		flag, oldval := compareApiData(apiOld, t.Field(i).Name, val)
 		switch val.Kind() {
 		case reflect.Int:
 			if val.Int() != 0 && !flag {
@@ -148,25 +95,39 @@ func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 		return errors.New("no change updated")
 	}
 	changes, _ := json.Marshal(chs)
-	_, err := model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
-	if err != nil {
-		return err
-	}
-	_, err = model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
-	if err != nil {
-		return err
-	}
+	model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
+	model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
 	return nil
 }
-func rebuildLog(apiOld *model.Api, comForm *model.Api)error {
+func compareApiData(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
+	v := reflect.ValueOf(*apiOld)
+	switch newVal.Kind() {
+	case reflect.Int:
+		return v.FieldByName(fieldName).Int() == newVal.Int(), v.FieldByName(fieldName).Int()
+	case reflect.String:
+		return v.FieldByName(fieldName).String() == newVal.String(), v.FieldByName(fieldName).String()
+	}
+	return true, nil
+}
+func RebuildApi(c *gin.Context) {
+	mod := model.GetApiModel()
+	var apiForm model.Api
+	err := c.BindJSON(&apiForm)
+	if err != nil {
+		panic(JsonTypeError(err))
+	}
+	id, _ := strconv.Atoi(c.Param("id"))
+	row := mod.ByID(id)
+	api := row.(*model.Api)
+	if api.Status == model.API_STATUS_DRAFT {
+		panic(ForbidError(errors.New("Api must published")))
+	}
+	rebuildLog(api, &apiForm)
+	info := mod.Update(id, &apiForm)
+	c.JSON(http.StatusOK, info)
+}
+func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 	changes, _ := json.Marshal(apiOld)
-	_, err := model.CreateCommit(changes, "rebuild", comForm.TaskId , int(apiOld.ID), comForm.AuthorId)
-	if err != nil {
-		return err
-	}
-	_, err = model.CreateLog(comForm.AuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_REBUILD, model.API_STATUS_PUBLISH)
-	if err != nil {
-		return err
-	}
-	return nil
+	model.CreateCommit(changes, "rebuild", comForm.TaskId , int(apiOld.ID), comForm.AuthorId)
+	model.CreateLog(comForm.AuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_REBUILD, model.API_STATUS_PUBLISH)
 }

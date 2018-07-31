@@ -5,75 +5,65 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"net/http"
+	"errors"
 )
 type BaseAction struct {
 	ModFunc *model.BaseFunc
 }
 
-func (ba *BaseAction) Info(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	info, err := ba.ModFunc.ByID(id)
-	if err == nil {
-		c.JSON(http.StatusOK, info)
-	}else {
-		c.JSON(http.StatusOK, err)
+func JsonDecode(c *gin.Context, obj interface{}){
+	err := c.BindJSON(obj)
+	if err != nil {
+		panic(JsonTypeError(err))
 	}
 }
+func (ba *BaseAction) Info(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	info := ba.ModFunc.ByID(id)
+	c.JSON(http.StatusOK, info)
+}
 func (ba *BaseAction) List(c *gin.Context) {
-	list,err := ba.ModFunc.FindList()
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusOK, list)
-	}
+	list := ba.ModFunc.FindList()
+	c.JSON(http.StatusOK, list)
 }
 func (ba *BaseAction) Create(c *gin.Context) {
 	err := c.BindJSON(ba.ModFunc.Mod)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		panic(JsonTypeError(err))
 	}
-	info, err := ba.ModFunc.Create(ba.ModFunc.Mod)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusCreated, info)
-	}
+	info := ba.ModFunc.Create(ba.ModFunc.Mod)
+	c.JSON(http.StatusCreated, info)
 }
 func (ba *BaseAction) Update(c *gin.Context) {
 	err := c.BindJSON(ba.ModFunc.Mod)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	info,err := ba.ModFunc.Update(id, ba.ModFunc.Mod)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusResetContent, info)
-	}
+	info := ba.ModFunc.Update(id, ba.ModFunc.Mod)
+	c.JSON(http.StatusOK, info)
 }
 func (ba *BaseAction) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	_,err := ba.ModFunc.Delete(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-	} else {
-		c.JSON(http.StatusNoContent, gin.H{"id": id})
-	}
+	ba.ModFunc.Delete(id)
+	c.JSON(http.StatusOK, gin.H{"id": id})
 }
 
 func (ba *BaseAction) CrudService(funcName string) func(c *gin.Context) {
-		switch funcName {
-		case "info":
-			return ba.Info
-		case "create":
-			return ba.Create
-		case "update":
-			return ba.Update
-		case "delete":
-			return ba.Delete
-		default:
-			return ba.List
-		}
+	if ba.ModFunc.Mod == nil{
+		panic(model.NotExistDaoError(errors.New("model not exist ")))
+	}
+	switch funcName {
+	case "info":
+		return ba.Info
+	case "create":
+		return ba.Create
+	case "update":
+		return ba.Update
+	case "delete":
+		return ba.Delete
+	default:
+		return ba.List
+	}
 
 }

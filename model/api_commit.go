@@ -20,7 +20,7 @@ func GetCommitModel() *BaseFunc {
 	return bf
 }
 
-func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) (interface{}, error) {
+func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) interface{} {
 	commitInfo := new(ApiCommit)
 	commitInfo.Changes = chs
 	commitInfo.CommitMessage = msg

@@ -37,24 +37,19 @@ func CommitApi(c *gin.Context) {
 	var commitForm model.ApiCommitForm
 	err := c.BindJSON(&commitForm)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
+		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
 	row := mod.ByID(id)
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_DRAFT {
-		c.JSON(http.StatusForbidden, "Api must published")
+		panic(ForbidError(errors.New("Api must published")))
 	}
-	err = commitLog(api, &commitForm) //commit LOG AND NOTICE
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
-		return
-	}
+	commitLog(api, &commitForm)
 	info := mod.Update(id, &commitForm)
 	c.JSON(http.StatusOK, info)
 }
-func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) error {
+func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) {
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
@@ -92,12 +87,12 @@ func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 		chs["response_content"] = comForm.CommitContent
 	}
 	if len(chs) == 0 {
-		return errors.New("no change updated")
+		panic(NOChangeError(errors.New("no change updated")))
 	}
 	changes, _ := json.Marshal(chs)
 	model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
 	model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
-	return nil
+
 }
 func compareApiData(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
 	v := reflect.ValueOf(*apiOld)

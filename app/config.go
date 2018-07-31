@@ -22,8 +22,8 @@ var Config = struct {
 		Host     string `default:"localhost"`
 		Port     uint64 `default:"3306"`
 		Name     string `default:"apibuilder"`
-		User     string `default:""`
-		Password string `default:""`
+		User     string `default:"root"`
+		Password string `default:"123456"`
 	}
 
 }{}

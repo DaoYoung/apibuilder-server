@@ -27,7 +27,7 @@ func GetLogModel() *BaseFunc {
 	return bf
 }
 
-func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int)  {
+func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) (interface{}, error) {
 	obj := new(ApiLog)
 	obj.UserId = uid
 	obj.FromUserId = formUid
@@ -35,5 +35,5 @@ func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int)  {
 	obj.Type = logType
 	obj.Status = logStatus
 	mod := GetLogModel()
-	mod.Create(obj)
+	return mod.Create(obj)
 }

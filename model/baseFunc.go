@@ -2,7 +2,6 @@ package model
 
 import (
 	"apibuilder-server/app"
-	"log"
 		"errors"
 )
 
@@ -19,57 +18,52 @@ func (bf *BaseFunc) ByID(id int) (interface{}, error){
 	if err := app.Db.Where("id = ?", id).Last(obj).Error; err == nil {
 		return obj, nil
 	} else {
-		log.Print(err)
 		return nil, err
 	}
 }
 
-func (bf *BaseFunc) FindList() interface{} {
+func (bf *BaseFunc) FindList() (interface{}, error) {
 	if bf.ModSlice == nil {
-		return nil
+		return nil, errors.New("model not defined")
 	}
 
 	if err := app.Db.Find(bf.ModSlice).Error; err == nil {
 		//log.Print(obj)
-		return bf.ModSlice
+		return bf.ModSlice, nil
 	} else {
-		log.Print(err)
-		return nil
+		return nil, err
 	}
 }
 
-func (bf *BaseFunc) Update(id int, data interface{}) interface{} {
+func (bf *BaseFunc) Update(id int, data interface{}) (interface{}, error) {
 	if bf.Mod == nil {
-		return nil
+		return nil, errors.New("model not defined")
 	}
 	if err := app.Db.Model(bf.Mod).Where("id = ?", id).Updates(data).Error; err == nil {
-		return bf.Mod
+		return bf.Mod, nil
 	} else {
-		log.Print(err)
-		return nil
+		return nil, err
 	}
 }
 
-func (bf *BaseFunc) Delete(id int) interface{} {
+func (bf *BaseFunc) Delete(id int) (interface{}, error) {
 	if bf.Mod == nil {
-		return nil
+		return nil, errors.New("model not defined")
 	}
 	if err := app.Db.Where("id = ?", id).Delete(bf.Mod).Error; err == nil {
-		return bf.Mod
+		return bf.Mod, nil
 	} else {
-		log.Print(err)
-		return nil
+		return nil, err
 	}
 }
 
-func (bf *BaseFunc) Create(data interface{}) interface{} {
+func (bf *BaseFunc) Create(data interface{}) (interface{}, error) {
 	if bf.Mod == nil {
-		return nil
+		return nil, errors.New("model not defined")
 	}
 	if err := app.Db.Create(data).Error; err == nil {
-		return data
+		return data, nil
 	} else {
-		log.Print(err)
-		return nil
+		return nil, err
 	}
 }

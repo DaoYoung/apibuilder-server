@@ -6,40 +6,30 @@ import (
 	"apibuilder-server/model"
 	"strconv"
 	"reflect"
-	"encoding/json"
-	"log"
+	"errors"
 )
-
-//api curd 对象
-func ApiAction(str string) func(c *gin.Context) {
-	ba := new(BaseAction)
-	ba.Mod = model.GetApiModel()
-	return CurdAction(ba, str)
-}
-
-//Module curd 对象
-func ModuleAction(str string) func(c *gin.Context) {
-	ba := new(BaseAction)
-	ba.Mod = model.GetModuleModel()
-	return CurdAction(ba, str)
-}
 
 func PublishApi(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	mod := model.GetApiModel()
 	row, err := mod.ByID(id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, "Json content error")
 		return
 	}
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_PUBLISH {
 		c.JSON(http.StatusForbidden, "Api has published")
 	} else {
-		info := mod.Update(id, model.Api{Status: model.API_STATUS_PUBLISH})
-		model.CreateLog(api.AuthorId, 0, int(api.ID), model.APILOG_TYPE_PUBLISH, model.API_STATUS_PUBLISH)
-		//todo notice others
-		c.JSON(http.StatusOK, info)
+		info,err := mod.Update(id, model.Api{Status: model.API_STATUS_PUBLISH})
+		if err != nil {
+			c.JSON(http.StatusBadRequest, err.Error())
+		} else {
+			model.CreateLog(api.AuthorId, 0, int(api.ID), model.APILOG_TYPE_PUBLISH, model.API_STATUS_PUBLISH)
+			//todo notice others
+			c.JSON(http.StatusOK, info)
+		}
+
 	}
 }
 func CommitApi(c *gin.Context) {
@@ -47,22 +37,30 @@ func CommitApi(c *gin.Context) {
 	var commitForm model.ApiCommitForm
 	err := c.BindJSON(&commitForm)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
 	row, err := mod.ByID(id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, err)
+		c.JSON(http.StatusNotFound, err.Error())
 		return
 	}
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_DRAFT {
 		c.JSON(http.StatusForbidden, "Api must published")
 	}
-	commitAdd(api, &commitForm) //commit LOG AND NOTICE
-	info := mod.Update(id, &commitForm)
-	c.JSON(http.StatusResetContent, info)
+	err = commitAdd(api, &commitForm) //commit LOG AND NOTICE
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	info,err := mod.Update(id, &commitForm)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	} else {
+		c.JSON(http.StatusOK, info)
+	}
 }
 func RebuildApi(c *gin.Context) {
 
@@ -70,7 +68,6 @@ func RebuildApi(c *gin.Context) {
 func NoteApi(c *gin.Context) {
 
 }
-
 func RenderApi(c *gin.Context) {
 
 }
@@ -84,8 +81,7 @@ func compareApi(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool
 	}
 	return true, nil
 }
-func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) (*model.Api, error) {
-
+func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) error {
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
@@ -123,17 +119,15 @@ func commitAdd(apiOld *model.Api, comForm *model.ApiCommitForm) (*model.Api, err
 		chs["response_content"] = comForm.CommitContent
 	}
 	if len(chs) == 0 {
-		log.Println("no change updated")
-		return nil, nil
+		return errors.New("no change updated")
 	}
-	commitInfo := new(model.ApiCommit)
-	commitInfo.Changes, _ = json.Marshal(chs)
-	commitInfo.ApiId = int(apiOld.ID)
-	commitInfo.TaskId = comForm.CommitTaskId
-	commitInfo.CommitMessage = comForm.CommitMessage
-	commitInfo.AuthorId = comForm.CommitAuthorId
-	mod := model.GetCommitModel()
-	mod.Create(commitInfo)
-	model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
-	return nil, nil
+	_, err := model.CreateCommit(chs, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
+	if err != nil {
+		return err
+	}
+	_, err = model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.APILOG_TYPE_COMMIT, model.API_STATUS_PUBLISH)
+	if err != nil {
+		return err
+	}
+	return nil
 }

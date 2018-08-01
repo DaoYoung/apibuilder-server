@@ -11,16 +11,9 @@ const (
 
 type Api struct {
 	gorm.Model
-	TaskId          int    `json:"task_id"`
-	ModuleId        int    `json:"module_id"`
 	AuthorId        int    `json:"author_id"`
-	Title           string `json:"title"`
-	RequestUrl      string `json:"request_url"`
-	RequestMethod   string `json:"request_method"`
-	RequestParam    JSON   `json:"request_param"`
-	RequestHeader   JSON   `json:"request_header"`
-	ResponseContent JSON   `json:"response_content"`
 	Status          int    `json:"status"`
+	ApiCommitForm
 }
 
 type ApiCommitForm struct {
@@ -39,6 +32,17 @@ type ApiCommitForm struct {
 	CommitTaskId    int    `gorm:"-" json:"commit_task_id"`
 	CommitAuthorId  int    `gorm:"-" json:"commit_author_id"`
 }
+
+func (model *Api) UpdateStruct() interface{} {
+	return ApiCommitForm{}
+}
+func (model *Api) InitDao() *Dao {
+	dao := &Dao{}
+	dao.MainResource = model
+	dao.SliceResource = &[]Api{}
+	return dao
+}
+
 
 func GetApiModel() *BaseFunc {
 	bf := &BaseFunc{}

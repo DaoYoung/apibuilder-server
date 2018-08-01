@@ -43,7 +43,7 @@ func CommitApi(c *gin.Context) {
 	row := mod.ByID(id)
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_DRAFT {
-		panic(ForbidError(errors.New("Api must published")))
+		panic(ForbidError(errors.New("api must published")))
 	}
 	commitLog(api, &commitForm)
 	info := mod.Update(id, &commitForm)
@@ -115,7 +115,7 @@ func RebuildApi(c *gin.Context) {
 	row := mod.ByID(id)
 	api := row.(*model.Api)
 	if api.Status == model.API_STATUS_DRAFT {
-		panic(ForbidError(errors.New("Api must published")))
+		panic(ForbidError(errors.New("api must published")))
 	}
 	rebuildLog(api, &apiForm)
 	info := mod.Update(id, &apiForm)

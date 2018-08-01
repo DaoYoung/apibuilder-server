@@ -19,6 +19,7 @@ type ModuleAction struct {
 }
 
 func (action ModuleAction) CrudService(str string) func(c *gin.Context)  {
+	//action.CrudService()
 	actionPtr := &action
 	actionPtr.ModFunc = model.GetModuleModel()
 	return actionPtr.BaseAction.CrudService(str)

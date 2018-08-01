@@ -2,3 +2,4 @@
 *.xml
 *.exe
 config.yml
+*.log

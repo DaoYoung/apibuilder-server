@@ -1,6 +1,9 @@
 package endpoint
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"apibuilder-server/model"
+)
 
 type APIErrors struct {
 	Errors      []*APIError `json:"errors"`
@@ -39,13 +42,8 @@ func JsonTypeError(err error) *APIError {
 func ForbidError(err error) *APIError {
 	return NewAPIError(400, "forbid", "forbid", err.Error(), "")
 }
-var (
-	ErrDatabase         = NewAPIError(500, "database_error", "Database Error", "An unknown error occurred.", "")
-	ErrInvalidSet       = NewAPIError(404, "invalid_set", "Invalid Set", "The set you requested does not exist.", "")
-	ErrInvalidGroup     = NewAPIError(404, "invalid_group", "Invalid Group", "The group you requested does not exist.", "")
-)
 
-func Recovery() gin.HandlerFunc {
+func CatchErrors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -59,12 +57,20 @@ func Recovery() gin.HandlerFunc {
 				case *APIErrors:
 					apiErrors := err.(*APIErrors)
 					c.JSON(apiErrors.Status(), apiErrors)
+				case *model.DaoError:
+					daoError := err.(*model.DaoError)
+					daoErrors := &model.DaoErrors{
+						Errors: []*model.DaoError{daoError},
+					}
+					c.JSON(daoError.Status, daoErrors)
+				case *model.DaoErrors:
+					daoErrors := err.(*model.DaoErrors)
+					c.JSON(daoErrors.Status(), daoErrors)
 				default:
 					panic(err)
 				}
 			}
 		}()
-
 		c.Next()
 	}
 }

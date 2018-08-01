@@ -1,11 +1,7 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 type ApiCommit struct {
-	gorm.Model
+	BaseFields
 	TaskId        int
 	ApiId         int
 	AuthorId      int
@@ -13,11 +9,15 @@ type ApiCommit struct {
 	Changes       JSON
 }
 
-func GetCommitModel() *BaseFunc {
-	bf := &BaseFunc{}
-	bf.Mod = new(ApiCommit)
-	bf.ModSlice = &[]ApiCommit{}
-	return bf
+func (model *ApiCommit) UpdateStruct() interface{} {
+	return nil
+}
+
+func (model *ApiCommit) InitDao() *Dao {
+	dao := &Dao{}
+	dao.MainResource = model
+	dao.SliceResource = &[]ApiCommit{}
+	return dao
 }
 
 func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) interface{} {
@@ -27,8 +27,7 @@ func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) 
 	commitInfo.ApiId = apiId
 	commitInfo.TaskId = taskId
 	commitInfo.AuthorId = authorId
-	modFunc := GetCommitModel()
-	return modFunc.Create(commitInfo)
+	return (&(ApiCommit{})).InitDao().Create(commitInfo)
 }
 
 type CommitChange struct {

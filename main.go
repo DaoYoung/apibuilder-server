@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/handler"
+	"apibuilder-server/handler/endpoint"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"apibuilder-server/app"
-	"apibuilder-server/handler/endpoint"
 )
 
 

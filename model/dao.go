@@ -4,11 +4,19 @@ import (
 	"apibuilder-server/app"
 	"errors"
 	"log"
+	"time"
 )
+
+type BaseFields struct {
+	ID        int `gorm:"primary_key" json:"id"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+	DeletedAt   *time.Time `json:"deleted_at"`
+}
 
 type Resource interface {
 	InitDao() *Dao
-	UpdateStruct() interface{}
+	UpdateStruct() interface{} //nil: forbid update
 }
 
 type Dao struct {

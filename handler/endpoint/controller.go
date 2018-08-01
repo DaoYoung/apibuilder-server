@@ -5,29 +5,24 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"net/http"
-	"log"
-	"reflect"
 	"errors"
 )
 type ControllerInterface interface {
-	CrudService()
+	CrudService(str string) func(c *gin.Context)
 }
 
 type Controller struct {
 	Res model.Resource
-
 }
 
 func (this *Controller) Info(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	info := this.Res.InitDao().ByID(id)
-	c.JSON(http.StatusOK, info)
+	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) List(c *gin.Context) {
-	log.Println(this.Res.InitDao())
-	log.Println(reflect.TypeOf(this.Res.InitDao()))
 	list := this.Res.InitDao().FindList()
-	c.JSON(http.StatusOK, list)
+	ReturnSuccess(c, http.StatusOK, list)
 }
 func (this *Controller) Create(c *gin.Context) {
 	err := c.BindJSON(this.Res)
@@ -69,4 +64,24 @@ func (this *Controller) CrudService(funcName string) func(c *gin.Context) {
 		return this.List
 	}
 
+}
+
+
+type JsonSuccess struct {
+	Data interface{} `json:"data"`
+}
+type JsonError struct {
+	Errors interface{} `json:"errors"`
+}
+
+func ReturnSuccess(c *gin.Context, code int, data interface{}) {
+	js := new(JsonSuccess)
+	js.Data = data
+	c.JSON(code, js)
+}
+
+func ReturnError(c *gin.Context, code int, err interface{}) {
+	js := new(JsonError)
+	js.Errors = err
+	c.JSON(code, js)
 }

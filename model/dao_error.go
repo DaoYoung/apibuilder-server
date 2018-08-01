@@ -13,25 +13,23 @@ type DaoError struct {
 	Code        string      `json:"code"`
 	Title       string      `json:"title"`
 	Details     string      `json:"details"`
-	Href        string      `json:"href"`
 }
 
-func NewDaoError(status int, code string, title string, details string, href string) *DaoError {
+func NewDaoError(status int, code string, title string, details string) *DaoError {
 	return &DaoError{
 		Status:     status,
 		Code:       code,
 		Title:      title,
 		Details:    details,
-		Href:       href,
 	}
 }
 
 func NotFoundDaoError(err error) *DaoError {
-	return NewDaoError(400, "not_found", "Not Found", err.Error(), "")
+	return NewDaoError(400, "not_found", "Not Found", err.Error())
 }
 func NotExistDaoError(err error) *DaoError {
-	return NewDaoError(400, "not_exist", "Not Exist", err.Error(), "")
+	return NewDaoError(400, "not_exist", "Not Exist", err.Error())
 }
 func QueryDaoError(err error) *DaoError {
-	return NewDaoError(400, "db_query", "DB query error", err.Error(), "")
+	return NewDaoError(400, "db_query", "DB query error", err.Error())
 }

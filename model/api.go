@@ -1,16 +1,12 @@
 package model
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 const (
-	API_STATUS_DRAFT   int = 0
-	API_STATUS_PUBLISH int = 1
+	API_STATUS_DRAFT    = 0
+	API_STATUS_PUBLISH  = 1
 )
 
 type Api struct {
-	gorm.Model
+	BaseFields
 	AuthorId        int    `json:"author_id"`
 	Status          int    `json:"status"`
 	ApiCommitForm
@@ -43,10 +39,3 @@ func (model *Api) InitDao() *Dao {
 	return dao
 }
 
-
-func GetApiModel() *BaseFunc {
-	bf := &BaseFunc{}
-	bf.Mod = new(Api)
-	bf.ModSlice = &[]Api{}
-	return bf
-}

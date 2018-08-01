@@ -1,6 +1,5 @@
 package model
 
-import "github.com/jinzhu/gorm"
 const (
 	APILOG_TYPE_PUBLISH   int = 1
 	APILOG_TYPE_COMMIT int = 2
@@ -12,7 +11,7 @@ const (
 
 )
 type ApiLog struct {
-	gorm.Model
+	BaseFields
 	UserId        int
 	ApiId         int
 	FromUserId    int
@@ -20,11 +19,15 @@ type ApiLog struct {
 	Status        int
 }
 
-func GetLogModel() *BaseFunc {
-	bf := &BaseFunc{}
-	bf.Mod = new(ApiLog)
-	bf.ModSlice = &[]ApiLog{}
-	return bf
+func (model *ApiLog) UpdateStruct() interface{} {
+	return nil
+}
+
+func (model *ApiLog) InitDao() *Dao {
+	dao := &Dao{}
+	dao.MainResource = model
+	dao.SliceResource = &[]ApiLog{}
+	return dao
 }
 
 func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) interface{} {
@@ -34,6 +37,5 @@ func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) int
 	obj.ApiId = apiId
 	obj.Type = logType
 	obj.Status = logStatus
-	mod := GetLogModel()
-	return mod.Create(obj)
+	return (&(ApiLog{})).InitDao().Create(obj)
 }

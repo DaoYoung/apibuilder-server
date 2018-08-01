@@ -33,15 +33,16 @@ CREATE TABLE IF NOT EXISTS `apis` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.apis 的数据：~1 rows (大约)
+-- 正在导出表  apibuilder.apis 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `apis` DISABLE KEYS */;
 INSERT INTO `apis` (`id`, `task_id`, `module_id`, `author_id`, `title`, `request_url`, `request_method`, `request_param`, `request_header`, `response_content`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 1, '2018-07-29 18:10:30', '2018-07-31 20:48:09', NULL),
 	(2, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 1, '2018-07-31 13:38:27', '2018-07-31 14:00:24', NULL),
 	(3, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-31 15:04:35', '2018-07-31 15:04:35', NULL),
-	(4, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-31 20:43:49', '2018-07-31 20:43:49', NULL);
+	(4, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-07-31 20:43:49', '2018-07-31 20:43:49', NULL),
+	(5, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 0, '2018-08-01 18:26:30', '2018-08-01 18:26:30', NULL);
 /*!40000 ALTER TABLE `apis` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_commits 结构
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `api_commits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_commits 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.api_commits 的数据：~17 rows (大约)
 /*!40000 ALTER TABLE `api_commits` DISABLE KEYS */;
 INSERT INTO `api_commits` (`id`, `api_id`, `author_id`, `task_id`, `changes`, `commit_message`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 0, 0, '{"Title": {"after": "bbb", "before": "aaa"}, "ResponseContent": {"change_json": null}}', '', '2018-07-30 17:22:24', '2018-07-30 17:22:24', NULL),
@@ -96,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `api_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_logs 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.api_logs 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `api_logs` DISABLE KEYS */;
 INSERT INTO `api_logs` (`id`, `user_id`, `api_id`, `from_user_id`, `type`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, 0, 1, 1, '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
@@ -109,15 +110,55 @@ INSERT INTO `api_logs` (`id`, `user_id`, `api_id`, `from_user_id`, `type`, `stat
 -- 导出  表 apibuilder.api_models 结构
 CREATE TABLE IF NOT EXISTS `api_models` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author_id` int(10) NOT NULL,
+  `model_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  apibuilder.api_models 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `api_models` DISABLE KEYS */;
-INSERT INTO `api_models` (`id`, `title`) VALUES
-	(1, 'Merchant');
 /*!40000 ALTER TABLE `api_models` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.api_model_maps 结构
+CREATE TABLE IF NOT EXISTS `api_model_maps` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `model_id` int(10) NOT NULL DEFAULT '0',
+  `target_type` tinyint(1) NOT NULL COMMENT '1belongs to 2has many',
+  `target_id` int(10) NOT NULL,
+  `author_id` int(10) NOT NULL,
+  `deleted_at` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.api_model_maps 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `api_model_maps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_model_maps` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.api_model_notes 结构
+CREATE TABLE IF NOT EXISTS `api_model_notes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `model_id` int(10) NOT NULL DEFAULT '0',
+  `author_id` int(10) NOT NULL,
+  `fkey` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_parent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_at` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fkey_parent` (`fkey_parent`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.api_model_notes 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `api_model_notes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `api_model_notes` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_notes 结构
 CREATE TABLE IF NOT EXISTS `api_notes` (

@@ -29,7 +29,10 @@ func (model *ApiLog) InitDao() *Dao {
 	dao.SliceResource = &[]ApiLog{}
 	return dao
 }
-
+func (model *ApiLog) Insert() interface{} {
+	dao := model.InitDao()
+	return dao.Create(model)
+}
 func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) interface{} {
 	obj := new(ApiLog)
 	obj.UserId = uid
@@ -37,5 +40,5 @@ func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) int
 	obj.ApiId = apiId
 	obj.Type = logType
 	obj.Status = logStatus
-	return (&(ApiLog{})).InitDao().Create(obj)
+	return obj.Insert()
 }

@@ -30,24 +30,28 @@ func (this *Controller) Create(c *gin.Context) {
 		panic(JsonTypeError(err))
 	}
 	info := this.Res.InitDao().Create(this.Res)
-	c.JSON(http.StatusCreated, info)
+	ReturnSuccess(c, http.StatusCreated, info)
 }
 func (this *Controller) Update(c *gin.Context) {
-	err := c.BindJSON(this.Res)
+	obj := this.Res.UpdateStruct()
+	if obj == nil {
+		panic(ForbidError(errors.New("forbid to update model")))
+	}
+	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := this.Res.InitDao().Update(id, this.Res)
-	c.JSON(http.StatusOK, info)
+	info := this.Res.InitDao().Update(id, obj)
+	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	this.Res.InitDao().Delete(id)
-	c.JSON(http.StatusOK, gin.H{"id": id})
+	ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
 }
 
-func (this *Controller) CrudService(funcName string) func(c *gin.Context) {
+func (this *Controller) DaoService(funcName string) func(c *gin.Context) {
 	if this.Res.InitDao() == nil{
 		panic(model.NotExistDaoError(errors.New("model not exist ")))
 	}

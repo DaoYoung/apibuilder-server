@@ -20,6 +20,11 @@ func (model *ApiCommit) InitDao() *Dao {
 	return dao
 }
 
+func (model *ApiCommit) Insert() interface{} {
+	dao := model.InitDao()
+	return dao.Create(model)
+}
+
 func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) interface{} {
 	commitInfo := new(ApiCommit)
 	commitInfo.Changes = chs
@@ -27,7 +32,7 @@ func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) 
 	commitInfo.ApiId = apiId
 	commitInfo.TaskId = taskId
 	commitInfo.AuthorId = authorId
-	return (&(ApiCommit{})).InitDao().Create(commitInfo)
+	return commitInfo.Insert()
 }
 
 type CommitChange struct {

@@ -12,6 +12,7 @@ type ModuleController struct {
 func (action ModuleController) CrudService(str string) func(c *gin.Context)  {
 	actionPtr := &action
 	actionPtr.Res = &(model.Module{})
-	return actionPtr.Controller.CrudService(str)
+	actionPtr.ResSlice = &[]model.Module{}
+	return actionPtr.Controller.DaoService(str)
 }
 

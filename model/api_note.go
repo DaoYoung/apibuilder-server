@@ -20,12 +20,6 @@ func (model *ApiNote) UpdateStruct() interface{} {
 	return NoteUpdate{}
 }
 
-func (model *ApiNote) InitDao() *Dao {
-	dao := &Dao{}
-	dao.MainResource = model
-	dao.SliceResource = &[]ApiNote{}
-	return dao
-}
 
 func CreateApiNote(chs []byte, msg string, taskId int, apiId int, authorId int) interface{} {
 	commitInfo := new(ApiCommit)
@@ -34,6 +28,6 @@ func CreateApiNote(chs []byte, msg string, taskId int, apiId int, authorId int) 
 	commitInfo.ApiId = apiId
 	commitInfo.TaskId = taskId
 	commitInfo.AuthorId = authorId
-	return (&(ApiCommit{})).InitDao().Create(commitInfo)
+	return Create(commitInfo)
 }
  

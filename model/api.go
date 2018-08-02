@@ -1,8 +1,8 @@
 package model
 
 const (
-	API_STATUS_DRAFT    = 0
-	API_STATUS_PUBLISH  = 1
+	ApiStatusDraft    = 0
+	ApiStatusPublish  = 1
 )
 
 type Api struct {
@@ -31,11 +31,5 @@ type ApiCommitForm struct {
 
 func (model *Api) UpdateStruct() interface{} {
 	return ApiCommitForm{}
-}
-func (model *Api) InitDao() *Dao {
-	dao := &Dao{}
-	dao.MainResource = model
-	dao.SliceResource = &[]Api{}
-	return dao
 }
 

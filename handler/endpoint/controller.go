@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"net/http"
 	"errors"
+	"log"
+	"reflect"
 )
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
@@ -13,15 +15,22 @@ type ControllerInterface interface {
 
 type Controller struct {
 	Res model.Resource
+	ResSlice interface{}
+}
+func (this *Controller) CrudService(str string) func(c *gin.Context)  {
+	panic(ForbidError(errors.New("no support model curd")))
 }
 
 func (this *Controller) Info(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := this.Res.InitDao().ByID(id)
+	//info := this.Res.InitDao().ByID(id)
+	info := model.ByID(this.Res, id)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) List(c *gin.Context) {
-	list := this.Res.InitDao().FindList()
+	//list := this.Res.InitDao().FindList()
+	log.Println(reflect.TypeOf(this.ResSlice), reflect.TypeOf(&this.ResSlice))
+	list := model.FindList(this.ResSlice)
 	ReturnSuccess(c, http.StatusOK, list)
 }
 func (this *Controller) Create(c *gin.Context) {
@@ -29,7 +38,7 @@ func (this *Controller) Create(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	info := this.Res.InitDao().Create(this.Res)
+	info := model.Create(this.Res)
 	ReturnSuccess(c, http.StatusCreated, info)
 }
 func (this *Controller) Update(c *gin.Context) {
@@ -42,17 +51,17 @@ func (this *Controller) Update(c *gin.Context) {
 		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := this.Res.InitDao().Update(id, obj)
+	info := model.Update(this.Res, id, obj)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	this.Res.InitDao().Delete(id)
+	model.Delete(this.Res, id)
 	ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
 }
 
 func (this *Controller) DaoService(funcName string) func(c *gin.Context) {
-	if this.Res.InitDao() == nil{
+	if this.Res == nil{
 		panic(model.NotExistDaoError(errors.New("model not exist ")))
 	}
 	switch funcName {
@@ -74,18 +83,9 @@ func (this *Controller) DaoService(funcName string) func(c *gin.Context) {
 type JsonSuccess struct {
 	Data interface{} `json:"data"`
 }
-type JsonError struct {
-	Errors interface{} `json:"errors"`
-}
 
 func ReturnSuccess(c *gin.Context, code int, data interface{}) {
 	js := new(JsonSuccess)
 	js.Data = data
-	c.JSON(code, js)
-}
-
-func ReturnError(c *gin.Context, code int, err interface{}) {
-	js := new(JsonError)
-	js.Errors = err
 	c.JSON(code, js)
 }

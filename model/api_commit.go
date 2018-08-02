@@ -7,22 +7,7 @@ type ApiCommit struct {
 	AuthorId      int
 	CommitMessage string
 	Changes       JSON
-}
-
-func (model *ApiCommit) UpdateStruct() interface{} {
-	return nil
-}
-
-func (model *ApiCommit) InitDao() *Dao {
-	dao := &Dao{}
-	dao.MainResource = model
-	dao.SliceResource = &[]ApiCommit{}
-	return dao
-}
-
-func (model *ApiCommit) Insert() interface{} {
-	dao := model.InitDao()
-	return dao.Create(model)
+	ForbidUpdateResource
 }
 
 func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) interface{} {
@@ -32,7 +17,7 @@ func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) 
 	commitInfo.ApiId = apiId
 	commitInfo.TaskId = taskId
 	commitInfo.AuthorId = authorId
-	return commitInfo.Insert()
+	return Create(commitInfo)
 }
 
 type CommitChange struct {

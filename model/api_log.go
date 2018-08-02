@@ -1,44 +1,31 @@
 package model
 
 const (
-	APILOG_TYPE_PUBLISH   int = 1
-	APILOG_TYPE_COMMIT int = 2
-	APILOG_TYPE_RENDER int = 3
-	APILOG_TYPE_TEST int = 4
-	APILOG_TYPE_HANDOVER int = 5
-	APILOG_TYPE_REBUILD int = 6
-	APILOG_TYPE_NOTE int = 7
-
+	ApiLogPublish  = 1
+	ApiLogCommit   = 2
+	ApiLogRender   = 3
+	ApiLogTest     = 4
+	ApiLogHandOver = 5
+	ApiLogRebuild  = 6
+	ApiLogNote     = 7
 )
+
 type ApiLog struct {
 	BaseFields
-	UserId        int
-	ApiId         int
-	FromUserId    int
-	Type          int
-	Status        int
+	UserId     int
+	ApiId      int
+	FromUserId int
+	Type       int
+	Status     int
+	ForbidUpdateResource
 }
 
-func (model *ApiLog) UpdateStruct() interface{} {
-	return nil
-}
-
-func (model *ApiLog) InitDao() *Dao {
-	dao := &Dao{}
-	dao.MainResource = model
-	dao.SliceResource = &[]ApiLog{}
-	return dao
-}
-func (model *ApiLog) Insert() interface{} {
-	dao := model.InitDao()
-	return dao.Create(model)
-}
-func CreateLog(uid int, formUid int , apiId int, logType int, logStatus int) interface{} {
+func CreateLog(uid int, formUid int, apiId int, logType int, logStatus int) interface{} {
 	obj := new(ApiLog)
 	obj.UserId = uid
 	obj.FromUserId = formUid
 	obj.ApiId = apiId
 	obj.Type = logType
 	obj.Status = logStatus
-	return obj.Insert()
+	return Create(obj)
 }

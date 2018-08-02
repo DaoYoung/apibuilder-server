@@ -24,6 +24,7 @@ func Serve(engine *gin.Engine) {
 		curdRoutes(mkdoc, "api", endpoint.ApiController{})
 		curdRoutes(mkdoc, "module", endpoint.ModuleController{})
 		curdRoutes(mkdoc, "model", endpoint.ModelController{})
+		curdRoutes(mkdoc, "/model/:id/map", endpoint.ModelMapController{}, "list", "create", "update", "delete")
 	}
 }
 

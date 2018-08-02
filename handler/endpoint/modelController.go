@@ -47,3 +47,14 @@ func NoteModelDetail(c *gin.Context) {
 	condition["model_id"] = id
 	ReturnSuccess(c, http.StatusOK, model.FindList(&([]model.ApiModelNote{}), condition))
 }
+
+type ModelMapController struct {
+	Controller
+}
+
+func (action ModelMapController) CrudService(str string) func(c *gin.Context) {
+	actionPtr := &action
+	actionPtr.Res = &(model.ApiModelMap{})
+	actionPtr.ResSlice = &[]model.ApiModelMap{}
+	return actionPtr.Controller.DaoService(str)
+}

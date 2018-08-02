@@ -17,7 +17,7 @@ type ApiController struct {
 func (action ApiController) CrudService(str string) func(c *gin.Context)  {
 	actionPtr := &action
 	actionPtr.Res = &(model.Api{})
-	actionPtr.ResSlice = &[]model.Api{}
+	actionPtr.ResSlice = &([]model.Api{})
 	return actionPtr.Controller.DaoService(str)
 }
 

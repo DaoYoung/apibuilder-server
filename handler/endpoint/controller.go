@@ -6,8 +6,6 @@ import (
 	"strconv"
 	"net/http"
 	"errors"
-	"log"
-	"reflect"
 )
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
@@ -15,21 +13,18 @@ type ControllerInterface interface {
 
 type Controller struct {
 	Res model.Resource
-	ResSlice interface{}
+	ResSlice interface{} //https://golang.org/doc/faq#convert_slice_of_interface
 }
 func (this *Controller) CrudService(str string) func(c *gin.Context)  {
-	panic(ForbidError(errors.New("no support model curd")))
+	panic(ForbidError(errors.New("not support model curd")))
 }
 
 func (this *Controller) Info(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	//info := this.Res.InitDao().ByID(id)
 	info := model.ByID(this.Res, id)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) List(c *gin.Context) {
-	//list := this.Res.InitDao().FindList()
-	log.Println(reflect.TypeOf(this.ResSlice), reflect.TypeOf(&this.ResSlice))
 	list := model.FindList(this.ResSlice)
 	ReturnSuccess(c, http.StatusOK, list)
 }

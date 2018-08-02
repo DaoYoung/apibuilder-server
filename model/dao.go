@@ -14,7 +14,7 @@ type BaseFields struct {
 }
 
 type Resource interface {
-	UpdateStruct() interface{} //nil: forbid update
+	UpdateStruct() interface{}
 }
 
 type ForbidUpdateResource struct {

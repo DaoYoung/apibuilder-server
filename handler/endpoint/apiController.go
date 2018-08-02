@@ -27,12 +27,12 @@ func PublishApi(c *gin.Context) {
 	row := model.ByID(mod, id)
 	api := row.(*model.Api)
 	if api.Status == model.ApiStatusPublish {
-		c.JSON(http.StatusForbidden, "Api has published")
+		panic(ForbidError(errors.New("api has published")))
 	} else {
 		info := model.Update(id, model.Api{Status: model.ApiStatusPublish})
 		model.CreateLog(api.AuthorId, model.ApiLogPublish, api.ID)
 		//todo notice others
-		c.JSON(http.StatusOK, info)
+		ReturnSuccess(c, http.StatusOK, info)
 
 	}
 }
@@ -51,7 +51,7 @@ func CommitApi(c *gin.Context) {
 	}
 	commitLog(api, &commitForm)
 	info := model.Update(id, &commitForm)
-	c.JSON(http.StatusOK, info)
+	ReturnSuccess(c, http.StatusOK, info)
 }
 func commitLog(apiOld *model.Api, comForm *model.Api) {
 	v := reflect.ValueOf(*comForm)
@@ -123,7 +123,7 @@ func RebuildApi(c *gin.Context) {
 	}
 	rebuildLog(api, &apiForm)
 	info := model.Update(id, &apiForm)
-	c.JSON(http.StatusOK, info)
+	ReturnSuccess(c, http.StatusOK, info)
 }
 func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 	changes, _ := json.Marshal(apiOld)

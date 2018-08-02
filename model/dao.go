@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 	"apibuilder-server/helper"
+	"strconv"
 )
 
 type BaseFields struct {
@@ -42,7 +43,7 @@ func ByID(res Resource, id int) interface{} {
 	if err := app.Db.Where("id = ?", id).Last(res).Error; err == nil {
 		return res
 	} else {
-		panic(NotFoundDaoError(errors.New("ByID:" + string(id) + " not found ")))
+		panic(NotFoundDaoError(errors.New("ByID:(" + strconv.Itoa(id) + ") data not found ")))
 	}
 }
 
@@ -55,7 +56,7 @@ func FindList(res interface{}) interface{} {
 }
 
 func Update(id int, res Resource) interface{} {
-	if err := app.Db.Where("id = ?", id).Updates(res).Error; err == nil {
+	if err := app.Db.Model(res).Where("id = ?", id).Updates(res).Error; err == nil {
 		return ByID(res, id)
 	} else {
 		panic(QueryDaoError(err))

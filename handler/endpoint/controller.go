@@ -25,7 +25,8 @@ func (this *Controller) Info(c *gin.Context) {
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) List(c *gin.Context) {
-	list := model.FindList(this.ResSlice)
+	condition := make(map[string]interface{})
+	list := model.FindList(this.ResSlice, condition)
 	ReturnSuccess(c, http.StatusOK, list)
 }
 func (this *Controller) Create(c *gin.Context) {

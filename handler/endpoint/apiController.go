@@ -134,3 +134,6 @@ func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 func NoteApi(c *gin.Context) {
 
 }
+func NoteApiDetail(c *gin.Context) {
+
+}

@@ -38,7 +38,7 @@ func (bf ForbidUpdateResource) ForbidUpdate() bool {
 }
 
 
-func ByID(res Resource, id int) interface{} {
+func ByID(res Resource, id int) Resource {
 
 	if err := app.Db.Where("id = ?", id).Last(res).Error; err == nil {
 		return res
@@ -47,15 +47,23 @@ func ByID(res Resource, id int) interface{} {
 	}
 }
 
-func FindList(res interface{}) interface{} {
-	if err := app.Db.Find(res).Error; err == nil {
+func FindList(res interface{}, where map[string]interface{}) interface{} {
+	if err := app.Db.Where(where).Find(res).Error; err == nil {
 		return res
 	} else {
 		panic(QueryDaoError(err))
 	}
 }
 
-func Update(id int, res Resource) interface{} {
+func Find(res Resource) Resource {
+	if err := app.Db.Where(res).First(res).Error; err == nil {
+		return res
+	} else {
+		panic(QueryDaoError(err))
+	}
+}
+
+func Update(id int, res Resource) Resource {
 	if err := app.Db.Model(res).Where("id = ?", id).Updates(res).Error; err == nil {
 		return ByID(res, id)
 	} else {
@@ -63,7 +71,7 @@ func Update(id int, res Resource) interface{} {
 	}
 }
 
-func Delete(res Resource, id int) interface{} {
+func Delete(res Resource, id int) Resource {
 	if err := app.Db.Where("id = ?", id).Delete(res).Error; err == nil {
 		return res
 	} else {
@@ -71,10 +79,18 @@ func Delete(res Resource, id int) interface{} {
 	}
 }
 
-func Create(res Resource) interface{} {
+func Create(res Resource) Resource {
 	if err := app.Db.Create(res).Error; err == nil {
 		return res
 	} else {
 		panic(QueryDaoError(err))
+	}
+}
+
+func ExsitAndFirst(res Resource) Resource {
+	if err := app.Db.Where(res).First(res).Error; err == nil {
+		return res
+	} else {
+		return nil
 	}
 }

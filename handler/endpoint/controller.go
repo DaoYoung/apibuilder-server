@@ -37,16 +37,16 @@ func (this *Controller) Create(c *gin.Context) {
 	ReturnSuccess(c, http.StatusCreated, info)
 }
 func (this *Controller) Update(c *gin.Context) {
-	obj := this.Res.UpdateStruct()
-	if obj == nil {
-		panic(ForbidError(errors.New("forbid to update model")))
-	}
-	err := c.BindJSON(obj)
+	//obj := this.Res.UpdateStruct()
+	//if obj == nil {
+	//	panic(ForbidError(errors.New("forbid to update model")))
+	//}
+	err := c.BindJSON(this.Res)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := model.Update(this.Res, id, obj)
+	info := model.Update(id, this.Res)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) Delete(c *gin.Context) {

@@ -12,20 +12,20 @@ const (
 
 type ApiLog struct {
 	BaseFields
-	UserId     int
-	ApiId      int
-	FromUserId int
-	Type       int
-	Status     int
+	UserId     int    `json:"user_id"`
+	Type       int    `json:"type"`
+	EntityId   int    `json:"entity_id"`
+	EntityType string `json:"entity_type"`
 	ForbidUpdateResource
 }
 
-func CreateLog(uid int, formUid int, apiId int, logType int, logStatus int) interface{} {
+func CreateLog(uid int, logType int, entityId int, entityType ...string) interface{} {
 	obj := new(ApiLog)
 	obj.UserId = uid
-	obj.FromUserId = formUid
-	obj.ApiId = apiId
 	obj.Type = logType
-	obj.Status = logStatus
+	if len(entityType) > 0 {
+		obj.EntityType = entityType[0]
+	}
+	obj.EntityId = entityId
 	return Create(obj)
 }

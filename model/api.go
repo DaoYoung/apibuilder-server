@@ -9,10 +9,6 @@ type Api struct {
 	BaseFields
 	AuthorId        int    `json:"author_id"`
 	Status          int    `json:"status"`
-	ApiCommitForm
-}
-
-type ApiCommitForm struct {
 	TaskId          int    `json:"task_id"`
 	ModuleId        int    `json:"module_id"`
 	Title           string `json:"title"`
@@ -29,7 +25,11 @@ type ApiCommitForm struct {
 	CommitAuthorId  int    `gorm:"-" json:"commit_author_id"`
 }
 
-func (model *Api) UpdateStruct() interface{} {
-	return ApiCommitForm{}
+func (model Api) ListFields() []string {
+	return []string{"id", "author_id", "task_id", "title", "module_id", "request_url", "request_method"}
+}
+
+func (model Api) InfoFields() []string {
+	return []string{"id", "author_id", "task_id", "title", "module_id", "request_url", "request_method"}
 }
 

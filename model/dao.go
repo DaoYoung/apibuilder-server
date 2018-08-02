@@ -4,25 +4,38 @@ import (
 	"apibuilder-server/app"
 	"errors"
 	"time"
+	"apibuilder-server/helper"
 )
 
 type BaseFields struct {
-	ID        int `gorm:"primary_key" json:"id"`
-	CreatedAt   time.Time  `json:"created_at"`
-	UpdatedAt   time.Time  `json:"updated_at"`
-	DeletedAt   *time.Time `json:"deleted_at"`
+	ID        int        `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
+}
+
+func (bf BaseFields) ListFields() []string {
+	return []string{"*"}
+}
+func (bf BaseFields) InfoFields() []string {
+	return bf.ListFields()
+}
+func (bf BaseFields) ForbidUpdateFields() []string {
+	return helper.SetForbidUpdateFields()
 }
 
 type Resource interface {
-	UpdateStruct() interface{}
+	ListFields() []string
+	InfoFields() []string
+	ForbidUpdateFields() []string
 }
 
-type ForbidUpdateResource struct {
+type ForbidUpdateResource struct{}
 
+func (bf ForbidUpdateResource) ForbidUpdate() bool {
+	return true
 }
-func (res *ForbidUpdateResource) UpdateStruct() interface{} {
-	return nil
-}
+
 
 func ByID(res Resource, id int) interface{} {
 
@@ -41,8 +54,8 @@ func FindList(res interface{}) interface{} {
 	}
 }
 
-func Update(res Resource, id int, data interface{}) interface{} {
-	if err := app.Db.Model(res).Where("id = ?", id).Updates(data).Error; err == nil {
+func Update(id int, res Resource) interface{} {
+	if err := app.Db.Where("id = ?", id).Updates(res).Error; err == nil {
 		return ByID(res, id)
 	} else {
 		panic(QueryDaoError(err))

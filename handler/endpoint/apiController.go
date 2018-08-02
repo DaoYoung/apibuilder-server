@@ -20,7 +20,6 @@ func (action ApiController) CrudService(str string) func(c *gin.Context)  {
 	actionPtr.ResSlice = &([]model.Api{})
 	return actionPtr.Controller.DaoService(str)
 }
-
 //todo 提炼valid
 func PublishApi(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -30,21 +29,16 @@ func PublishApi(c *gin.Context) {
 	if api.Status == model.ApiStatusPublish {
 		c.JSON(http.StatusForbidden, "Api has published")
 	} else {
-		info := model.Update(mod, id, model.Api{Status: model.ApiStatusPublish})
-		model.CreateLog(api.AuthorId, 0, int(api.ID), model.ApiLogPublish, model.ApiStatusPublish)
+		info := model.Update(id, model.Api{Status: model.ApiStatusPublish})
+		model.CreateLog(api.AuthorId, model.ApiLogPublish, api.ID)
 		//todo notice others
 		c.JSON(http.StatusOK, info)
 
 	}
 }
-
-func NoteApi(c *gin.Context) {
-
-}
-
 func CommitApi(c *gin.Context) {
 	mod := &model.Api{}
-	var commitForm model.ApiCommitForm
+	var commitForm model.Api
 	err := c.BindJSON(&commitForm)
 	if err != nil {
 		panic(JsonTypeError(err))
@@ -56,10 +50,10 @@ func CommitApi(c *gin.Context) {
 		panic(ForbidError(errors.New("api must published")))
 	}
 	commitLog(api, &commitForm)
-	info := model.Update(mod, id, &commitForm)
+	info := model.Update(id, &commitForm)
 	c.JSON(http.StatusOK, info)
 }
-func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) {
+func commitLog(apiOld *model.Api, comForm *model.Api) {
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
 	count := v.NumField()
@@ -100,8 +94,8 @@ func commitLog(apiOld *model.Api, comForm *model.ApiCommitForm) {
 		panic(NOChangeError(errors.New("no change updated")))
 	}
 	changes, _ := json.Marshal(chs)
-	model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , int(apiOld.ID), comForm.CommitAuthorId)
-	model.CreateLog(comForm.CommitAuthorId, 0, int(apiOld.ID), model.ApiLogCommit, model.ApiStatusPublish)
+	model.CreateCommit(changes, comForm.CommitMessage, comForm.CommitTaskId , apiOld.ID, comForm.CommitAuthorId)
+	model.CreateLog(comForm.CommitAuthorId, model.ApiLogCommit, apiOld.ID)
 
 }
 func compareApiData(apiOld *model.Api, fieldName string, newVal reflect.Value) (bool, interface{}) {
@@ -128,11 +122,15 @@ func RebuildApi(c *gin.Context) {
 		panic(ForbidError(errors.New("api must published")))
 	}
 	rebuildLog(api, &apiForm)
-	info := model.Update(mod, id, &apiForm)
+	info := model.Update(id, &apiForm)
 	c.JSON(http.StatusOK, info)
 }
 func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 	changes, _ := json.Marshal(apiOld)
-	model.CreateCommit(changes, "rebuild", comForm.TaskId , int(apiOld.ID), comForm.AuthorId)
-	model.CreateLog(comForm.AuthorId, 0, int(apiOld.ID), model.ApiLogRebuild, model.ApiStatusPublish)
+	model.CreateCommit(changes, "rebuild", comForm.TaskId , apiOld.ID, comForm.AuthorId)
+	model.CreateLog(comForm.AuthorId, model.ApiLogRebuild, apiOld.ID)
+}
+
+func NoteApi(c *gin.Context) {
+
 }

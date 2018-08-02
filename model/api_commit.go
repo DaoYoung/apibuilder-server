@@ -24,6 +24,3 @@ type CommitChange struct {
 	Before interface{} `json:"before"`
 	After interface{} `json:"after"`
 }
-type CommitChangeJson struct {
-	ChangeJson map[string]CommitChange `json:"change_json"`
-}

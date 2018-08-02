@@ -132,8 +132,29 @@ func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 }
 
 func NoteApi(c *gin.Context) {
+	var jsonForm model.ApiNote
+	var info interface{}
+	err := c.BindJSON(&jsonForm)
+	if err != nil {
+		panic(JsonTypeError(err))
+	}
+	jsonForm.ApiId, _ = strconv.Atoi(c.Param("id"))
+	jsonForm.FkeyToken = jsonForm.FkeyParent + "." +jsonForm.Fkey
+	cloneNote := model.ApiNote{ApiId: jsonForm.ApiId, FkeyToken: jsonForm.FkeyToken}
+	dbData := model.ExsitAndFirst(&cloneNote)
+	if dbData != nil{
+		dbNote := dbData.(*model.ApiNote)
+		info = model.Update(dbNote.ID, &jsonForm)
+	}
+	if info == nil{
 
+		info = model.Create(&jsonForm)
+	}
+	ReturnSuccess(c, http.StatusOK, info)
 }
 func NoteApiDetail(c *gin.Context) {
-
+	condition := make(map[string]interface{})
+	id, _ := strconv.Atoi(c.Param("id"))
+	condition["api_id"] = id
+	ReturnSuccess(c, http.StatusOK, model.FindList(&([]model.ApiNote{}), condition))
 }

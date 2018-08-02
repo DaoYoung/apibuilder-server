@@ -5,14 +5,389 @@
     {
       "type": "Project",
       "id": "e18334d4-2cda-4c4e-b67e-3f40b993c31a",
-      "lastModified": "2018-07-31T20:47:50.167+08:00",
+      "lastModified": "2018-08-03T00:33:20.619+08:00",
       "name": "apibuilder"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "3f8fd486-9149-45f1-afaa-500c9b91eeb9",
+      "lastModified": "2018-08-02T19:10:36.476+08:00",
+      "name": "注释",
+      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"model_id\":0,\n  \"fkey\":\"user\",\n  \"fkey_parent\":\"test\",\n  \"note\":\"用户\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/api/2/note"
+      },
+      "id": "13f107ad-a0e8-468f-8520-c779c5615bf8",
+      "lastModified": "2018-08-03T00:33:20.619+08:00",
+      "name": "api注解",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"model_key\":\"cid\",\n  \"level\":1,\n  \"parent_id\":0,\n  \"note\":\"城市\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/api/2/note"
+      },
+      "id": "b585090c-8ef2-4150-a8ce-cee1eb69c0c4",
+      "lastModified": "2018-08-03T00:21:34.389+08:00",
+      "name": "api注解详情",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/"
+      },
+      "id": "c5a05810-e4d9-4aa4-b353-0be1c742fb8c",
+      "lastModified": "2018-08-02T19:17:02.061+08:00",
+      "name": "model列表",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"model_code\":\"merchant\",\n  \"model_name\":\"商家\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/"
+      },
+      "id": "45d5b1ec-47ba-4445-9256-58d34f94a62d",
+      "lastModified": "2018-08-02T22:50:14.385+08:00",
+      "name": "model创建",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/1"
+      },
+      "id": "673224a9-70c7-4612-9e8e-1d27424c09e6",
+      "lastModified": "2018-08-02T19:17:18.729+08:00",
+      "name": "model删除",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"model_name\":\"商家1\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/14"
+      },
+      "id": "74a4f16d-10b8-4a88-a958-d77caacead29",
+      "lastModified": "2018-08-02T22:51:43.618+08:00",
+      "name": "model更新",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"model_key\":\"cid\",\n  \"level\":1,\n  \"parent_id\":0,\n  \"note\":\"城市\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/14/note"
+      },
+      "id": "1f42c87b-21be-4c58-a102-7dd0b93acc73",
+      "lastModified": "2018-08-03T00:00:01.546+08:00",
+      "name": "model注解",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"model_key\":\"cid\",\n  \"level\":1,\n  \"parent_id\":0,\n  \"note\":\"城市\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/14/note"
+      },
+      "id": "0ab9d12f-b43c-4ee1-aa67-d984cc384b64",
+      "lastModified": "2018-08-03T00:15:18.574+08:00",
+      "name": "model注解详情",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/doc/model/14"
+      },
+      "id": "283cad30-50e2-415b-b24c-e3d8fe3d1cf5",
+      "lastModified": "2018-08-02T22:52:31.357+08:00",
+      "name": "model详情",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
       "type": "Scenario",
       "id": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a",
-      "lastModified": "2018-07-31T15:36:02.148+08:00",
-      "name": "文档化接口",
+      "lastModified": "2018-08-02T19:10:15.953+08:00",
+      "name": "接口",
       "requestOrder": [
         "接口详情",
         "接口列表",

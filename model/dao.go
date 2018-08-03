@@ -47,15 +47,14 @@ func ByID(res Resource, id int) Resource {
 	}
 }
 
-func FindList(res interface{}, where map[string]interface{})  {
+func FindListWhereMap(res interface{}, where map[string]interface{})  {
 	if err := app.Db.Where(where).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
 	}
 }
-func FindListWhere(res interface{}, whereField string, whereValue interface{}, relate ...interface{}) interface{} {
-	if err := app.Db.Where(whereField, whereValue).Find(res).Error; err == nil {
-		return res
-	} else {
+func FindListWhereKV(res interface{}, whereField string, whereValue interface{}, fields []string) {
+	//todo 判断res类型
+	if err := app.Db.Select(fields).Where(whereField, whereValue).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
 	}
 }

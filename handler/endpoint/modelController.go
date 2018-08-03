@@ -5,7 +5,6 @@ import (
 	"apibuilder-server/model"
 	"strconv"
 	"net/http"
-	"errors"
 )
 
 type ModelController struct {
@@ -31,13 +30,9 @@ func NoteModel(c *gin.Context) {
 	dbData := model.ExsitAndFirst(&cloneNote)
 	if dbData != nil {
 		dbNote := dbData.(*model.ApiModelNote)
-		if dbNote.AuthorId != jsonForm.AuthorId {
-			panic(ForbidError(errors.New("you can't post note")))
-		}
-		info = model.Update(dbNote.ID, &jsonForm)
-	} else {
-		info = model.Create(&jsonForm)
+		model.Delete(dbNote, dbNote.ID)
 	}
+	info = model.Create(&jsonForm)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 
@@ -46,7 +41,7 @@ func NoteModelDetail(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	condition["model_id"] = id
 	modelNotes := &([]model.ApiModelNote{})
-	model.FindList(modelNotes, condition)
+	model.FindListWhereMap(modelNotes, condition)
 	ReturnSuccess(c, http.StatusOK, modelNotes)
 }
 

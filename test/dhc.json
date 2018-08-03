@@ -5,7 +5,7 @@
     {
       "type": "Project",
       "id": "e18334d4-2cda-4c4e-b67e-3f40b993c31a",
-      "lastModified": "2018-08-03T00:33:20.619+08:00",
+      "lastModified": "2018-08-03T16:03:34.926+08:00",
       "name": "apibuilder"
     },
     {
@@ -31,7 +31,7 @@
         },
         "bodyType": "Text",
         "autoSetLength": true,
-        "textBody": "{\n  \"author_id\":1,\n  \"model_id\":0,\n  \"fkey\":\"user\",\n  \"fkey_parent\":\"test\",\n  \"note\":\"用户\"\n}"
+        "textBody": "{\n  \"author_id\":1,\n  \"model_id\":14,\n  \"fkey\":\"merchant\",\n  \"fkey_parent\":\"test\",\n  \"note\":\"商家\"\n}"
       },
       "headersType": "Form",
       "uri": {
@@ -47,7 +47,7 @@
         "path": "/doc/api/2/note"
       },
       "id": "13f107ad-a0e8-468f-8520-c779c5615bf8",
-      "lastModified": "2018-08-03T00:33:20.619+08:00",
+      "lastModified": "2018-08-03T16:03:34.926+08:00",
       "name": "api注解",
       "headers": [
         {

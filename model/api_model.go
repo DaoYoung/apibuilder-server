@@ -10,10 +10,10 @@ type ApiModel struct {
 	ModelNotes []ApiModelNote `gorm:"foreignkey:ModelId;association_foreignkey:ID"`
 }
 
-func (model *ApiModel) ForbidUpdateFields() []string {
+func (model ApiModel) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields("author_id")
 }
 
-func (model *ApiModel) ListFields() []string {
+func (model ApiModel) ListFields() []string {
 	return []string{"id", "author_id", "model_code", "model_name"}
 }

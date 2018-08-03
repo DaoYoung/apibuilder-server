@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `apis` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.apis 的数据：~6 rows (大约)
+-- 正在导出表  apibuilder.apis 的数据：~7 rows (大约)
 /*!40000 ALTER TABLE `apis` DISABLE KEYS */;
 INSERT INTO `apis` (`id`, `task_id`, `module_id`, `author_id`, `title`, `request_url`, `request_method`, `request_param`, `request_header`, `response_content`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, 1, 'test', '/doc/api/', 'get', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', '{"Content-Type": "application/json-dft"}', 1, '2018-07-29 18:10:30', '2018-08-02 13:03:11', '2018-08-02 21:03:11'),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `api_commits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_commits 的数据：~19 rows (大约)
+-- 正在导出表  apibuilder.api_commits 的数据：~22 rows (大约)
 /*!40000 ALTER TABLE `api_commits` DISABLE KEYS */;
 INSERT INTO `api_commits` (`id`, `api_id`, `author_id`, `task_id`, `changes`, `commit_message`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 0, 0, '{"Title": {"after": "bbb", "before": "aaa"}, "ResponseContent": {"change_json": null}}', '', '2018-07-30 17:22:24', '2018-07-30 17:22:24', NULL),
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `api_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_logs 的数据：~7 rows (大约)
+-- 正在导出表  apibuilder.api_logs 的数据：~8 rows (大约)
 /*!40000 ALTER TABLE `api_logs` DISABLE KEYS */;
 INSERT INTO `api_logs` (`id`, `user_id`, `type`, `entity_id`, `entity_type`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, 0, '0', '2018-07-30 19:18:17', '2018-07-30 19:18:17', NULL),
@@ -126,10 +126,11 @@ CREATE TABLE IF NOT EXISTS `api_models` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.api_models 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.api_models 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `api_models` DISABLE KEYS */;
 INSERT INTO `api_models` (`id`, `author_id`, `model_code`, `model_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(14, 1, 'merchant', '商家1', '2018-08-02 22:50:41', '2018-08-02 22:51:46', NULL);
+	(14, 1, 'merchant', '商家1', '2018-08-02 22:50:41', '2018-08-02 22:51:46', NULL),
+	(15, 1, 'merchants', '商家', '2018-08-03 19:30:33', '2018-08-03 19:30:33', NULL);
 /*!40000 ALTER TABLE `api_models` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_model_maps 结构
@@ -165,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `api_model_notes` (
   KEY `fkey_parent` (`level`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.api_model_notes 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.api_model_notes 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `api_model_notes` DISABLE KEYS */;
 INSERT INTO `api_model_notes` (`id`, `model_id`, `author_id`, `model_key`, `level`, `parent_id`, `note`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(15, 14, 1, 'name4', 1, 0, '商家名', '2018-08-02 23:18:28', '2018-08-02 23:50:31', NULL),
@@ -190,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `api_notes` (
   KEY `api_id` (`api_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.api_notes 的数据：~13 rows (大约)
+-- 正在导出表  apibuilder.api_notes 的数据：~14 rows (大约)
 /*!40000 ALTER TABLE `api_notes` DISABLE KEYS */;
 INSERT INTO `api_notes` (`id`, `api_id`, `author_id`, `fkey`, `fkey_parent`, `fkey_token`, `note`, `model_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 1, '$root.data.merchant', '$root.data', 'mdOG/quDax4mA', '商家', 0, '2017-06-26 08:45:32', '2017-06-26 16:45:32', NULL),
@@ -206,7 +207,8 @@ INSERT INTO `api_notes` (`id`, `api_id`, `author_id`, `fkey`, `fkey_parent`, `fk
 	(11, 0, 1, 'Merchant.fans_count', 'Merchant', '0Merchant.fans_count', 'fens', 0, '2017-06-27 06:01:58', '2017-06-27 06:01:58', NULL),
 	(12, 0, 1, 'Merchant.bond_sign', 'Merchant', '0Merchant.bond_sign', '保证金', 0, '2017-06-29 06:36:10', '2017-06-29 06:36:10', NULL),
 	(13, 0, 1, 'Merchant.grade', 'Merchant', '0Merchant.grade', '等级', 0, '2017-07-06 11:55:33', '2017-07-06 11:55:33', NULL),
-	(14, 2, 1, 'user', 'test', 'test.user', '用户', 0, '2018-08-03 00:33:14', '2018-08-03 00:34:36', NULL);
+	(14, 2, 1, 'user', 'test', 'test.user', '用户', 0, '2018-08-03 00:33:14', '2018-08-03 00:34:36', NULL),
+	(15, 2, 1, 'merchant', 'test', 'test.merchant', '商家', 14, '2018-08-03 15:57:47', '2018-08-03 15:57:52', NULL);
 /*!40000 ALTER TABLE `api_notes` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.modules 结构
@@ -222,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.modules 的数据：~5 rows (大约)
+-- 正在导出表  apibuilder.modules 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
 INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '用户中心', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),

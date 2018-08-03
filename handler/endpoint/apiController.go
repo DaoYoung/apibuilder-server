@@ -146,18 +146,16 @@ func NoteApi(c *gin.Context) {
 	dbData := model.ExsitAndFirst(&cloneNote)
 	if dbData != nil{
 		dbNote := dbData.(*model.ApiNote)
-		info = model.Update(dbNote.ID, &jsonForm)
+		model.Delete(dbNote, dbNote.ID)
 	}
-	if info == nil{
-
-		info = model.Create(&jsonForm)
-	}
+	info = model.Create(&jsonForm)
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func NoteApiDetail(c *gin.Context) {
+	var resouce model.ApiNote
 	apiNotes := &([]model.ApiNote{})
 	id, _ := strconv.Atoi(c.Param("id"))
-	model.FindListWhere(apiNotes, "api_id in (?)", id)
+	model.FindListWhereKV(apiNotes, "api_id in (?)", id, resouce.ListFields())
 	apiModel := new(model.ApiModel)
 	for key,val := range *apiNotes{
 		apiModelNotes := &([]model.ApiModelNote{})
@@ -167,7 +165,6 @@ func NoteApiDetail(c *gin.Context) {
 			app.Db.Model(apiModel).Related(apiModelNotes, "ModelNotes")
 			((*apiNotes)[key]).ModelNotes = *apiModelNotes
 		}
-
 	}
 	ReturnSuccess(c, http.StatusOK, apiNotes)
 }

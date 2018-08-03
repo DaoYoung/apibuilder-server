@@ -47,16 +47,21 @@ func ByID(res Resource, id int) Resource {
 	}
 }
 
-func FindList(res interface{}, where map[string]interface{}) interface{} {
-	if err := app.Db.Where(where).Find(res).Error; err == nil {
+func FindList(res interface{}, where map[string]interface{})  {
+	if err := app.Db.Where(where).Find(res).Error; err != nil {
+		panic(QueryDaoError(err))
+	}
+}
+func FindListWhere(res interface{}, whereField string, whereValue interface{}, relate ...interface{}) interface{} {
+	if err := app.Db.Where(whereField, whereValue).Find(res).Error; err == nil {
 		return res
 	} else {
 		panic(QueryDaoError(err))
 	}
 }
 
-func Find(res Resource) Resource {
-	if err := app.Db.Where(res).First(res).Error; err == nil {
+func Find(res Resource, where map[string]interface{}) Resource {
+	if err := app.Db.Where(where).First(res).Error; err == nil {
 		return res
 	} else {
 		panic(QueryDaoError(err))

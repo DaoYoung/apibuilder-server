@@ -8,6 +8,8 @@ import (
 	"reflect"
 	"encoding/json"
 	"errors"
+	"apibuilder-server/app"
+	"log"
 )
 
 type ApiController struct {
@@ -153,10 +155,19 @@ func NoteApi(c *gin.Context) {
 	ReturnSuccess(c, http.StatusOK, info)
 }
 func NoteApiDetail(c *gin.Context) {
-	condition := make(map[string]interface{})
+	apiNotes := &([]model.ApiNote{})
 	id, _ := strconv.Atoi(c.Param("id"))
-	condition["api_id"] = id
+	model.FindListWhere(apiNotes, "api_id in (?)", id)
+	apiModel := new(model.ApiModel)
+	for key,val := range *apiNotes{
+		apiModelNotes := &([]model.ApiModelNote{})
+		if val.ModelId>0 {
+			log.Println(val)
+			apiModel.ID = val.ModelId
+			app.Db.Model(apiModel).Related(apiModelNotes, "ModelNotes")
+			((*apiNotes)[key]).ModelNotes = *apiModelNotes
+		}
 
-	//todo 返回model注释 
-	ReturnSuccess(c, http.StatusOK, model.FindList(&([]model.ApiNote{}), condition))
+	}
+	ReturnSuccess(c, http.StatusOK, apiNotes)
 }

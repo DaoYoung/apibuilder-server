@@ -11,6 +11,7 @@ type ApiNote struct {
 	FkeyToken  string `json:"fkey_token"`
 	Note       string `json:"note"`
 	ModelId    int    `json:"model_id"`
+	ModelNotes []ApiModelNote `json:"model_notes" gorm:"foreignkey:ModelId"`
 }
 
 func (model ApiNote) ForbidUpdateFields() []string {

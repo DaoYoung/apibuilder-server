@@ -1,6 +1,8 @@
 package model
 
-import "apibuilder-server/helper"
+import (
+	"apibuilder-server/helper"
+)
 
 type ApiModelNote struct {
 	BaseFields

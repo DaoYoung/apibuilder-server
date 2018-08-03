@@ -45,7 +45,9 @@ func NoteModelDetail(c *gin.Context) {
 	condition := make(map[string]interface{})
 	id, _ := strconv.Atoi(c.Param("id"))
 	condition["model_id"] = id
-	ReturnSuccess(c, http.StatusOK, model.FindList(&([]model.ApiModelNote{}), condition))
+	modelNotes := &([]model.ApiModelNote{})
+	model.FindList(modelNotes, condition)
+	ReturnSuccess(c, http.StatusOK, modelNotes)
 }
 
 type ModelMapController struct {

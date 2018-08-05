@@ -142,10 +142,9 @@ func NoteApi(c *gin.Context) {
 	}
 	jsonForm.ApiId, _ = strconv.Atoi(c.Param("id"))
 	jsonForm.FkeyToken = jsonForm.FkeyParent + "." +jsonForm.Fkey
-	cloneNote := model.ApiNote{ApiId: jsonForm.ApiId, FkeyToken: jsonForm.FkeyToken}
-	dbData := model.ExsitAndFirst(&cloneNote)
-	if dbData != nil{
-		dbNote := dbData.(*model.ApiNote)
+	dbNote := model.ApiNote{ApiId: jsonForm.ApiId, FkeyToken: jsonForm.FkeyToken}
+	model.ExsitAndFirst(&dbNote)
+	if &dbNote != nil{
 		info = model.Update(dbNote.ID, &jsonForm)
 	}
 	if info == nil{

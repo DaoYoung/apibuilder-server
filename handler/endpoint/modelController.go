@@ -27,10 +27,9 @@ func NoteModel(c *gin.Context) {
 		panic(JsonTypeError(err))
 	}
 	jsonForm.ModelId, _ = strconv.Atoi(c.Param("id"))
-	cloneNote := model.ApiModelNote{ModelId: jsonForm.ModelId, ParentId: jsonForm.ParentId, ModelKey: jsonForm.ModelKey}
-	dbData := model.ExsitAndFirst(&cloneNote)
-	if dbData != nil {
-		dbNote := dbData.(*model.ApiModelNote)
+	dbNote := model.ApiModelNote{ModelId: jsonForm.ModelId, ParentId: jsonForm.ParentId, ModelKey: jsonForm.ModelKey}
+	model.ExsitAndFirst(&dbNote)
+	if &dbNote != nil{
 		if dbNote.AuthorId != jsonForm.AuthorId {
 			panic(ForbidError(errors.New("you can't post note")))
 		}

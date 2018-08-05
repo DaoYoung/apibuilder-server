@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/handler/endpoint"
 	"apibuilder-server/helper"
+	"apibuilder-server/handler/middleware"
 )
 
 func Serve(engine *gin.Engine) {
@@ -25,6 +26,21 @@ func Serve(engine *gin.Engine) {
 		curdRoutes(mkdoc, "module", endpoint.ModuleController{})
 		curdRoutes(mkdoc, "model", endpoint.ModelController{})
 		curdRoutes(mkdoc, "/model/:id/map", endpoint.ModelMapController{}, "list", "create", "update", "delete")
+	}
+
+	engine.POST("/auth/login", middleware.AuthMiddleware.LoginHandler)
+	engine.POST("/auth/reg", endpoint.UserController{}.CrudService("create"))
+	auth := engine.Group("/auth")
+	auth.Use(middleware.AuthMiddleware.MiddlewareFunc())
+	{
+		auth.GET("/refresh_token", middleware.AuthMiddleware.RefreshHandler)
+		auth.GET("/logout", middleware.AuthMiddleware.RefreshHandler)
+		auth.GET("/profile", middleware.AuthMiddleware.P)
+	}
+	user := engine.Group("/user")
+	user.Use(middleware.AuthMiddleware.MiddlewareFunc())
+	{
+		user.GET("/:id", endpoint.UserController{}.CrudService("info"))
 	}
 }
 

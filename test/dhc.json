@@ -4,17 +4,17 @@
   "nodes": [
     {
       "type": "Project",
-      "id": "e18334d4-2cda-4c4e-b67e-3f40b993c31a",
-      "lastModified": "2018-08-03T00:33:20.619+08:00",
+      "id": "289c5017-91c2-4561-bcc6-a37ade21e013",
+      "lastModified": "2018-08-05T23:50:42.725+08:00",
       "name": "apibuilder"
     },
     {
       "type": "Service",
       "description": "",
-      "id": "3f8fd486-9149-45f1-afaa-500c9b91eeb9",
-      "lastModified": "2018-08-02T19:10:36.476+08:00",
+      "id": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9",
+      "lastModified": "2018-08-05T16:18:03.754+08:00",
       "name": "注释",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -46,8 +46,8 @@
         "host": "{domain}",
         "path": "/doc/api/2/note"
       },
-      "id": "13f107ad-a0e8-468f-8520-c779c5615bf8",
-      "lastModified": "2018-08-03T00:33:20.619+08:00",
+      "id": "c14a93a0-66be-4b24-aa7a-b09faf216708",
+      "lastModified": "2018-08-05T16:18:03.754+08:00",
       "name": "api注解",
       "headers": [
         {
@@ -59,7 +59,7 @@
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -90,14 +90,14 @@
         "host": "{domain}",
         "path": "/doc/api/2/note"
       },
-      "id": "b585090c-8ef2-4150-a8ce-cee1eb69c0c4",
-      "lastModified": "2018-08-03T00:21:34.389+08:00",
+      "id": "9e1a85e0-7eca-423f-ba12-fd017cb7372a",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "api注解详情",
       "headers": [],
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -127,14 +127,14 @@
         "host": "{domain}",
         "path": "/doc/model/"
       },
-      "id": "c5a05810-e4d9-4aa4-b353-0be1c742fb8c",
-      "lastModified": "2018-08-02T19:17:02.061+08:00",
+      "id": "1b93ab9b-2a04-4d38-b7a4-f20b91d9d9cc",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model列表",
       "headers": [],
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -166,8 +166,8 @@
         "host": "{domain}",
         "path": "/doc/model/"
       },
-      "id": "45d5b1ec-47ba-4445-9256-58d34f94a62d",
-      "lastModified": "2018-08-02T22:50:14.385+08:00",
+      "id": "2cf47459-93e6-4cfc-9245-8314e959c834",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model创建",
       "headers": [
         {
@@ -179,7 +179,7 @@
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -209,14 +209,14 @@
         "host": "{domain}",
         "path": "/doc/model/1"
       },
-      "id": "673224a9-70c7-4612-9e8e-1d27424c09e6",
-      "lastModified": "2018-08-02T19:17:18.729+08:00",
+      "id": "f2520291-0535-48c7-ae23-bedae82f31a5",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model删除",
       "headers": [],
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -248,8 +248,8 @@
         "host": "{domain}",
         "path": "/doc/model/14"
       },
-      "id": "74a4f16d-10b8-4a88-a958-d77caacead29",
-      "lastModified": "2018-08-02T22:51:43.618+08:00",
+      "id": "cc4a3803-f89b-4426-b55c-e02ba6ad7b53",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model更新",
       "headers": [
         {
@@ -261,7 +261,7 @@
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -293,8 +293,8 @@
         "host": "{domain}",
         "path": "/doc/model/14/note"
       },
-      "id": "1f42c87b-21be-4c58-a102-7dd0b93acc73",
-      "lastModified": "2018-08-03T00:00:01.546+08:00",
+      "id": "d466eeb9-01ff-4b80-8b53-baa17dca9106",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model注解",
       "headers": [
         {
@@ -306,7 +306,7 @@
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -337,14 +337,14 @@
         "host": "{domain}",
         "path": "/doc/model/14/note"
       },
-      "id": "0ab9d12f-b43c-4ee1-aa67-d984cc384b64",
-      "lastModified": "2018-08-03T00:15:18.574+08:00",
+      "id": "a13ac96e-6c39-4caf-b9e6-ffe675c312ec",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model注解详情",
       "headers": [],
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -374,19 +374,173 @@
         "host": "{domain}",
         "path": "/doc/model/14"
       },
-      "id": "283cad30-50e2-415b-b24c-e3d8fe3d1cf5",
-      "lastModified": "2018-08-02T22:52:31.357+08:00",
+      "id": "1df5306b-ccba-4548-aa8d-157f7201930c",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "model详情",
       "headers": [],
       "metaInfo": {
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "a589e920-509f-4a2c-9b58-4a59d7c32b9e",
+      "lastModified": "2018-08-05T23:50:42.725+08:00",
+      "name": "用户",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/auth/refresh_token"
+      },
+      "id": "d50722e7-6ca3-480f-92a0-1205f53fc533",
+      "lastModified": "2018-08-05T23:50:35.998+08:00",
+      "name": "更新token",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzM0ODY5MDIsImlkIjoieWlkYW8iLCJvcmlnX2lhdCI6MTUzMzQ4MzMwMn0.WqtYA5HDH5OWkzFlc0RP2sWhQUem-MP-aaQV_Ehus3c"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"username\":\"yidao\",\n  \"password\":\"123123\",\n  \"avatar\":\"sql.png\",\n  \"email\":\"yi_dao@hunliji.com\",\n  \"phone\":\"13567119103\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/auth/reg"
+      },
+      "id": "9cff0863-0bbb-4eaf-9eb9-c30ec77b79d2",
+      "lastModified": "2018-08-05T23:50:09.035+08:00",
+      "name": "注册",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": [
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "username",
+              "value": "admin"
+            },
+            {
+              "enabled": true,
+              "type": "Text",
+              "name": "password",
+              "value": "admin"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"username\":\"yidao\",\n  \"password\":\"123123\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/auth/login"
+      },
+      "id": "f246f1f1-2338-4c25-b2a2-336ab77ac0d9",
+      "lastModified": "2018-08-05T23:49:55.036+08:00",
+      "name": "登录",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+      },
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
     },
     {
       "type": "Scenario",
-      "id": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a",
-      "lastModified": "2018-08-02T19:10:15.953+08:00",
+      "id": "ec942577-c5d3-4d92-b053-fd23290c9372",
+      "lastModified": "2018-08-05T16:18:03.755+08:00",
       "name": "接口",
       "requestOrder": [
         "接口详情",
@@ -401,7 +555,7 @@
         "接口发布后修改",
         "接口重构"
       ],
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -431,15 +585,15 @@
         "host": "{domain}",
         "path": "/doc/api/1"
       },
-      "id": "f75da8da-32d6-43b0-b0ec-60fc38d22371",
-      "lastModified": "2018-07-30T11:33:17.153+08:00",
+      "id": "8116d94b-a737-4e0b-96d1-6d74cb438d7f",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口详情",
       "headers": [],
       "metaInfo": {
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -469,15 +623,15 @@
         "host": "{domain}",
         "path": "/doc/api/"
       },
-      "id": "072ae726-718f-4955-8d63-fd15ac0cb835",
-      "lastModified": "2018-07-30T10:59:30.202+08:00",
+      "id": "3d245dda-abd9-493e-9c26-821f7e054599",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口列表",
       "headers": [],
       "metaInfo": {
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -509,8 +663,8 @@
         "host": "localhost:8080",
         "path": "/doc/api/"
       },
-      "id": "8ad580c6-cab8-4b97-ae8b-a8d956eee92a",
-      "lastModified": "2018-07-30T10:59:30.203+08:00",
+      "id": "afd13459-e646-4b2d-8fcf-b5bfccbcf9fd",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口新增",
       "headers": [
         {
@@ -523,7 +677,7 @@
         "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -554,15 +708,15 @@
         "host": "{domain}",
         "path": "/doc/api/1"
       },
-      "id": "b0ee57e5-3d0b-4baf-b71e-4a3eda00cccc",
-      "lastModified": "2018-07-30T10:59:30.203+08:00",
+      "id": "36f14d81-2377-4e75-9e09-fa8e889e11eb",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口删除",
       "headers": [],
       "metaInfo": {
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -594,8 +748,8 @@
         "host": "localhost:8080",
         "path": "/doc/api/1"
       },
-      "id": "d19d1c8d-40df-4dfb-8715-4866ffdf7509",
-      "lastModified": "2018-07-31T13:39:03.225+08:00",
+      "id": "8ec3fd61-f8ea-4bb8-b79e-7c6112f668e8",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口更新",
       "headers": [
         {
@@ -608,7 +762,7 @@
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -639,15 +793,15 @@
         "host": "localhost:8080",
         "path": "/doc/module/1"
       },
-      "id": "d6e5ce78-b049-4fbf-a8f4-f0ea569100f2",
-      "lastModified": "2018-07-30T10:59:30.203+08:00",
+      "id": "8085e501-c4b9-4047-9879-08130e454ff2",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "模块详情",
       "headers": [],
       "metaInfo": {
         "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -679,8 +833,8 @@
         "host": "localhost:8080",
         "path": "/doc/module/"
       },
-      "id": "fc5f29bf-6575-45c1-84a5-9b1f656b50d6",
-      "lastModified": "2018-07-30T10:59:30.203+08:00",
+      "id": "e2cf8c3b-c42a-4a3a-a54f-f0a301244c35",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "模块创建",
       "headers": [
         {
@@ -693,7 +847,7 @@
         "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -724,15 +878,15 @@
         "host": "localhost:8080",
         "path": "/doc/module/"
       },
-      "id": "2c7f2ead-030a-43ff-8c0f-8ab13a528674",
-      "lastModified": "2018-07-30T10:59:30.203+08:00",
+      "id": "d44a17e9-3372-49ff-854e-9f5d5a134099",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "模块列表",
       "headers": [],
       "metaInfo": {
         "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -764,8 +918,8 @@
         "host": "localhost:8080",
         "path": "/doc/api/1/publish"
       },
-      "id": "a8d8ca1c-427c-4358-9a1f-2bd6af7698be",
-      "lastModified": "2018-07-31T14:00:20.634+08:00",
+      "id": "2965c668-f047-444c-8835-016ae1b5a52a",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口发布",
       "headers": [
         {
@@ -778,7 +932,7 @@
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -810,8 +964,8 @@
         "host": "localhost:8080",
         "path": "/doc/api/1/commit"
       },
-      "id": "170fdf2f-ac04-4f35-81d9-ebf021af5b2b",
-      "lastModified": "2018-07-30T21:09:12.807+08:00",
+      "id": "ce65792e-1a71-4af3-83fa-e0ade52883fe",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口发布后修改",
       "headers": [
         {
@@ -824,7 +978,7 @@
         "IS_FROM_HISTORY": null,
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -856,8 +1010,8 @@
         "host": "localhost:8080",
         "path": "/doc/api/1/rebuild"
       },
-      "id": "57c91558-9ab0-4264-a35c-cff92f5fda1e",
-      "lastModified": "2018-07-31T20:47:50.167+08:00",
+      "id": "afae1909-6bc7-4bff-95e3-d321a5f87386",
+      "lastModified": "2018-08-05T16:18:03.756+08:00",
       "name": "接口重构",
       "headers": [
         {
@@ -870,7 +1024,7 @@
         "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
         "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     }
   ]
 }

@@ -92,10 +92,8 @@ func Create(res Resource) Resource {
 	}
 }
 
-func ExsitAndFirst(res Resource) Resource {
-	if err := app.Db.Where(res).First(res).Error; err == nil {
-		return res
-	} else {
-		return nil
+func ExsitAndFirst(res Resource) {
+	if err := app.Db.Where(res).First(res).Error; err != nil {
+		res = nil
 	}
 }

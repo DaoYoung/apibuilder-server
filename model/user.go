@@ -1,5 +1,11 @@
 package model
 
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/appleboy/gin-jwt"
+	"log"
+)
+
 type User struct {
 	BaseFields
 	Username string `json:"username"`
@@ -18,4 +24,12 @@ func CheckUserPasswd(username string, passwd string) *User {
 	obj.Status = 1
 	ExsitAndFirst(obj)
 	return obj
+}
+
+func GetUserFromToken(c *gin.Context) *User {
+	claims := jwt.ExtractClaims(c)
+	log.Print(claims)
+	user := new(User)
+	ByID(user, int(claims["uid"].(float64)))
+	return user
 }

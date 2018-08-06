@@ -34,14 +34,9 @@ func Serve(engine *gin.Engine) {
 	auth.Use(middleware.AuthMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/refresh_token", middleware.AuthMiddleware.RefreshHandler)
-		auth.GET("/logout", middleware.AuthMiddleware.RefreshHandler)
-		auth.GET("/profile", middleware.AuthMiddleware.P)
+		auth.GET("/profile", endpoint.Profile)
 	}
-	user := engine.Group("/user")
-	user.Use(middleware.AuthMiddleware.MiddlewareFunc())
-	{
-		user.GET("/:id", endpoint.UserController{}.CrudService("info"))
-	}
+	//todo user Permission
 }
 
 func curdRoutes(group *gin.RouterGroup, resourceName string, controller endpoint.ControllerInterface, actions ...string) {

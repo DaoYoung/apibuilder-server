@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/model"
 	"apibuilder-server/handler/endpoint"
-	"net/http"
 )
 
 var AuthMiddleware *jwt.GinJWTMiddleware
@@ -24,6 +23,16 @@ func InitJWT() {
 				return user, true
 			}
 			return nil, false
+		},
+		PayloadFunc: func(data interface{}) jwt.MapClaims {
+			claims  := make(map[string]interface{})
+			if data != nil{
+				user := data.(*model.User)
+				claims["uid"] = user.ID
+				claims["email"] = user.Email
+				claims["phone"] = user.Phone
+			}
+			return claims
 		},
 		Authorizator: func(user interface{}, c *gin.Context) bool {
 			return true
@@ -55,49 +64,11 @@ func InitJWT() {
 		TimeFunc: time.Now,
 	}
 }
-func  RefreshHandler(c *gin.Context) {
-	token, _ := AuthMiddleware.parseToken(c)
-	claims := token.Claims.(jwt.MapClaims)
 
-	origIat := int64(claims["orig_iat"].(float64))
-
-	if origIat < AuthMiddleware.TimeFunc().Add(-AuthMiddleware.MaxRefresh).Unix() {
-		AuthMiddleware.unauthorized(c, http.StatusUnauthorized, AuthMiddleware.HTTPStatusMessageFunc(ErrExpiredToken, c))
-		return
+func IsAdminUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		//claims := jwt.ExtractClaims(c)
+		//user := model.GetUserFromToken(c)
+		c.Next()
 	}
-
-	// Create the token
-	newToken := jwt.New(jwt.GetSigningMethod(AuthMiddleware.SigningAlgorithm))
-	newClaims := newToken.Claims.(jwt.MapClaims)
-
-	for key := range claims {
-		newClaims[key] = claims[key]
-	}
-
-	expire := AuthMiddleware.TimeFunc().Add(AuthMiddleware.Timeout)
-	newClaims["id"] = claims["id"]
-	newClaims["exp"] = expire.Unix()
-	newClaims["orig_iat"] = AuthMiddleware.TimeFunc().Unix()
-	tokenString, err := AuthMiddleware.signedString(newToken)
-
-	if err != nil {
-		AuthMiddleware.unauthorized(c, http.StatusUnauthorized, AuthMiddleware.HTTPStatusMessageFunc(ErrFailedTokenCreation, c))
-		return
-	}
-
-	// set cookie
-	if AuthMiddleware.SendCookie {
-		maxage := int(expire.Unix() - time.Now().Unix())
-		c.SetCookie(
-			"JWTToken",
-			tokenString,
-			maxage,
-			"/",
-			"",
-			AuthMiddleware.SecureCookie,
-			true,
-		)
-	}
-
-	AuthMiddleware.RefreshResponse(c, http.StatusOK, tokenString, expire)
 }

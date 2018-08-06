@@ -5,7 +5,7 @@ import (
 	"time"
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/model"
-		"apibuilder-server/handler/endpoint"
+	"apibuilder-server/handler/endpoint"
 	"net/http"
 )
 

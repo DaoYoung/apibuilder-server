@@ -145,7 +145,6 @@ func NoteApi(c *gin.Context) {
 	dbNote := model.ApiNote{ApiId: jsonForm.ApiId, FkeyToken: jsonForm.FkeyToken}
 	model.ExsitAndFirst(&dbNote)
 	if dbNote.ID > 0{
-		dbNote := dbData.(*model.ApiNote)
 		model.Delete(dbNote, dbNote.ID)
 	}
 	info = model.Create(&jsonForm)

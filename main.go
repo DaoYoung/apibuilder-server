@@ -7,9 +7,24 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"apibuilder-server/app"
+	"github.com/appleboy/gin-jwt"
+	"apibuilder-server/handler/middleware"
 )
 
+func helloHandler(c *gin.Context) {
+	claims := jwt.ExtractClaims(c)
+	c.JSON(200, gin.H{
+		"userID": claims["id"],
+		"text":   "Hello World.",
+	})
+}
 
+// User demo
+type User struct {
+	UserName  string
+	FirstName string
+	LastName  string
+}
 func main() {
 	if err := app.InitConfig("config.yml"); err != nil {
 		log.Fatal(err)
@@ -17,6 +32,7 @@ func main() {
 	if err := app.InitDb(); err != nil {
 		log.Fatal(err)
 	}
+	middleware.InitJWT()
 	//// Disable Console Color, you don't need console color when writing the logs to file.
 	//gin.DisableConsoleColor()
 	//

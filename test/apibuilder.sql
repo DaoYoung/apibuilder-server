@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
--- 服务器版本:                        8.0.11 - MySQL Community Server - GPL
--- 服务器操作系统:                      Linux
+-- 服务器版本:                        5.7.13-log - MySQL Community Server (GPL)
+-- 服务器操作系统:                      Win64
 -- HeidiSQL 版本:                  9.5.0.5196
 -- --------------------------------------------------------
 
@@ -13,7 +13,7 @@
 
 
 -- 导出 apibuilder 的数据库结构
-CREATE DATABASE IF NOT EXISTS `apibuilder` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE IF NOT EXISTS `apibuilder` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `apibuilder`;
 
 -- 导出  表 apibuilder.apis 结构
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `apis` (
   `task_id` int(10) NOT NULL,
   `module_id` int(10) NOT NULL,
   `author_id` int(10) NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `request_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'get',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_method` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'get',
   `request_param` json DEFAULT NULL,
   `request_header` json DEFAULT NULL,
   `response_content` json DEFAULT NULL,
@@ -118,19 +118,18 @@ INSERT INTO `api_logs` (`id`, `user_id`, `type`, `entity_id`, `entity_type`, `cr
 CREATE TABLE IF NOT EXISTS `api_models` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `author_id` int(10) NOT NULL,
-  `model_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.api_models 的数据：~1 rows (大约)
+-- 正在导出表  apibuilder.api_models 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `api_models` DISABLE KEYS */;
 INSERT INTO `api_models` (`id`, `author_id`, `model_code`, `model_name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(14, 1, 'merchant', '商家1', '2018-08-02 22:50:41', '2018-08-02 22:51:46', NULL),
-	(15, 1, 'merchants', '商家', '2018-08-03 19:30:33', '2018-08-03 19:30:33', NULL);
+	(14, 1, 'merchant', '商家1', '2018-08-02 22:50:41', '2018-08-02 22:51:46', NULL);
 /*!40000 ALTER TABLE `api_models` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.api_model_maps 结构
@@ -144,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `api_model_maps` (
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  apibuilder.api_model_maps 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `api_model_maps` DISABLE KEYS */;
@@ -155,10 +154,10 @@ CREATE TABLE IF NOT EXISTS `api_model_notes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `model_id` int(10) NOT NULL DEFAULT '0',
   `author_id` int(10) NOT NULL,
-  `model_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` smallint(3) NOT NULL DEFAULT '1',
   `parent_id` int(10) NOT NULL DEFAULT '0',
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -178,10 +177,10 @@ CREATE TABLE IF NOT EXISTS `api_notes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `api_id` int(10) DEFAULT NULL,
   `author_id` int(10) NOT NULL,
-  `fkey` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fkey_parent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fkey_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fkey_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` int(10) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -207,9 +206,24 @@ INSERT INTO `api_notes` (`id`, `api_id`, `author_id`, `fkey`, `fkey_parent`, `fk
 	(11, 0, 1, 'Merchant.fans_count', 'Merchant', '0Merchant.fans_count', 'fens', 0, '2017-06-27 06:01:58', '2017-06-27 06:01:58', NULL),
 	(12, 0, 1, 'Merchant.bond_sign', 'Merchant', '0Merchant.bond_sign', '保证金', 0, '2017-06-29 06:36:10', '2017-06-29 06:36:10', NULL),
 	(13, 0, 1, 'Merchant.grade', 'Merchant', '0Merchant.grade', '等级', 0, '2017-07-06 11:55:33', '2017-07-06 11:55:33', NULL),
-	(14, 2, 1, 'user', 'test', 'test.user', '用户', 0, '2018-08-03 00:33:14', '2018-08-03 00:34:36', NULL),
-	(15, 2, 1, 'merchant', 'test', 'test.merchant', '商家', 14, '2018-08-03 15:57:47', '2018-08-03 15:57:52', NULL);
+	(14, 2, 1, 'user', 'test', 'test.user', '用户', 0, '2018-08-03 00:33:14', '2018-08-03 00:34:36', NULL);
 /*!40000 ALTER TABLE `api_notes` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.departments 结构
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(100) NOT NULL DEFAULT '0',
+  `pid` int(10) NOT NULL DEFAULT '0',
+  `lead_id` int(10) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  apibuilder.departments 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.modules 结构
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -238,20 +252,41 @@ INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, 
 -- 导出  表 apibuilder.users 结构
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varbinary(50) DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `role_id` int(10) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  apibuilder.users 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `phone`, `status`, `role_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'yidao', '123123', 'sql.png', 'yi_dao@hunliji.com', '13567119103', 1, 0, '2018-08-05 23:33:43', '2018-08-05 23:34:06', NULL),
+	(2, 'yidao', '123123', 'sql.png', 'yi_dao@hunliji.com', '13567119103', 0, 0, '2018-08-05 23:50:05', '2018-08-05 23:50:05', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.user_roles 结构
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(50) NOT NULL,
+  `lead_id` int(10) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  apibuilder.user_roles 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

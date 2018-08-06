@@ -26,10 +26,9 @@ func NoteModel(c *gin.Context) {
 		panic(JsonTypeError(err))
 	}
 	jsonForm.ModelId, _ = strconv.Atoi(c.Param("id"))
-	cloneNote := model.ApiModelNote{ModelId: jsonForm.ModelId, ParentId: jsonForm.ParentId, ModelKey: jsonForm.ModelKey}
-	dbData := model.ExsitAndFirst(&cloneNote)
-	if dbData != nil {
-		dbNote := dbData.(*model.ApiModelNote)
+	dbNote := model.ApiModelNote{ModelId: jsonForm.ModelId, ParentId: jsonForm.ParentId, ModelKey: jsonForm.ModelKey}
+	model.ExsitAndFirst(&dbNote)
+	if dbNote.ID >0 {
 		model.Delete(dbNote, dbNote.ID)
 	}
 	info = model.Create(&jsonForm)

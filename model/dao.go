@@ -7,7 +7,7 @@ import (
 	"apibuilder-server/helper"
 	"strconv"
 )
-
+//todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
 type BaseFields struct {
 	ID        int        `gorm:"primary_key" json:"id"`
 	CreatedAt time.Time  `json:"created_at"`
@@ -91,6 +91,13 @@ func Create(res Resource) Resource {
 	}
 }
 
+func CreateNew(tb string, res interface{}) interface{} {
+	if err := app.Db.Table(tb).Updates(res).Error; err == nil {
+		return res
+	} else {
+		panic(QueryDaoError(err))
+	}
+}
 func ExsitAndFirst(res Resource) {
 	if err := app.Db.Where(res).First(res).Error; err != nil {
 		res = nil

@@ -3,6 +3,7 @@ package endpoint
 import (
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/model"
+	"log"
 )
 
 type ControllerErrors struct {
@@ -65,6 +66,7 @@ func CatchErrors() gin.HandlerFunc {
 					daoErrors := err.(*model.DaoErrors)
 					c.JSON(daoErrors.Status(), daoErrors)
 				default:
+					log.Print(err)
 					panic(err)
 				}
 			}

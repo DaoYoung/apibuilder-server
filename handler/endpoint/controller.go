@@ -6,12 +6,14 @@ import (
 	"strconv"
 	"net/http"
 	"errors"
+	"reflect"
 )
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
 }
 
 type Controller struct {
+	TableName string
 	Res model.Resource
 	ResSlice interface{} //https://golang.org/doc/faq#convert_slice_of_interface
 }
@@ -29,14 +31,30 @@ func (this *Controller) List(c *gin.Context) {
 	model.FindListWhereMap(this.ResSlice, condition)
 	ReturnSuccess(c, http.StatusOK, this.ResSlice)
 }
+func clone(i interface{}) interface{} {
+	// Wrap argument to reflect.Value, dereference it and return back as interface{}
+	return reflect.Indirect(reflect.ValueOf(i)).Interface()
+}
 func (this *Controller) Create(c *gin.Context) {
 	err := c.BindJSON(this.Res)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	info := model.Create(this.Res)
+	info := model.CreateNew(this.TableName, this.Res)
 	ReturnSuccess(c, http.StatusCreated, info)
+
+	//
+	//obj := clone(this.Res)
+	//log.Printf("11 %+v", obj)
+	//err := c.BindJSON(&obj)
+	//if err != nil {
+	//	panic(JsonTypeError(err))
+	//}
+	//log.Printf("%+v", obj)
+	//info := model.CreateNew(this.TableName, obj)
+	//ReturnSuccess(c, http.StatusCreated, info)
 }
+
 func (this *Controller) Update(c *gin.Context) {
 	//obj := this.Res.UpdateStruct()
 	//if obj == nil {

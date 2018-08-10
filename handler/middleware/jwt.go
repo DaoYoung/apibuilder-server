@@ -16,7 +16,7 @@ func InitJWT() {
 	AuthMiddleware = &jwt.GinJWTMiddleware{
 		Realm:      "API Builder tool",
 		Key:        []byte("build restful api"),
-		Timeout:    time.Hour,
+		Timeout:    time.Hour * 24,
 		MaxRefresh: time.Hour,
 		Authenticator: func(userId string, password string, c *gin.Context) (interface{}, bool) {
 			user := model.CheckUserPasswd(userId, password)

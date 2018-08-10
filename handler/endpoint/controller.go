@@ -6,76 +6,70 @@ import (
 	"strconv"
 	"net/http"
 	"errors"
-	"reflect"
+	"apibuilder-server/helper"
+	"apibuilder-server/app"
 )
+
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
 }
 
 type Controller struct {
-	TableName string
-	Res model.Resource
-	ResSlice interface{} //https://golang.org/doc/faq#convert_slice_of_interface
+	GetResModel func()  model.Resource
+	GetResSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
 }
-func (this *Controller) CrudService(str string) func(c *gin.Context)  {
+
+func (this *Controller) CrudService(str string) func(c *gin.Context) {
 	panic(ForbidError(errors.New("not support model curd")))
 }
 
 func (this *Controller) Info(c *gin.Context) {
+	obj := this.GetResModel()
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := model.ByID(this.Res, id)
-	ReturnSuccess(c, http.StatusOK, info)
+	info := model.ByID(obj, id)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 func (this *Controller) List(c *gin.Context) {
-	condition := make(map[string]interface{})
-	model.FindListWhereMap(this.ResSlice, condition)
-	ReturnSuccess(c, http.StatusOK, this.ResSlice)
+	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
+	if err != nil{
+		panic(err)
+	}
+	obj := this.GetResSlice()
+	condition := helper.MapUrlQuery(c.Request.URL.Query(), this.GetResModel())
+	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage)
+	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
-func clone(i interface{}) interface{} {
-	// Wrap argument to reflect.Value, dereference it and return back as interface{}
-	return reflect.Indirect(reflect.ValueOf(i)).Interface()
-}
+
 func (this *Controller) Create(c *gin.Context) {
-	err := c.BindJSON(this.Res)
+	obj := this.GetResModel()
+	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	info := model.CreateNew(this.TableName, this.Res)
-	ReturnSuccess(c, http.StatusCreated, info)
-
-	//
-	//obj := clone(this.Res)
-	//log.Printf("11 %+v", obj)
-	//err := c.BindJSON(&obj)
-	//if err != nil {
-	//	panic(JsonTypeError(err))
-	//}
-	//log.Printf("%+v", obj)
-	//info := model.CreateNew(this.TableName, obj)
-	//ReturnSuccess(c, http.StatusCreated, info)
+	info := model.Create(obj)
+	helper.ReturnSuccess(c, http.StatusCreated, info)
 }
 
 func (this *Controller) Update(c *gin.Context) {
-	//obj := this.Res.UpdateStruct()
-	//if obj == nil {
-	//	panic(ForbidError(errors.New("forbid to update model")))
-	//}
-	err := c.BindJSON(this.Res)
+	obj := this.GetResModel()
+	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
-	info := model.Update(id, this.Res)
-	ReturnSuccess(c, http.StatusOK, info)
+	info := model.Update(id, obj)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
+
 func (this *Controller) Delete(c *gin.Context) {
+	obj := this.GetResModel()
 	id, _ := strconv.Atoi(c.Param("id"))
-	model.Delete(this.Res, id)
-	ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
+	model.Delete(obj, id)
+	helper.ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
 }
 
 func (this *Controller) DaoService(funcName string) func(c *gin.Context) {
-	if this.Res == nil{
+	if this.GetResModel() == nil {
 		panic(model.NotExistDaoError(errors.New("model not exist ")))
 	}
 	switch funcName {
@@ -91,15 +85,4 @@ func (this *Controller) DaoService(funcName string) func(c *gin.Context) {
 		return this.List
 	}
 
-}
-
-
-type JsonSuccess struct {
-	Data interface{} `json:"data"`
-}
-
-func ReturnSuccess(c *gin.Context, code int, data interface{}) {
-	js := new(JsonSuccess)
-	js.Data = data
-	c.JSON(code, js)
 }

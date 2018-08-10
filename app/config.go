@@ -15,7 +15,7 @@ var Config = struct {
 	LogLevel     int    `default:"5"`
 	LogSql       bool   `default:"false"`
 	SqlLogPath   string `default:"runtime/sql.log"`
-
+	PerPage int `default:"10"`
 
 
 	Db struct {

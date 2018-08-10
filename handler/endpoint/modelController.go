@@ -5,6 +5,8 @@ import (
 	"apibuilder-server/model"
 	"strconv"
 	"net/http"
+	"apibuilder-server/helper"
+	"apibuilder-server/app"
 )
 
 type ModelController struct {
@@ -13,8 +15,8 @@ type ModelController struct {
 
 func (action ModelController) CrudService(str string) func(c *gin.Context) {
 	actionPtr := &action
-	actionPtr.Res = &(model.ApiModel{})
-	actionPtr.ResSlice = &[]model.ApiModel{}
+	actionPtr.GetResModel = func() model.Resource { return &(model.ApiModel{}) }
+	actionPtr.GetResSlice = func() interface{} { return &[]model.ApiModel{} }
 	return actionPtr.Controller.DaoService(str)
 }
 
@@ -32,7 +34,7 @@ func NoteModel(c *gin.Context) {
 		model.Delete(dbNote, dbNote.ID)
 	}
 	info = model.Create(&jsonForm)
-	ReturnSuccess(c, http.StatusOK, info)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 
 func NoteModelDetail(c *gin.Context) {
@@ -40,8 +42,8 @@ func NoteModelDetail(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	condition["model_id"] = id
 	modelNotes := &([]model.ApiModelNote{})
-	model.FindListWhereMap(modelNotes, condition)
-	ReturnSuccess(c, http.StatusOK, modelNotes)
+	model.FindListWhereMap(modelNotes, condition, "", 1, app.Config.PerPage)
+	helper.ReturnSuccess(c, http.StatusOK, modelNotes)
 }
 
 type ModelMapController struct {
@@ -50,7 +52,7 @@ type ModelMapController struct {
 
 func (action ModelMapController) CrudService(str string) func(c *gin.Context) {
 	actionPtr := &action
-	actionPtr.Res = &(model.ApiModelMap{})
-	actionPtr.ResSlice = &[]model.ApiModelMap{}
+	actionPtr.GetResModel = func() model.Resource { return &(model.ApiModelMap{}) }
+	actionPtr.GetResSlice = func() interface{} { return &[]model.ApiModelMap{} }
 	return actionPtr.Controller.DaoService(str)
 }

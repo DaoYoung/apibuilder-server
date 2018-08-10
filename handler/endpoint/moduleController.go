@@ -11,8 +11,8 @@ type ModuleController struct {
 
 func (action ModuleController) CrudService(str string) func(c *gin.Context)  {
 	actionPtr := &action
-	actionPtr.Res = &(model.Module{})
-	actionPtr.ResSlice = &[]model.Module{}
+	actionPtr.GetResModel = func() model.Resource { return &(model.Module{}) }
+	actionPtr.GetResSlice = func() interface{} { return &[]model.Module{} }
 	return actionPtr.Controller.DaoService(str)
 }
 

@@ -10,6 +10,7 @@ import (
 	"errors"
 	"apibuilder-server/app"
 	"log"
+	"apibuilder-server/helper"
 )
 
 type ApiController struct {
@@ -18,8 +19,8 @@ type ApiController struct {
 
 func (action ApiController) CrudService(str string) func(c *gin.Context)  {
 	actionPtr := &action
-	actionPtr.Res = &(model.Api{})
-	actionPtr.ResSlice = &([]model.Api{})
+	actionPtr.GetResModel = func() model.Resource { return &(model.Api{}) }
+	actionPtr.GetResSlice = func() interface{} { return &[]model.Api{} }
 	return actionPtr.Controller.DaoService(str)
 }
 //todo 提炼valid
@@ -34,7 +35,7 @@ func PublishApi(c *gin.Context) {
 		info := model.Update(id, model.Api{Status: model.ApiStatusPublish})
 		model.CreateLog(api.AuthorId, model.ApiLogPublish, api.ID)
 		//todo notice others
-		ReturnSuccess(c, http.StatusOK, info)
+		helper.ReturnSuccess(c, http.StatusOK, info)
 
 	}
 }
@@ -53,7 +54,7 @@ func CommitApi(c *gin.Context) {
 	}
 	commitLog(api, &commitForm)
 	info := model.Update(id, &commitForm)
-	ReturnSuccess(c, http.StatusOK, info)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 func commitLog(apiOld *model.Api, comForm *model.Api) {
 	v := reflect.ValueOf(*comForm)
@@ -125,7 +126,7 @@ func RebuildApi(c *gin.Context) {
 	}
 	rebuildLog(api, &apiForm)
 	info := model.Update(id, &apiForm)
-	ReturnSuccess(c, http.StatusOK, info)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 func rebuildLog(apiOld *model.Api, comForm *model.Api) {
 	changes, _ := json.Marshal(apiOld)
@@ -148,7 +149,7 @@ func NoteApi(c *gin.Context) {
 		model.Delete(dbNote, dbNote.ID)
 	}
 	info = model.Create(&jsonForm)
-	ReturnSuccess(c, http.StatusOK, info)
+	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 func NoteApiDetail(c *gin.Context) {
 	var resouce model.ApiNote
@@ -165,5 +166,5 @@ func NoteApiDetail(c *gin.Context) {
 			((*apiNotes)[key]).ModelNotes = *apiModelNotes
 		}
 	}
-	ReturnSuccess(c, http.StatusOK, apiNotes)
+	helper.ReturnSuccess(c, http.StatusOK, apiNotes)
 }

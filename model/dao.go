@@ -7,6 +7,7 @@ import (
 	"apibuilder-server/helper"
 	"strconv"
 )
+
 //todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
 type BaseFields struct {
 	ID        int        `gorm:"primary_key" json:"id"`
@@ -37,7 +38,6 @@ func (bf ForbidUpdateResource) ForbidUpdate() bool {
 	return true
 }
 
-
 func ByID(res Resource, id int) Resource {
 
 	if err := app.Db.Where("id = ?", id).Last(res).Error; err == nil {
@@ -47,8 +47,9 @@ func ByID(res Resource, id int) Resource {
 	}
 }
 
-func FindListWhereMap(res interface{}, where map[string]interface{})  {
-	if err := app.Db.Where(where).Find(res).Error; err != nil {
+func FindListWhereMap(res interface{}, where map[string]interface{}, order string, page int, limit int) {
+	offset := limit * (page - 1)
+	if err := app.Db.Where(where).Order(order).Offset(offset).Limit(limit).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
 	}
 }

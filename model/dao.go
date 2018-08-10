@@ -26,6 +26,7 @@ func (bf BaseFields) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields()
 }
 
+
 type Resource interface {
 	ListFields() []string
 	InfoFields() []string

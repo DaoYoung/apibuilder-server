@@ -7,6 +7,3 @@ type Container struct {
 	LastAuthorId int    `json:"last_author_id"`
 }
 
-func (Container) TableName() string {
-	return "containers"
-}

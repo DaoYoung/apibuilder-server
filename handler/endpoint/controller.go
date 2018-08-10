@@ -39,9 +39,12 @@ func (this *Controller) List(c *gin.Context) {
 	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage)
 	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
+func (this *Controller) BeforeCreate(c *gin.Context, m model.Resource) {
 
+}
 func (this *Controller) Create(c *gin.Context) {
 	obj := this.GetResModel()
+	this.be
 	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))

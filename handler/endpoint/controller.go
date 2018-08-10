@@ -44,7 +44,7 @@ func (this *Controller) BeforeCreate(c *gin.Context, m model.Resource) {
 }
 func (this *Controller) Create(c *gin.Context) {
 	obj := this.GetResModel()
-	this.be
+	//this.BeforeCreate(c, obj)
 	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))

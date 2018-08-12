@@ -39,6 +39,11 @@ func Serve(engine *gin.Engine) {
 	admin.Use(middleware.AuthHandlerFunc)
 	{
 		curdRoutes(admin, "container", endpoint.ContainerController{})
+		admin.GET("/container/:id/params",endpoint.ContainerParamController{}.List)
+		admin.POST("/container/:id/params",endpoint.ContainerParamController{}.SaveList)
+		admin.GET("/container/:id/deploys",endpoint.ContainerDeployController{}.List)
+		admin.POST("/container/:id/deploys",endpoint.ContainerDeployController{}.Create)
+		admin.PUT("/container/:id/deploys/:deploy_id",endpoint.ContainerDeployController{}.Update)
 	}
 
 	//todo user Permission

@@ -77,6 +77,14 @@ func Update(id int, res Resource) Resource {
 	}
 }
 
+func UpdateWhere(where map[string]interface{}, res Resource) Resource {
+	if err := app.Db.Model(res).Where(where).Updates(res).Error; err == nil {
+		return res
+	} else {
+		panic(QueryDaoError(err))
+	}
+}
+
 func Delete(res Resource, id int) Resource {
 	if err := app.Db.Where("id = ?", id).Delete(res).Error; err == nil {
 		return res

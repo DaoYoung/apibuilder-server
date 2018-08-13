@@ -8,15 +8,28 @@ import (
 	"errors"
 	"apibuilder-server/helper"
 	"apibuilder-server/app"
+	"reflect"
+	"fmt"
 )
 
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
 }
 
+type EasyController interface {
+	SetResModel() model.Resource
+	SetResSlice() interface{}
+	SetSelf() EasyController
+
+	Create(c *gin.Context)
+	BeforeCreate(c *gin.Context, m model.Resource)
+	AfterCreate(c *gin.Context, m model.Resource)
+}
+
 type Controller struct {
 	GetResModel func()  model.Resource
 	GetResSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
+	Self EasyController
 }
 
 func (this *Controller) CrudService(str string) func(c *gin.Context) {
@@ -43,6 +56,14 @@ func (this *Controller) BeforeCreate(c *gin.Context, m model.Resource) {
 
 }
 func (this *Controller) Create(c *gin.Context) {
+	v := reflect.ValueOf(this.Self)
+	self := v.Elem().FieldByName("Model")
+	fmt.Printf("%s\n%s\n%s\n", v.Elem().FieldByName("Id").String(), self.FieldByName("View").String())
+	method := v.MethodByName("G")
+	in := []reflect.Value{}
+	method.Call(in)
+
+
 	obj := this.GetResModel()
 	//this.BeforeCreate(c, obj)
 	err := c.BindJSON(obj)

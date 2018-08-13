@@ -45,7 +45,15 @@ func Serve(engine *gin.Engine) {
 		admin.POST("/container/:id/deploys",endpoint.ContainerDeployController{}.Create)
 		admin.PUT("/container/:id/deploys/:deploy_id",endpoint.ContainerDeployController{}.Update)
 	}
-
+	task := engine.Group("/task")
+	task.Use(middleware.AuthHandlerFunc)
+	{
+		task.GET("/", endpoint.TaskController{}.CrudService("list"))
+		task.GET("/:id", endpoint.TaskController{}.CrudService("info"))
+		task.PUT("/:id", endpoint.TaskController{}.CrudService("update"))
+		task.POST("/:id", endpoint.TaskController{}.CrudService("create"))
+		task.DELETE("/:id", endpoint.TaskController{}.CrudService("delete"))
+	}
 	//todo user Permission
 }
 

@@ -8,28 +8,49 @@ import (
 	"errors"
 	"apibuilder-server/helper"
 	"apibuilder-server/app"
-	"reflect"
-	"fmt"
-)
+		)
 
 type ControllerInterface interface {
 	CrudService(str string) func(c *gin.Context)
 }
 
-type EasyController interface {
-	SetResModel() model.Resource
-	SetResSlice() interface{}
-	SetSelf() EasyController
-
-	Create(c *gin.Context)
-	BeforeCreate(c *gin.Context, m model.Resource)
-	AfterCreate(c *gin.Context, m model.Resource)
+type RestSource interface {
+	GetResModel() model.Resource
+	GetResSlice() interface{}//https://golang.org/doc/faq#convert_slice_of_interface
+	GetController() ControllerInterface
+}
+type EmptySource struct {}
+func (this *EmptySource) GetResModel() model.Resource{
+	return nil
+}
+func (this *EmptySource) GetResSlice() interface{}{
+	return nil
+}
+func (this *EmptySource) GetController() ControllerInterface {
+	return nil
+}
+type Controller struct {
 }
 
-type Controller struct {
-	GetResModel func()  model.Resource
-	GetResSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
-	Self EasyController
+func (this *Controller) GetRestSource() RestSource {
+	return &EmptySource{}
+}
+func (this *Controller) BeforeCreate(c *gin.Context, m model.Resource) {
+
+}
+func (this *Controller) AfterCreate(c *gin.Context, m model.Resource) {
+
+}
+func (this *Controller) Create(c *gin.Context) {
+	obj := this.GetRestSource().GetResModel()
+	this.BeforeCreate(c, obj)
+	err := c.BindJSON(obj)
+	if err != nil {
+		panic(JsonTypeError(err))
+	}
+	info := model.Create(obj)
+	this.AfterCreate(c, obj)
+	helper.ReturnSuccess(c, http.StatusCreated, info)
 }
 
 func (this *Controller) CrudService(str string) func(c *gin.Context) {
@@ -52,27 +73,7 @@ func (this *Controller) List(c *gin.Context) {
 	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage)
 	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
-func (this *Controller) BeforeCreate(c *gin.Context, m model.Resource) {
 
-}
-func (this *Controller) Create(c *gin.Context) {
-	v := reflect.ValueOf(this.Self)
-	self := v.Elem().FieldByName("Model")
-	fmt.Printf("%s\n%s\n%s\n", v.Elem().FieldByName("Id").String(), self.FieldByName("View").String())
-	method := v.MethodByName("G")
-	in := []reflect.Value{}
-	method.Call(in)
-
-
-	obj := this.GetResModel()
-	//this.BeforeCreate(c, obj)
-	err := c.BindJSON(obj)
-	if err != nil {
-		panic(JsonTypeError(err))
-	}
-	info := model.Create(obj)
-	helper.ReturnSuccess(c, http.StatusCreated, info)
-}
 
 func (this *Controller) Update(c *gin.Context) {
 	obj := this.GetResModel()

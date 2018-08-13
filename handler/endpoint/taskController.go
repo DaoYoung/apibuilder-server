@@ -8,14 +8,14 @@ import (
 type TaskController struct {
 	Controller
 }
-func (action TaskController) SetResModel() model.Resource{
+func (action *TaskController) SetResModel() model.Resource{
 	return &(model.Task{})
 }
-func (action TaskController) SetResSlice() interface{}{
+func (action *TaskController) SetResSlice() interface{}{
 	return &[]model.Task{}
 }
-func (action TaskController) SetSelf() EasyController {
-	return &action
+func (action *TaskController) SetSelf() EasyController {
+	return action
 }
 
 func (action TaskController) CrudService(str string) func(c *gin.Context) {

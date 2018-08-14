@@ -1,29 +1,23 @@
 package endpoint
 
 import (
-	"github.com/gin-gonic/gin"
 	"apibuilder-server/model"
+	"github.com/gin-gonic/gin"
 )
 
 type TaskController struct {
 	Controller
 }
-func (action *TaskController) SetResModel() model.Resource{
-	return &(model.Task{})
+func (action *TaskController) Rester() ControllerInterface {
+	action.Controller.Rester = action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Task{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.Task{} }
+	return  action
 }
-func (action *TaskController) SetResSlice() interface{}{
-	return &[]model.Task{}
+func (this *TaskController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+	user := model.GetUserFromToken(c)
+	m.(*model.Task).AuthorId = user.ID
 }
-func (action *TaskController) SetSelf() EasyController {
-	return action
-}
-
-func (action TaskController) CrudService(str string) func(c *gin.Context) {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource {
-		return &(model.Task{})
-	}
-	actionPtr.GetResSlice = func() interface{} { return &[]model.Task{} }
-	actionPtr.Self = actionPtr
-	return actionPtr.Controller.DaoService(str)
+func (this *TaskController) AfterRest(c *gin.Context, m model.ResourceInterface) {
+	//todo add task log
 }

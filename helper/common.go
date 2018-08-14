@@ -71,8 +71,7 @@ func ReturnSuccess(c *gin.Context, code int, data interface{}) {
 	c.JSON(code, js)
 }
 
-func MapUrlQuery(query url.Values, obj interface{})  map[string]interface{}{
-	condition := make(map[string]interface{})
+func MapUrlQuery(condition map[string]interface{}, query url.Values, obj interface{})  map[string]interface{}{
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
 	if v.Kind() == reflect.Ptr {

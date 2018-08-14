@@ -12,6 +12,13 @@ import (
 type ContainerDeployController struct {
 	Controller
 }
+
+func (action *ContainerDeployController) Rester() ControllerInterface {
+	action.Controller.Rester = action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ContainerDeploy{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.ContainerDeploy{} }
+	return  action
+}
 func (this ContainerDeployController) List(c *gin.Context) {
 	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
 	if err != nil{

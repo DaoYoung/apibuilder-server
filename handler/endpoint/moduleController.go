@@ -2,17 +2,18 @@ package endpoint
 
 import (
 	"apibuilder-server/model"
-	"github.com/gin-gonic/gin"
 )
 
 type ModuleController struct {
 	Controller
 }
-
-func (action ModuleController) CrudService(str string) func(c *gin.Context)  {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource { return &(model.Module{}) }
-	actionPtr.GetResSlice = func() interface{} { return &[]model.Module{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *ModuleController) GetRestModel() model.ResourceInterface{
+	return &(model.Module{})
+}
+func (action *ModuleController) GetRestModelSlice() interface{}{
+	return &[]model.Module{}
+}
+func (action *ModuleController) GetRester() *ModuleController {
+	return action
 }
 

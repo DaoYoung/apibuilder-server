@@ -12,12 +12,14 @@ import (
 type ModelController struct {
 	Controller
 }
-
-func (action ModelController) CrudService(str string) func(c *gin.Context) {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource { return &(model.ApiModel{}) }
-	actionPtr.GetResSlice = func() interface{} { return &[]model.ApiModel{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *ModelController) GetRestModel() model.ResourceInterface{
+	return &(model.ApiModel{})
+}
+func (action *ModelController) GetRestModelSlice() interface{}{
+	return &[]model.ApiModel{}
+}
+func (action *ModelController) GetRester() *ModelController {
+	return action
 }
 
 func NoteModel(c *gin.Context) {
@@ -49,10 +51,12 @@ func NoteModelDetail(c *gin.Context) {
 type ModelMapController struct {
 	Controller
 }
-
-func (action ModelMapController) CrudService(str string) func(c *gin.Context) {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource { return &(model.ApiModelMap{}) }
-	actionPtr.GetResSlice = func() interface{} { return &[]model.ApiModelMap{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *ModelMapController) GetRestModel() model.ResourceInterface{
+	return &(model.ApiModelMap{})
+}
+func (action *ModelMapController) GetRestModelSlice() interface{}{
+	return &[]model.ApiModelMap{}
+}
+func (action *ModelMapController) GetRester() *ModelMapController {
+	return action
 }

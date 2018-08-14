@@ -27,7 +27,7 @@ func (bf BaseFields) ForbidUpdateFields() []string {
 }
 
 
-type Resource interface {
+type ResourceInterface interface {
 	ListFields() []string
 	InfoFields() []string
 	ForbidUpdateFields() []string
@@ -39,7 +39,7 @@ func (bf ForbidUpdateResource) ForbidUpdate() bool {
 	return true
 }
 
-func ByID(res Resource, id int) Resource {
+func ByID(res ResourceInterface, id int) ResourceInterface {
 
 	if err := app.Db.Where("id = ?", id).Last(res).Error; err == nil {
 		return res
@@ -61,7 +61,7 @@ func FindListWhereKV(res interface{}, whereField string, whereValue interface{},
 	}
 }
 
-func Find(res Resource, where map[string]interface{}) Resource {
+func Find(res ResourceInterface, where map[string]interface{}) ResourceInterface {
 	if err := app.Db.Where(where).First(res).Error; err == nil {
 		return res
 	} else {
@@ -69,7 +69,7 @@ func Find(res Resource, where map[string]interface{}) Resource {
 	}
 }
 
-func Update(id int, res Resource) Resource {
+func Update(id int, res ResourceInterface) ResourceInterface {
 	if err := app.Db.Model(res).Where("id = ?", id).Updates(res).Error; err == nil {
 		return ByID(res, id)
 	} else {
@@ -77,7 +77,7 @@ func Update(id int, res Resource) Resource {
 	}
 }
 
-func UpdateWhere(where map[string]interface{}, res Resource) Resource {
+func UpdateWhere(where map[string]interface{}, res ResourceInterface) ResourceInterface {
 	if err := app.Db.Model(res).Where(where).Updates(res).Error; err == nil {
 		return res
 	} else {
@@ -85,7 +85,7 @@ func UpdateWhere(where map[string]interface{}, res Resource) Resource {
 	}
 }
 
-func Delete(res Resource, id int) Resource {
+func Delete(res ResourceInterface, id int) ResourceInterface {
 	if err := app.Db.Where("id = ?", id).Delete(res).Error; err == nil {
 		return res
 	} else {
@@ -93,7 +93,7 @@ func Delete(res Resource, id int) Resource {
 	}
 }
 
-func Create(res Resource) Resource {
+func Create(res ResourceInterface) ResourceInterface {
 	if err := app.Db.Create(res).Error; err == nil {
 		return res
 	} else {
@@ -108,7 +108,7 @@ func CreateNew(tb string, res interface{}) interface{} {
 		panic(QueryDaoError(err))
 	}
 }
-func ExsitAndFirst(res Resource) {
+func ExsitAndFirst(res ResourceInterface) {
 	if err := app.Db.Where(res).First(res).Error; err != nil {
 		res = nil
 	}

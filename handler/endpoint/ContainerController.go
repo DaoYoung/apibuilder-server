@@ -8,16 +8,13 @@ import (
 type ContainerController struct {
 	Controller
 }
-
-func (action ContainerController) CrudService(str string) func(c *gin.Context) {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource {
-		return &(model.Container{})
-	}
-	actionPtr.GetResSlice = func() interface{} { return &[]model.Container{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *ContainerController) Rester() ControllerInterface {
+	action.Controller.Rester = action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Container{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.Container{} }
+	return  action
 }
-func (action *ContainerController) BeforeCreate(c *gin.Context, m model.Container) {
+func (action *ContainerController) BeforeRest(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
-	m.LastAuthorId = user.ID
+	m.(*model.Container).LastAuthorId = user.ID
 }

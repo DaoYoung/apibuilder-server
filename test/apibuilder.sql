@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `api_commits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.api_commits 的数据：~5 rows (大约)
+-- 正在导出表  apibuilder.api_commits 的数据：~22 rows (大约)
 /*!40000 ALTER TABLE `api_commits` DISABLE KEYS */;
 INSERT INTO `api_commits` (`id`, `api_id`, `author_id`, `task_id`, `changes`, `commit_message`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 1, 0, 0, '{"Title": {"after": "bbb", "before": "aaa"}, "ResponseContent": {"change_json": null}}', '', '2018-07-30 17:22:24', '2018-07-30 17:22:24', NULL),
@@ -219,9 +219,9 @@ CREATE TABLE IF NOT EXISTS `containers` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.containers 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.containers 的数据：~31 rows (大约)
 /*!40000 ALTER TABLE `containers` DISABLE KEYS */;
 INSERT INTO `containers` (`id`, `title`, `status`, `last_author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'test', 0, 0, '2018-08-09 17:09:51', '2018-08-09 13:02:19', NULL),
@@ -254,11 +254,12 @@ INSERT INTO `containers` (`id`, `title`, `status`, `last_author_id`, `created_at
 	(29, 'test22', 0, 0, '2018-08-10 16:27:49', '2018-08-10 16:27:49', NULL),
 	(30, 'test33', 0, 0, '2018-08-10 16:27:49', '2018-08-10 16:27:49', NULL),
 	(31, 'test33', 0, 0, '2018-08-10 16:41:38', '2018-08-10 16:41:38', NULL),
-	(32, 'test33', 0, 0, '2018-08-10 16:41:39', '2018-08-10 16:41:39', NULL);
+	(32, 'test33', 0, 0, '2018-08-10 16:41:39', '2018-08-10 16:41:39', NULL),
+	(33, 'test33', 0, 1, '2018-08-14 20:31:53', '2018-08-14 20:31:53', NULL);
 /*!40000 ALTER TABLE `containers` ENABLE KEYS */;
 
--- 导出  表 apibuilder.container_deploy 结构
-CREATE TABLE IF NOT EXISTS `container_deploy` (
+-- 导出  表 apibuilder.container_deploys 结构
+CREATE TABLE IF NOT EXISTS `container_deploys` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `container_id` int(10) NOT NULL DEFAULT '0',
   `team_id` int(10) NOT NULL DEFAULT '0',
@@ -269,11 +270,13 @@ CREATE TABLE IF NOT EXISTS `container_deploy` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.container_deploy 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `container_deploy` DISABLE KEYS */;
-/*!40000 ALTER TABLE `container_deploy` ENABLE KEYS */;
+-- 正在导出表  apibuilder.container_deploys 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `container_deploys` DISABLE KEYS */;
+INSERT INTO `container_deploys` (`id`, `container_id`, `team_id`, `deploy_type`, `deploy_user`, `last_author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 5, 1, 8, 1, '2018-08-14 21:18:40', '2018-08-14 21:18:40', NULL);
+/*!40000 ALTER TABLE `container_deploys` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.container_params 结构
 CREATE TABLE IF NOT EXISTS `container_params` (
@@ -286,10 +289,12 @@ CREATE TABLE IF NOT EXISTS `container_params` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  apibuilder.container_params 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `container_params` DISABLE KEYS */;
+INSERT INTO `container_params` (`id`, `container_id`, `key_string`, `value_string`, `last_author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 'domain', 'localhost', 1, '2018-08-14 21:15:55', '2018-08-14 21:15:55', NULL);
 /*!40000 ALTER TABLE `container_params` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.modules 结构
@@ -305,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apibuilder.modules 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.modules 的数据：~6 rows (大约)
 /*!40000 ALTER TABLE `modules` DISABLE KEYS */;
 INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '用户中心', '', 0, 1, '2018-07-29 10:53:53', '2018-07-29 10:53:53', NULL),
@@ -323,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `assign_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '分配者',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `priority` tinyint(1) NOT NULL DEFAULT '0',
+  `priority` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1高 2中 3低',
   `deadline` datetime DEFAULT NULL,
   `version_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `has_prd` tinyint(1) NOT NULL DEFAULT '0',
@@ -333,10 +338,14 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新需求任务';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新需求任务';
 
 -- 正在导出表  apibuilder.tasks 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` (`id`, `author_id`, `assign_user_id`, `title`, `description`, `priority`, `deadline`, `version_tag`, `has_prd`, `is_check`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 0, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 20:07:39', '2018-08-14 20:07:39', NULL),
+	(2, 1, 3, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 20:18:25', '2018-08-14 21:09:27', NULL),
+	(3, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 21:09:23', '2018-08-14 21:09:23', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.task_containers 结构
@@ -435,7 +444,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.users 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.users 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `phone`, `status`, `role_id`, `team_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'yidao', '123123', 'sql.png', 'yi_dao@hunliji.com', '13567119103', 1, 0, 0, '2018-08-05 23:33:43', '2018-08-05 23:34:06', NULL),

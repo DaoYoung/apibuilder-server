@@ -16,12 +16,11 @@ import (
 type ApiController struct {
 	Controller
 }
-
-func (action ApiController) CrudService(str string) func(c *gin.Context)  {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource { return &(model.Api{}) }
-	actionPtr.GetResSlice = func() interface{} { return &[]model.Api{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *ApiController) Rester() ControllerInterface {
+	action.Controller.Rester = action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ApiModel{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
+	return  action
 }
 //todo 提炼valid
 func PublishApi(c *gin.Context) {

@@ -10,12 +10,14 @@ import (
 type UserController struct {
 	Controller
 }
-
-func (action UserController) CrudService(str string) func(c *gin.Context)  {
-	actionPtr := &action
-	actionPtr.GetResModel = func() model.Resource { return &(model.User{}) }
-	actionPtr.GetResSlice = func() interface{} { return &[]model.User{} }
-	return actionPtr.Controller.DaoService(str)
+func (action *UserController) GetRestModel() model.ResourceInterface{
+	return &(model.User{})
+}
+func (action *UserController) GetRestModelSlice() interface{}{
+	return &[]model.User{}
+}
+func (action *UserController) GetRester() *UserController {
+	return action
 }
 
 func Profile(c *gin.Context)  {

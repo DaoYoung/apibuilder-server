@@ -3,59 +3,39 @@ package endpoint
 import (
 	"github.com/gin-gonic/gin"
 	"apibuilder-server/model"
-	"apibuilder-server/app"
-	"apibuilder-server/helper"
-	"net/http"
-	"strconv"
-)
+				"strconv"
+	)
 
 type ContainerDeployController struct {
 	Controller
 }
 
-func (action *ContainerDeployController) Rester() ControllerInterface {
-	action.Controller.Rester = action
+func (action ContainerDeployController) Rester() ControllerInterface {
+	actionPtr := &action
+	action.Controller.Rester = actionPtr
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ContainerDeploy{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ContainerDeploy{} }
-	return  action
+	return  actionPtr
 }
-func (this ContainerDeployController) List(c *gin.Context) {
-	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
-	if err != nil{
-		panic(err)
-	}
+func (this *ContainerDeployController) ListCondition(c *gin.Context) map[string]interface{} {
 	condition := make(map[string]interface{})
-	condition["container_id"] = c.Param("id")
-	obj :=  &[]model.ContainerDeploy{}
-	model.FindListWhereMap(obj, condition, "id asc", page, app.Config.PerPage)
-	helper.ReturnSuccess(c, http.StatusOK, obj)
+	condition["container_id"] = c.Param("container_id")
+	return condition
 }
-func (this ContainerDeployController) Update(c *gin.Context) {
-	obj := &model.ContainerDeploy{}
-	err := c.BindJSON(obj)
-	if err != nil {
-		panic(JsonTypeError(err))
-	}
-	id, _ := strconv.Atoi(c.Param("deploy_id"))
-	containerId, _ := strconv.Atoi(c.Param("id"))
-	condition := make(map[string]interface{})
-	condition["container_id"] = containerId
-	condition["id"] = id
+func (this *ContainerDeployController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
-	obj.LastAuthorId = user.ID
-	info := model.UpdateWhere(condition, obj)
-	helper.ReturnSuccess(c, http.StatusOK, info)
+	m.(*model.ContainerDeploy).LastAuthorId = user.ID
+	m.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
 }
-func (this ContainerDeployController) Create(c *gin.Context) {
-	containerId, _ := strconv.Atoi(c.Param("id"))
-	obj := &model.ContainerDeploy{}
-	err := c.BindJSON(obj)
-	if err != nil {
-		panic(JsonTypeError(err))
-	}
-	obj.ContainerId = containerId
+
+func (this *ContainerDeployController) BeforeUpdate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
-	obj.LastAuthorId = user.ID
-	info := model.Create(obj)
-	helper.ReturnSuccess(c, http.StatusCreated, info)
+	m.(*model.ContainerDeploy).LastAuthorId = user.ID
+	m.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
+}
+
+func (this *ContainerDeployController) UpdateCondition(c *gin.Context) map[string]interface{} {
+	condition := this.Controller.UpdateCondition(c)
+	condition["container_id"] ,_ = strconv.Atoi(c.Param("container_id"))
+	return condition
 }

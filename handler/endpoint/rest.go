@@ -4,6 +4,7 @@ import (
 	"apibuilder-server/model"
 	"github.com/gin-gonic/gin"
 	"errors"
+	"strconv"
 )
 
 type RestInterface interface {
@@ -14,8 +15,10 @@ type RestInterface interface {
 	BeforeCreate(c *gin.Context, m model.ResourceInterface)
 	AfterCreate(c *gin.Context, m model.ResourceInterface)
 	BeforeUpdate(c *gin.Context, m model.ResourceInterface)
+	UpdateCondition(c *gin.Context) map[string]interface{}
 	AfterUpdate(c *gin.Context, m model.ResourceInterface)
 	ListCondition(c *gin.Context) map[string]interface{}
+
 
 }
 
@@ -28,7 +31,7 @@ func (this *EmptyRest) GetRestModelSlice() interface{}{
 	panic(NOContentError(errors.New("can't find func:GetRestModelSlice in your controller")))
 	return nil
 }
-func (this *EmptyRest) Rester() ControllerInterface{
+func (this EmptyRest) Rester() ControllerInterface{
 	panic(NOContentError(errors.New("can't find func:Rester in your controller")))
 }
 func (this *EmptyRest) BeforeCreate(c *gin.Context, m model.ResourceInterface) {}
@@ -39,4 +42,13 @@ func (this *EmptyRest) BeforeRest(c *gin.Context, m model.ResourceInterface) {}
 func (this *EmptyRest) AfterRest(c *gin.Context, m model.ResourceInterface) {}
 func (this *EmptyRest) ListCondition(c *gin.Context) map[string]interface{} {
 	return make(map[string]interface{})
+}
+func (this *EmptyRest) UpdateCondition(c *gin.Context) map[string]interface{} {
+	condition := make(map[string]interface{})
+	id, err := strconv.Atoi(c.Param("id"))
+	if err!=nil {
+		panic(NOContentError(errors.New("can't Update without ID")))
+	}
+	condition["id"] = id
+	return condition
 }

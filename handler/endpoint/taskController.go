@@ -8,11 +8,12 @@ import (
 type TaskController struct {
 	Controller
 }
-func (action *TaskController) Rester() ControllerInterface {
-	action.Controller.Rester = action
+func (action TaskController) Rester() ControllerInterface {
+	actionPtr := &action
+	action.Controller.Rester = actionPtr
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Task{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.Task{} }
-	return  action
+	return  actionPtr
 }
 func (this *TaskController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)

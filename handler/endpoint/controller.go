@@ -7,8 +7,7 @@ import (
 	"net/http"
 	"apibuilder-server/helper"
 	"apibuilder-server/app"
-	"log"
-)
+	)
 var Com ControllerInterface
 type ControllerInterface interface {
 	Update(c *gin.Context)
@@ -51,7 +50,6 @@ func (this *Controller) List(c *gin.Context) {
 	if err != nil{
 		panic(err)
 	}
-	log.Println("%T %+v", this.Rester, this.Rester)
 	obj := this.RestModelSlice()
 	condition := this.Rester.ListCondition(c)
 	condition = helper.MapUrlQuery(condition, c.Request.URL.Query(), this.RestModel())
@@ -66,8 +64,8 @@ func (this *Controller) Update(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	info := model.Update(id, obj)
+	condition := this.Rester.UpdateCondition(c)
+	info := model.UpdateWhere(condition, obj)
 	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 

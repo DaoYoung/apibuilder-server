@@ -8,11 +8,12 @@ import (
 type ContainerController struct {
 	Controller
 }
-func (action *ContainerController) Rester() ControllerInterface {
-	action.Controller.Rester = action
+func (action ContainerController) Rester() ControllerInterface {
+	actionPtr := &action
+	action.Controller.Rester = actionPtr
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Container{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.Container{} }
-	return  action
+	return  actionPtr
 }
 func (action *ContainerController) BeforeRest(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)

@@ -10,6 +10,7 @@ import (
 	)
 var Com ControllerInterface
 type ControllerInterface interface {
+	isRestRoutePk() bool
 	Update(c *gin.Context)
 	Create(c *gin.Context)
 	Info(c *gin.Context)
@@ -22,6 +23,10 @@ type Controller struct {
 	RestModel func()  model.ResourceInterface
 	RestModelSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
 	*EmptyRest
+}
+
+func (this *Controller) isRestRoutePk() bool{
+	return false
 }
 
 func (this *Controller) Create(c *gin.Context) {

@@ -12,16 +12,18 @@ import (
 type ModelController struct {
 	Controller
 }
-func (action *ModelController) GetRestModel() model.ResourceInterface{
-	return &(model.ApiModel{})
+func (action ModelController) Rester() ControllerInterface {
+	action.Controller.Rester = &action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ApiModel{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
+	return  &action
 }
-func (action *ModelController) GetRestModelSlice() interface{}{
-	return &[]model.ApiModel{}
+func (this *ModelController) IsRestRoutePk() bool{
+	return true
 }
-func (action *ModelController) GetRester() *ModelController {
-	return action
+func (action *ModelController) RouteName() string {
+	return "model"
 }
-
 func NoteModel(c *gin.Context) {
 	var jsonForm model.ApiModelNote
 	var info interface{}
@@ -51,12 +53,13 @@ func NoteModelDetail(c *gin.Context) {
 type ModelMapController struct {
 	Controller
 }
-func (action *ModelMapController) GetRestModel() model.ResourceInterface{
-	return &(model.ApiModelMap{})
+func (action ModelMapController) Rester() ControllerInterface {
+	action.Controller.Rester = &action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ApiModelMap{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModelMap{} }
+	action.Controller.ParentController = ModelController{}.Rester()
+	return  &action
 }
-func (action *ModelMapController) GetRestModelSlice() interface{}{
-	return &[]model.ApiModelMap{}
-}
-func (action *ModelMapController) GetRester() *ModelMapController {
-	return action
+func (action *ModelMapController) RouteName() string {
+	return "map"
 }

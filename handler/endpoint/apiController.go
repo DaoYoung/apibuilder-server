@@ -16,11 +16,11 @@ import (
 type ApiController struct {
 	Controller
 }
-func (action *ApiController) Rester() ControllerInterface {
-	action.Controller.Rester = action
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ApiModel{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
-	return  action
+func (action ApiController) Rester() ControllerInterface {
+	action.Controller.Rester = &action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Api{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.Api{} }
+	return  &action
 }
 //todo 提炼valid
 func PublishApi(c *gin.Context) {

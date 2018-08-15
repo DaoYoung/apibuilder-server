@@ -23,14 +23,6 @@ type RestInterface interface {
 }
 
 type EmptyRest struct {}
-func (this *EmptyRest) GetRestModel() model.ResourceInterface{
-	panic(NOContentError(errors.New("can't find func:GetRestModel in your controller")))
-	return nil
-}
-func (this *EmptyRest) GetRestModelSlice() interface{}{
-	panic(NOContentError(errors.New("can't find func:GetRestModelSlice in your controller")))
-	return nil
-}
 func (this EmptyRest) Rester() ControllerInterface{
 	panic(NOContentError(errors.New("can't find func:Rester in your controller")))
 }

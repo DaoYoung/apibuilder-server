@@ -7,26 +7,41 @@ import (
 	"net/http"
 	"apibuilder-server/helper"
 	"apibuilder-server/app"
-	)
+	"reflect"
+	"strings"
+)
 var Com ControllerInterface
 type ControllerInterface interface {
-	isRestRoutePk() bool
 	Update(c *gin.Context)
 	Create(c *gin.Context)
 	Info(c *gin.Context)
 	List(c *gin.Context)
 	Delete(c *gin.Context)
+	IsRestRoutePk() bool
+	RouteName() string
+	ParentNode() ControllerInterface
 }
 
 type Controller struct {
+	ParentController ControllerInterface
 	Rester RestInterface
 	RestModel func()  model.ResourceInterface
 	RestModelSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
 	*EmptyRest
 }
-
-func (this *Controller) isRestRoutePk() bool{
+func (this *Controller) ParentNode() ControllerInterface{
+	return this.ParentController
+}
+func (this *Controller) IsRestRoutePk() bool{
 	return false
+}
+func (this *Controller) RouteName() string{
+	obj := this.RestModel()
+	f := reflect.TypeOf(obj)
+	if f.Kind() == reflect.Ptr {
+		f = f.Elem()
+	}
+	return strings.ToLower(f.Name())
 }
 
 func (this *Controller) Create(c *gin.Context) {
@@ -79,4 +94,27 @@ func (this *Controller) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	model.Delete(obj, id)
 	helper.ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
+}
+func BuildRoute(controller ControllerInterface) (path,resourceName, routeId string)  {
+	path = parentRoute(controller)
+	RouteName := controller.RouteName()
+	resourceName = RouteName+"s"
+	routeId = "id"
+	if controller.IsRestRoutePk(){
+		routeId = RouteName+"_id"
+	}
+	return
+}
+func parentRoute(controller ControllerInterface) (path string) {
+	path = ""
+	if controller.ParentNode() != nil {
+		parent := parentRoute(controller.ParentNode())
+		resourceName := controller.ParentNode().RouteName()+"s"
+		routeId := "id"
+		if controller.ParentNode().IsRestRoutePk(){
+			routeId = controller.ParentNode().RouteName()+"_id"
+		}
+		path = parent+"/"+resourceName+"/:"+routeId
+	}
+	return
 }

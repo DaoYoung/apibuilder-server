@@ -14,7 +14,11 @@ func (action ContainerParamController) Rester() ControllerInterface {
 	action.Controller.Rester = actionPtr
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ContainerParam{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ContainerParam{} }
+	action.Controller.ParentController = ContainerController{}.Rester()
 	return  actionPtr
+}
+func (action *ContainerParamController) RouteName() string {
+	return "param"
 }
 func (this *ContainerParamController) ListCondition(c *gin.Context) map[string]interface{} {
 	condition := make(map[string]interface{})

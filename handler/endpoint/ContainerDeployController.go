@@ -9,12 +9,15 @@ import (
 type ContainerDeployController struct {
 	Controller
 }
-
+func (action *ContainerDeployController) RouteName() string {
+	return "deploy"
+}
 func (action ContainerDeployController) Rester() ControllerInterface {
 	actionPtr := &action
 	action.Controller.Rester = actionPtr
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ContainerDeploy{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ContainerDeploy{} }
+	action.Controller.ParentController = ContainerController{}.Rester()
 	return  actionPtr
 }
 func (this *ContainerDeployController) ListCondition(c *gin.Context) map[string]interface{} {

@@ -143,6 +143,3 @@ func camelString(s string) string {
 	return string(data[:])
 }
 
-func getRoutePk()  {
-	
-}

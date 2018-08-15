@@ -7,13 +7,10 @@ import (
 type ModuleController struct {
 	Controller
 }
-func (action *ModuleController) GetRestModel() model.ResourceInterface{
-	return &(model.Module{})
-}
-func (action *ModuleController) GetRestModelSlice() interface{}{
-	return &[]model.Module{}
-}
-func (action *ModuleController) GetRester() *ModuleController {
-	return action
+func (action ModuleController) Rester() ControllerInterface {
+	action.Controller.Rester = &action
+	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Module{}) }
+	action.Controller.RestModelSlice = func() interface{} { return &[]model.Module{} }
+	return  &action
 }
 

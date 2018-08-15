@@ -8,6 +8,9 @@ import (
 type ContainerController struct {
 	Controller
 }
+func (this *ContainerController) IsRestRoutePk() bool{
+	return true
+}
 func (action ContainerController) Rester() ControllerInterface {
 	actionPtr := &action
 	action.Controller.Rester = actionPtr

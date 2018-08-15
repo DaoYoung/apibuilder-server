@@ -13,12 +13,11 @@ func (action *ContainerDeployController) RouteName() string {
 	return "deploy"
 }
 func (action ContainerDeployController) Rester() ControllerInterface {
-	actionPtr := &action
-	action.Controller.Rester = actionPtr
+	action.Controller.Rester = &action
 	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ContainerDeploy{}) }
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ContainerDeploy{} }
 	action.Controller.ParentController = ContainerController{}.Rester()
-	return  actionPtr
+	return  &action
 }
 func (this *ContainerDeployController) ListCondition(c *gin.Context) map[string]interface{} {
 	condition := make(map[string]interface{})
@@ -31,10 +30,10 @@ func (this *ContainerDeployController) BeforeCreate(c *gin.Context, m model.Reso
 	m.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
 }
 
-func (this *ContainerDeployController) BeforeUpdate(c *gin.Context, m model.ResourceInterface) {
+func (this *ContainerDeployController) BeforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
-	m.(*model.ContainerDeploy).LastAuthorId = user.ID
-	m.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
+	new.(*model.ContainerDeploy).LastAuthorId = user.ID
+	new.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
 }
 
 func (this *ContainerDeployController) UpdateCondition(c *gin.Context, pk string) map[string]interface{} {

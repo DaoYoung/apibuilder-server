@@ -2,7 +2,6 @@ package helper
 
 import (
 	"reflect"
-	"log"
 	"github.com/gin-gonic/gin"
 	"net/url"
 	"strings"
@@ -37,7 +36,7 @@ func clearObj(obj interface{}) {
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
-	log.Println(111, v, v.Kind(), v.NumField())
+
 	for i := 0; i < v.NumField(); i++ {
 		f := v.Field(i)
 		//if f.Kind() == reflect.Struct {
@@ -83,7 +82,6 @@ func MapUrlQuery(condition map[string]interface{}, query url.Values, obj interfa
 		if f.Kind() == reflect.Struct {
 			for j := 0; j < f.NumField(); j++ {
 				nm := snakeString(t.FieldByIndex([]int{i, j}).Name)
-				log.Println(nm)
 				if p := query.Get(nm);p != ""{
 					condition[nm] = p
 				}
@@ -92,12 +90,10 @@ func MapUrlQuery(condition map[string]interface{}, query url.Values, obj interfa
 		}
 		s := t.Field(i)
 		nm := snakeString(s.Name)
-		log.Println(nm)
 		if p := query.Get(nm);p != ""{
 			condition[nm] = p
 		}
 	}
-	log.Println(condition)
 	return  condition
 }
 
@@ -119,11 +115,14 @@ func snakeString(s string) string {
 	return strings.ToLower(string(data[:]))
 }
 // 下划线写法转为驼峰写法
-func camelString(s string) string {
+func CamelString(s string) string {
 	data := make([]byte, 0, len(s))
 	j := false
 	k := false
 	num := len(s) - 1
+	if num<2 {
+		return strings.ToUpper(s)
+	}
 	for i := 0; i <= num; i++ {
 		d := s[i]
 		if k == false && d >= 'A' && d <= 'Z' {

@@ -18,6 +18,10 @@ func (action ModelController) Rester() ControllerInterface {
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
 	return  &action
 }
+func (action *ModelController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+	user := model.GetUserFromToken(c)
+	m.(*model.ApiModel).AuthorId = user.ID
+}
 func (action *ModelController) IsRestRoutePk() bool{
 	return true
 }
@@ -62,4 +66,8 @@ func (action ModelMapController) Rester() ControllerInterface {
 }
 func (action *ModelMapController) RouteName() string {
 	return "map"
+}
+func (action *ModelMapController) BeforeRest(c *gin.Context, m model.ResourceInterface) {
+	user := model.GetUserFromToken(c)
+	m.(*model.ApiModelMap).AuthorId = user.ID
 }

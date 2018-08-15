@@ -9,12 +9,14 @@ import (
 	"encoding/json"
 	"errors"
 	"apibuilder-server/app"
-	"log"
 	"apibuilder-server/helper"
 )
 
 type ApiController struct {
 	Controller
+}
+func (this *ApiController) IsRestRoutePk() bool {
+	return true
 }
 func (action ApiController) Rester() ControllerInterface {
 	action.Controller.Rester = &action
@@ -22,39 +24,20 @@ func (action ApiController) Rester() ControllerInterface {
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.Api{} }
 	return  &action
 }
-//todo 提炼valid
-func PublishApi(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	mod := &model.Api{}
-	row := model.ByID(mod, id)
-	api := row.(*model.Api)
-	if api.Status == model.ApiStatusPublish {
-		panic(ForbidError(errors.New("api has published")))
-	} else {
-		info := model.Update(id, model.Api{Status: model.ApiStatusPublish})
-		model.CreateLog(api.AuthorId, model.ApiLogPublish, api.ID)
-		//todo notice others
-		helper.ReturnSuccess(c, http.StatusOK, info)
 
+func (action *ApiController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+	user := model.GetUserFromToken(c)
+	m.(*model.Api).AuthorId = user.ID
+}
+
+func (action *ApiController) AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
+	if old.(*model.Api).Status == model.ApiStatusDraft && new.(*model.Api).Status == model.ApiStatusPublish {
+		model.CreateLog(old.(*model.Api).AuthorId, model.ApiLogPublish, old.(*model.Api).ID)
+	}else{
+		commitLog(old.(*model.Api), new.(*model.Api))
 	}
 }
-func CommitApi(c *gin.Context) {
-	mod := &model.Api{}
-	var commitForm model.Api
-	err := c.BindJSON(&commitForm)
-	if err != nil {
-		panic(JsonTypeError(err))
-	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	row := model.ByID(mod, id)
-	api := row.(*model.Api)
-	if api.Status == model.ApiStatusDraft {
-		panic(ForbidError(errors.New("api must published")))
-	}
-	commitLog(api, &commitForm)
-	info := model.Update(id, &commitForm)
-	helper.ReturnSuccess(c, http.StatusOK, info)
-}
+
 func commitLog(apiOld *model.Api, comForm *model.Api) {
 	v := reflect.ValueOf(*comForm)
 	t := reflect.TypeOf(*comForm)
@@ -110,30 +93,10 @@ func compareApiData(apiOld *model.Api, fieldName string, newVal reflect.Value) (
 	}
 	return true, nil
 }
-func RebuildApi(c *gin.Context) {
-	mod := &model.Api{}
-	var apiForm model.Api
-	err := c.BindJSON(&apiForm)
-	if err != nil {
-		panic(JsonTypeError(err))
-	}
-	id, _ := strconv.Atoi(c.Param("id"))
-	row := model.ByID(mod, id)
-	api := row.(*model.Api)
-	if api.Status == model.ApiStatusDraft {
-		panic(ForbidError(errors.New("api must published")))
-	}
-	rebuildLog(api, &apiForm)
-	info := model.Update(id, &apiForm)
-	helper.ReturnSuccess(c, http.StatusOK, info)
-}
-func rebuildLog(apiOld *model.Api, comForm *model.Api) {
-	changes, _ := json.Marshal(apiOld)
-	model.CreateCommit(changes, "rebuild", comForm.TaskId , apiOld.ID, comForm.AuthorId)
-	model.CreateLog(comForm.AuthorId, model.ApiLogRebuild, apiOld.ID)
-}
 
-func NoteApi(c *gin.Context) {
+
+
+func (this *ApiController)NoteApi(c *gin.Context) {
 	var jsonForm model.ApiNote
 	var info interface{}
 	err := c.BindJSON(&jsonForm)
@@ -150,7 +113,7 @@ func NoteApi(c *gin.Context) {
 	info = model.Create(&jsonForm)
 	helper.ReturnSuccess(c, http.StatusOK, info)
 }
-func NoteApiDetail(c *gin.Context) {
+func (this *ApiController)NoteApiDetail(c *gin.Context) {
 	var resouce model.ApiNote
 	apiNotes := &([]model.ApiNote{})
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -159,7 +122,6 @@ func NoteApiDetail(c *gin.Context) {
 	for key,val := range *apiNotes{
 		apiModelNotes := &([]model.ApiModelNote{})
 		if val.ModelId>0 {
-			log.Println(val)
 			apiModel.ID = val.ModelId
 			app.Db.Model(apiModel).Related(apiModelNotes, "ModelNotes")
 			((*apiNotes)[key]).ModelNotes = *apiModelNotes

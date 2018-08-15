@@ -5,18 +5,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"errors"
 	"strconv"
+	"reflect"
+	"apibuilder-server/helper"
 )
 
 type RestInterface interface {
 	ControllerInterface
 	Rester() ControllerInterface
-	BeforeRest(c *gin.Context, m model.ResourceInterface)
-	AfterRest(c *gin.Context, m model.ResourceInterface)
+	BeforeDelete(c *gin.Context, m model.ResourceInterface, id int)
+	AfterDelete(c *gin.Context, m model.ResourceInterface, id int)
 	BeforeCreate(c *gin.Context, m model.ResourceInterface)
 	AfterCreate(c *gin.Context, m model.ResourceInterface)
-	BeforeUpdate(c *gin.Context, m model.ResourceInterface)
+	BeforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
 	UpdateCondition(c *gin.Context, pk string) map[string]interface{}
-	AfterUpdate(c *gin.Context, m model.ResourceInterface)
+	AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
 	ListCondition(c *gin.Context) map[string]interface{}
 }
 
@@ -26,10 +28,10 @@ func (this EmptyRest) Rester() ControllerInterface{
 }
 func (this *EmptyRest) BeforeCreate(c *gin.Context, m model.ResourceInterface) {}
 func (this *EmptyRest) AfterCreate(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) BeforeUpdate(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) AfterUpdate(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) BeforeRest(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) AfterRest(c *gin.Context, m model.ResourceInterface) {}
+func (this *EmptyRest) BeforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
+func (this *EmptyRest) AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
+func (this *EmptyRest) BeforeDelete(c *gin.Context, m model.ResourceInterface, id int) {}
+func (this *EmptyRest) AfterDelete(c *gin.Context, m model.ResourceInterface, id int) {}
 func (this *EmptyRest) ListCondition(c *gin.Context) map[string]interface{} {
 	return make(map[string]interface{})
 }
@@ -41,4 +43,46 @@ func (this *EmptyRest) UpdateCondition(c *gin.Context, pk string) map[string]int
 	}
 	condition["id"] = id
 	return condition
+}
+
+
+
+func BuildRoute(controller ControllerInterface) (path, resourceName, routeId string) {
+	if controller.ParentNode() != nil {
+		pp, pr, pi := BuildRoute(controller.ParentNode())
+		path = pp + "/" + pr + "/:" + pi
+	}
+	resourceName = controller.RouteName() + "s"
+	routeId = GetRouteID(controller)
+	return
+}
+func GetRouteID(controller ControllerInterface) (routeId string) {
+	routeId = "id"
+	if controller.IsRestRoutePk() {
+		routeId = controller.RouteName() + "_id"
+	}
+	return
+}
+func CheckUpdateCondition(m model.ResourceInterface, condition map[string]interface{}) {
+	v := reflect.ValueOf(m)
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+	for key, val := range condition {
+		old := v.FieldByName(helper.CamelString(key))
+		switch old.Kind() {
+		case reflect.String:
+			if old.String() != val {
+				panic(ForbidError(errors.New("forbid update by field:" + key)))
+			}
+			break
+		case reflect.Int:
+			if old.Int() != int64(val.(int)) {
+				panic(ForbidError(errors.New("forbid update by field:" + key)))
+			}
+			break
+		default:
+			panic(ForbidError(errors.New("forbid update by field type:" + old.Kind().String())))
+		}
+	}
 }

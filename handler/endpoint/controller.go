@@ -9,6 +9,7 @@ import (
 	"apibuilder-server/app"
 	"reflect"
 	"strings"
+	"errors"
 )
 
 var Com ControllerInterface
@@ -53,11 +54,9 @@ func (this *Controller) Create(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	this.Rester.BeforeRest(c, obj)
 	this.Rester.BeforeCreate(c, obj)
 	info := model.Create(obj)
-	this.Rester.AfterCreate(c, obj)
-	this.Rester.AfterRest(c, obj)
+	this.Rester.AfterCreate(c, info)
 	helper.ReturnSuccess(c, http.StatusCreated, info)
 }
 
@@ -86,35 +85,23 @@ func (this *Controller) Update(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	this.Rester.BeforeRest(c, obj)
-	this.Rester.BeforeUpdate(c, obj)
 	condition := this.Rester.UpdateCondition(c, GetRouteID(this.Rester))
-	info := model.UpdateWhere(condition, obj)
-	this.Rester.AfterUpdate(c, obj)
-	this.Rester.AfterRest(c, obj)
-
-	helper.ReturnSuccess(c, http.StatusOK, info)
+	if val, ok := condition["id"]; ok {
+		old := model.ByID(this.RestModel(), val.(int))
+		CheckUpdateCondition(old, condition)
+		this.Rester.BeforeUpdate(c, old, obj)
+		info := model.Update(val.(int), obj)
+		this.Rester.AfterUpdate(c, old, info)
+		helper.ReturnSuccess(c, http.StatusOK, info)
+	}else {
+		panic(NOChangeError(errors.New("can't find data to update")))
+	}
 }
-
 func (this *Controller) Delete(c *gin.Context) {
 	obj := this.RestModel()
 	id, _ := strconv.Atoi(c.Param(GetRouteID(this.Rester)))
+	this.Rester.BeforeDelete(c,obj, id)
 	model.Delete(obj, id)
+	this.Rester.AfterDelete(c,obj, id)
 	helper.ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
-}
-func BuildRoute(controller ControllerInterface) (path, resourceName, routeId string) {
-	if controller.ParentNode() != nil {
-		pp,pr,pi := BuildRoute(controller.ParentNode())
-		path =  pp + "/" + pr + "/:" + pi
-	}
-	resourceName = controller.RouteName() + "s"
-	routeId = GetRouteID(controller)
-	return
-}
-func GetRouteID(controller ControllerInterface) (routeId string) {
-	routeId = "id"
-	if controller.IsRestRoutePk() {
-		routeId = controller.RouteName() + "_id"
-	}
-	return
 }

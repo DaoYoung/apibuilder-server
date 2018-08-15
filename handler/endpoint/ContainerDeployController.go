@@ -37,8 +37,8 @@ func (this *ContainerDeployController) BeforeUpdate(c *gin.Context, m model.Reso
 	m.(*model.ContainerDeploy).ContainerId , _ = strconv.Atoi(c.Param("container_id"))
 }
 
-func (this *ContainerDeployController) UpdateCondition(c *gin.Context) map[string]interface{} {
-	condition := this.Controller.UpdateCondition(c)
+func (this *ContainerDeployController) UpdateCondition(c *gin.Context, pk string) map[string]interface{} {
+	condition := this.Controller.UpdateCondition(c, GetRouteID(this))
 	condition["container_id"] ,_ = strconv.Atoi(c.Param("container_id"))
 	return condition
 }

@@ -10,7 +10,9 @@ import (
 	"reflect"
 	"strings"
 )
+
 var Com ControllerInterface
+
 type ControllerInterface interface {
 	Update(c *gin.Context)
 	Create(c *gin.Context)
@@ -24,18 +26,19 @@ type ControllerInterface interface {
 
 type Controller struct {
 	ParentController ControllerInterface
-	Rester RestInterface
-	RestModel func()  model.ResourceInterface
-	RestModelSlice func()  interface{}//https://golang.org/doc/faq#convert_slice_of_interface
+	Rester           RestInterface
+	RestModel        func() model.ResourceInterface
+	RestModelSlice   func() interface{} //https://golang.org/doc/faq#convert_slice_of_interface
 	*EmptyRest
 }
-func (this *Controller) ParentNode() ControllerInterface{
+
+func (this *Controller) ParentNode() ControllerInterface {
 	return this.ParentController
 }
-func (this *Controller) IsRestRoutePk() bool{
+func (this *Controller) IsRestRoutePk() bool {
 	return false
 }
-func (this *Controller) RouteName() string{
+func (this *Controller) RouteName() string {
 	obj := this.RestModel()
 	f := reflect.TypeOf(obj)
 	if f.Kind() == reflect.Ptr {
@@ -60,14 +63,14 @@ func (this *Controller) Create(c *gin.Context) {
 
 func (this *Controller) Info(c *gin.Context) {
 	obj := this.RestModel()
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param(GetRouteID(this.Rester)))
 	info := model.ByID(obj, id)
 	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 
 func (this *Controller) List(c *gin.Context) {
 	page, err := strconv.Atoi(c.DefaultQuery("page", "1"))
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	obj := this.RestModelSlice()
@@ -77,44 +80,41 @@ func (this *Controller) List(c *gin.Context) {
 	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
 
-
 func (this *Controller) Update(c *gin.Context) {
 	obj := this.RestModel()
 	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	condition := this.Rester.UpdateCondition(c)
+	this.Rester.BeforeRest(c, obj)
+	this.Rester.BeforeUpdate(c, obj)
+	condition := this.Rester.UpdateCondition(c, GetRouteID(this.Rester))
 	info := model.UpdateWhere(condition, obj)
+	this.Rester.AfterUpdate(c, obj)
+	this.Rester.AfterRest(c, obj)
+
 	helper.ReturnSuccess(c, http.StatusOK, info)
 }
 
 func (this *Controller) Delete(c *gin.Context) {
 	obj := this.RestModel()
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param(GetRouteID(this.Rester)))
 	model.Delete(obj, id)
 	helper.ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
 }
-func BuildRoute(controller ControllerInterface) (path,resourceName, routeId string)  {
-	path = parentRoute(controller)
-	RouteName := controller.RouteName()
-	resourceName = RouteName+"s"
-	routeId = "id"
-	if controller.IsRestRoutePk(){
-		routeId = RouteName+"_id"
+func BuildRoute(controller ControllerInterface) (path, resourceName, routeId string) {
+	if controller.ParentNode() != nil {
+		pp,pr,pi := BuildRoute(controller.ParentNode())
+		path =  pp + "/" + pr + "/:" + pi
 	}
+	resourceName = controller.RouteName() + "s"
+	routeId = GetRouteID(controller)
 	return
 }
-func parentRoute(controller ControllerInterface) (path string) {
-	path = ""
-	if controller.ParentNode() != nil {
-		parent := parentRoute(controller.ParentNode())
-		resourceName := controller.ParentNode().RouteName()+"s"
-		routeId := "id"
-		if controller.ParentNode().IsRestRoutePk(){
-			routeId = controller.ParentNode().RouteName()+"_id"
-		}
-		path = parent+"/"+resourceName+"/:"+routeId
+func GetRouteID(controller ControllerInterface) (routeId string) {
+	routeId = "id"
+	if controller.IsRestRoutePk() {
+		routeId = controller.RouteName() + "_id"
 	}
 	return
 }

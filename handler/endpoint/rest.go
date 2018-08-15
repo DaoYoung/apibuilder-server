@@ -15,11 +15,9 @@ type RestInterface interface {
 	BeforeCreate(c *gin.Context, m model.ResourceInterface)
 	AfterCreate(c *gin.Context, m model.ResourceInterface)
 	BeforeUpdate(c *gin.Context, m model.ResourceInterface)
-	UpdateCondition(c *gin.Context) map[string]interface{}
+	UpdateCondition(c *gin.Context, pk string) map[string]interface{}
 	AfterUpdate(c *gin.Context, m model.ResourceInterface)
 	ListCondition(c *gin.Context) map[string]interface{}
-
-
 }
 
 type EmptyRest struct {}
@@ -35,9 +33,9 @@ func (this *EmptyRest) AfterRest(c *gin.Context, m model.ResourceInterface) {}
 func (this *EmptyRest) ListCondition(c *gin.Context) map[string]interface{} {
 	return make(map[string]interface{})
 }
-func (this *EmptyRest) UpdateCondition(c *gin.Context) map[string]interface{} {
+func (this *EmptyRest) UpdateCondition(c *gin.Context, pk string) map[string]interface{} {
 	condition := make(map[string]interface{})
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param(pk))
 	if err!=nil {
 		panic(NOContentError(errors.New("can't Update without ID")))
 	}

@@ -18,7 +18,7 @@ func (action ModelController) Rester() ControllerInterface {
 	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
 	return  &action
 }
-func (this *ModelController) IsRestRoutePk() bool{
+func (action *ModelController) IsRestRoutePk() bool{
 	return true
 }
 func (action *ModelController) RouteName() string {

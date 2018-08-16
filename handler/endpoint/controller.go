@@ -12,7 +12,6 @@ import (
 	"errors"
 )
 
-var Com ControllerInterface
 
 type ControllerInterface interface {
 	Update(c *gin.Context)
@@ -20,19 +19,40 @@ type ControllerInterface interface {
 	Info(c *gin.Context)
 	List(c *gin.Context)
 	Delete(c *gin.Context)
-	IsRestRoutePk() bool
-	RouteName() string
+	IsRestRoutePk() bool //false id
+	RouteName() string //rewrite resource name in route url
 	ParentNode() ControllerInterface
+
+	init(r ControllerInterface)
+	model() model.ResourceInterface
+	modelSlice() interface{}
+	parentController() ControllerInterface
+	beforeDelete(c *gin.Context, m model.ResourceInterface, id int)
+	afterDelete(c *gin.Context, m model.ResourceInterface, id int)
+	beforeCreate(c *gin.Context, m model.ResourceInterface)
+	afterCreate(c *gin.Context, m model.ResourceInterface)
+	beforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
+	updateCondition(c *gin.Context, pk string) map[string]interface{}
+	afterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
+	listCondition(c *gin.Context) map[string]interface{}
 }
 
 type Controller struct {
 	ParentController ControllerInterface
-	Rester           RestInterface
+	Rester           ControllerInterface
 	RestModel        func() model.ResourceInterface
 	RestModelSlice   func() interface{} //https://golang.org/doc/faq#convert_slice_of_interface
 	*EmptyRest
 }
-
+func (this *Controller) init(r ControllerInterface){
+	if r == nil {
+		panic(NOContentError(errors.New("param r: is not a controller")))
+	}
+	this.Rester = r
+	this.RestModel = r.model
+	this.RestModelSlice = r.modelSlice
+	this.ParentController = r.parentController()
+}
 func (this *Controller) ParentNode() ControllerInterface {
 	return this.ParentController
 }
@@ -54,9 +74,9 @@ func (this *Controller) Create(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	this.Rester.BeforeCreate(c, obj)
+	this.Rester.beforeCreate(c, obj)
 	info := model.Create(obj)
-	this.Rester.AfterCreate(c, info)
+	this.Rester.afterCreate(c, info)
 	helper.ReturnSuccess(c, http.StatusCreated, info)
 }
 
@@ -73,7 +93,7 @@ func (this *Controller) List(c *gin.Context) {
 		panic(err)
 	}
 	obj := this.RestModelSlice()
-	condition := this.Rester.ListCondition(c)
+	condition := this.Rester.listCondition(c)
 	condition = helper.MapUrlQuery(condition, c.Request.URL.Query(), this.RestModel())
 	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage)
 	helper.ReturnSuccess(c, http.StatusOK, obj)
@@ -85,13 +105,13 @@ func (this *Controller) Update(c *gin.Context) {
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
-	condition := this.Rester.UpdateCondition(c, GetRouteID(this.Rester))
+	condition := this.Rester.updateCondition(c, GetRouteID(this.Rester))
 	if val, ok := condition["id"]; ok {
 		old := model.ByID(this.RestModel(), val.(int))
-		CheckUpdateCondition(old, condition)
-		this.Rester.BeforeUpdate(c, old, obj)
+		CheckupdateCondition(old, condition)
+		this.Rester.beforeUpdate(c, old, obj)
 		info := model.Update(val.(int), obj)
-		this.Rester.AfterUpdate(c, old, info)
+		this.Rester.afterUpdate(c, old, info)
 		helper.ReturnSuccess(c, http.StatusOK, info)
 	}else {
 		panic(NOChangeError(errors.New("can't find data to update")))
@@ -100,8 +120,8 @@ func (this *Controller) Update(c *gin.Context) {
 func (this *Controller) Delete(c *gin.Context) {
 	obj := this.RestModel()
 	id, _ := strconv.Atoi(c.Param(GetRouteID(this.Rester)))
-	this.Rester.BeforeDelete(c,obj, id)
+	this.Rester.beforeDelete(c,obj, id)
 	model.Delete(obj, id)
-	this.Rester.AfterDelete(c,obj, id)
+	this.Rester.afterDelete(c,obj, id)
 	helper.ReturnSuccess(c, http.StatusOK, gin.H{"id": id})
 }

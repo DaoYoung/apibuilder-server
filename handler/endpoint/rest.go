@@ -9,33 +9,27 @@ import (
 	"apibuilder-server/helper"
 )
 
-type RestInterface interface {
-	ControllerInterface
-	Rester() ControllerInterface
-	BeforeDelete(c *gin.Context, m model.ResourceInterface, id int)
-	AfterDelete(c *gin.Context, m model.ResourceInterface, id int)
-	BeforeCreate(c *gin.Context, m model.ResourceInterface)
-	AfterCreate(c *gin.Context, m model.ResourceInterface)
-	BeforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
-	UpdateCondition(c *gin.Context, pk string) map[string]interface{}
-	AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface)
-	ListCondition(c *gin.Context) map[string]interface{}
-}
-
 type EmptyRest struct {}
-func (this EmptyRest) Rester() ControllerInterface{
+func (this EmptyRest)  Rester() {
 	panic(NOContentError(errors.New("can't find func:Rester in your controller")))
 }
-func (this *EmptyRest) BeforeCreate(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) AfterCreate(c *gin.Context, m model.ResourceInterface) {}
-func (this *EmptyRest) BeforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
-func (this *EmptyRest) AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
-func (this *EmptyRest) BeforeDelete(c *gin.Context, m model.ResourceInterface, id int) {}
-func (this *EmptyRest) AfterDelete(c *gin.Context, m model.ResourceInterface, id int) {}
-func (this *EmptyRest) ListCondition(c *gin.Context) map[string]interface{} {
+func (this EmptyRest)  modelSlice() interface{} {
+	panic(NOContentError(errors.New("can't find func:modelSlice in your controller")))
+}
+func (this *EmptyRest) model() model.ResourceInterface{
+	panic(NOContentError(errors.New("can't find func:model in your controller")))
+}
+func (this *EmptyRest) parentController() ControllerInterface { return  nil}
+func (this *EmptyRest) beforeCreate(c *gin.Context, m model.ResourceInterface) {}
+func (this *EmptyRest) afterCreate(c *gin.Context, m model.ResourceInterface) {}
+func (this *EmptyRest) beforeUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
+func (this *EmptyRest) afterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {}
+func (this *EmptyRest) beforeDelete(c *gin.Context, m model.ResourceInterface, id int) {}
+func (this *EmptyRest) afterDelete(c *gin.Context, m model.ResourceInterface, id int) {}
+func (this *EmptyRest) listCondition(c *gin.Context) map[string]interface{} {
 	return make(map[string]interface{})
 }
-func (this *EmptyRest) UpdateCondition(c *gin.Context, pk string) map[string]interface{} {
+func (this *EmptyRest) updateCondition(c *gin.Context, pk string) map[string]interface{} {
 	condition := make(map[string]interface{})
 	id, err := strconv.Atoi(c.Param(pk))
 	if err!=nil {
@@ -63,7 +57,7 @@ func GetRouteID(controller ControllerInterface) (routeId string) {
 	}
 	return
 }
-func CheckUpdateCondition(m model.ResourceInterface, condition map[string]interface{}) {
+func CheckupdateCondition(m model.ResourceInterface, condition map[string]interface{}) {
 	v := reflect.ValueOf(m)
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()

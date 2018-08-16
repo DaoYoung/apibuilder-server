@@ -12,13 +12,17 @@ import (
 type ModelController struct {
 	Controller
 }
-func (action ModelController) Rester() ControllerInterface {
-	action.Controller.Rester = &action
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.ApiModel{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.ApiModel{} }
+func (action *ModelController) model() model.ResourceInterface {
+	return &(model.ApiModel{})
+}
+func (action *ModelController) modelSlice() interface{} {
+	return &[]model.ApiModel{}
+}
+func (action ModelController) Rester() (actionPtr *ModelController) {
+	action.init(&action)
 	return  &action
 }
-func (action *ModelController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+func (action *ModelController) beforeCreate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
 	m.(*model.ApiModel).AuthorId = user.ID
 }

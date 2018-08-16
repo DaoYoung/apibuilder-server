@@ -8,17 +8,21 @@ import (
 type TaskController struct {
 	Controller
 }
-func (action TaskController) Rester() ControllerInterface {
-	actionPtr := &action
-	action.Controller.Rester = actionPtr
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Task{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.Task{} }
-	return  actionPtr
+func (action *TaskController) model() model.ResourceInterface {
+	return &(model.Task{})
 }
-func (this *TaskController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+func (action *TaskController) modelSlice() interface{} {
+	return &[]model.Task{}
+}
+func (action TaskController) Rester() (actionPtr *TaskController) {
+	action.init(&action)
+	return  &action
+}
+
+func (action *TaskController) beforeCreate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
 	m.(*model.Task).AuthorId = user.ID
 }
-func (this *TaskController) AfterRest(c *gin.Context, m model.ResourceInterface) {
+func (action *TaskController) assign(c *gin.Context) {
 	//todo add task log
 }

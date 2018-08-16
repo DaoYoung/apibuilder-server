@@ -11,12 +11,15 @@ type ContainerController struct {
 func (this *ContainerController) IsRestRoutePk() bool{
 	return true
 }
-func (action ContainerController) Rester() ControllerInterface {
-	actionPtr := &action
-	action.Controller.Rester = actionPtr
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Container{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.Container{} }
-	return  actionPtr
+func (action *ContainerController) model() model.ResourceInterface {
+	return &(model.Container{})
+}
+func (action *ContainerController) modelSlice() interface{} {
+	return &[]model.Container{}
+}
+func (action ContainerController) Rester() (actionPtr *ContainerController) {
+	action.init(&action)
+	return  &action
 }
 func (action *ContainerController) BeforeRest(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)

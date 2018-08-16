@@ -18,19 +18,23 @@ type ApiController struct {
 func (this *ApiController) IsRestRoutePk() bool {
 	return true
 }
-func (action ApiController) Rester() ControllerInterface {
-	action.Controller.Rester = &action
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.Api{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.Api{} }
+func (action *ApiController) model() model.ResourceInterface {
+	return &(model.Api{})
+}
+func (action *ApiController) modelSlice() interface{} {
+	return &[]model.Api{}
+}
+func (action ApiController) Rester() (actionPtr *ApiController) {
+	action.init(&action)
 	return  &action
 }
 
-func (action *ApiController) BeforeCreate(c *gin.Context, m model.ResourceInterface) {
+func (action *ApiController) beforeCreate(c *gin.Context, m model.ResourceInterface) {
 	user := model.GetUserFromToken(c)
 	m.(*model.Api).AuthorId = user.ID
 }
 
-func (action *ApiController) AfterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
+func (action *ApiController) afterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
 	if old.(*model.Api).Status == model.ApiStatusDraft && new.(*model.Api).Status == model.ApiStatusPublish {
 		model.CreateLog(old.(*model.Api).AuthorId, model.ApiLogPublish, old.(*model.Api).ID)
 	}else{

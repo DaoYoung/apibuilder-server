@@ -10,12 +10,15 @@ import (
 type UserController struct {
 	Controller
 }
-func (action UserController) Rester() ControllerInterface {
-	actionPtr := &action
-	action.Controller.Rester = actionPtr
-	action.Controller.RestModel = func() model.ResourceInterface { return &(model.User{}) }
-	action.Controller.RestModelSlice = func() interface{} { return &[]model.User{} }
-	return  actionPtr
+func (action *UserController) model() model.ResourceInterface {
+	return &(model.User{})
+}
+func (action *UserController) modelSlice() interface{} {
+	return &[]model.User{}
+}
+func (action UserController) Rester() (actionPtr *UserController) {
+	action.init(&action)
+	return  &action
 }
 func Profile(c *gin.Context)  {
 	user := model.GetUserFromToken(c)

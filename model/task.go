@@ -10,7 +10,8 @@ type Task struct {
 	Description   string    `json:"description"`
 	Priority      int       `json:"priority"`
 	Deadline      time.Time `json:"deadline"`
-	DependId      int       `json:"depend_id"`
-	BindApiId     int       `json:"bind_api_id"`
+	VersionTag   string    `json:"version_tag"`
+	HasPrd       int       `json:"has_prd"`
+	IsCheck      int       `json:"is_check"`
 	Status        int       `json:"status"`
 }

@@ -330,6 +330,26 @@ INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, 
 	(7, 'kai', '', 0, 1, '2018-08-15 17:27:04', '2018-08-15 17:27:04', NULL);
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 
+-- 导出  表 apibuilder.notifications 结构
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `type` mediumint(5) NOT NULL DEFAULT '0',
+  `entity_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entity_id` int(10) NOT NULL DEFAULT '0',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未读 1已读',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.notifications 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+
 -- 导出  表 apibuilder.students 结构
 CREATE TABLE IF NOT EXISTS `students` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -362,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新需求任务';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新需求任务';
 
 -- 正在导出表  apibuilder.tasks 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
@@ -371,7 +391,8 @@ INSERT INTO `tasks` (`id`, `author_id`, `appoint_user_id`, `title`, `description
 	(2, 1, 22, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 20:18:25', '2018-08-16 18:33:10', NULL),
 	(3, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 21:09:23', '2018-08-14 21:09:23', NULL),
 	(4, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-15 14:40:47', '2018-08-15 14:40:47', NULL),
-	(5, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-16 18:33:07', '2018-08-16 18:33:07', NULL);
+	(5, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-16 18:33:07', '2018-08-16 18:33:07', NULL),
+	(6, 1, 1, 'task222', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-30 17:48:34', '2018-08-30 18:07:43', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.task_containers 结构

@@ -3,6 +3,7 @@ package endpoint
 import (
 	"apibuilder-server/model"
 	"github.com/gin-gonic/gin"
+	"apibuilder-server/helper"
 )
 
 type TaskController struct {
@@ -23,6 +24,13 @@ func (action *TaskController) beforeCreate(c *gin.Context, m model.ResourceInter
 	user := model.GetUserFromToken(c)
 	m.(*model.Task).AuthorId = user.ID
 }
-func (action *TaskController) assign(c *gin.Context) {
-	//todo add task log
+func (this *TaskController) afterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
+	if 1 > 0 {
+		author := model.GetUserFromToken(c)
+		appointUser := &model.User{}
+		model.ByID(appointUser, new.(*model.Task).AppointUserId)
+		(&model.Notification{}).PoorNew(
+			new.(*model.Task).AppointUserId,
+			helper.Speak("task_appoint", author.Username, new.(*model.Task).Title, appointUser.Username))
+	}
 }

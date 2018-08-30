@@ -16,13 +16,13 @@ type BaseFields struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
-func (bf BaseFields) ListFields() []string {
+func (mod BaseFields) ListFields() []string {
 	return []string{"*"}
 }
-func (bf BaseFields) InfoFields() []string {
-	return bf.ListFields()
+func (mod BaseFields) InfoFields() []string {
+	return mod.ListFields()
 }
-func (bf BaseFields) ForbidUpdateFields() []string {
+func (mod BaseFields) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields()
 }
 

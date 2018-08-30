@@ -25,7 +25,7 @@ func (action *TaskController) beforeCreate(c *gin.Context, m model.ResourceInter
 	m.(*model.Task).AuthorId = user.ID
 }
 func (this *TaskController) afterUpdate(c *gin.Context, old model.ResourceInterface, new model.ResourceInterface) {
-	if 1 > 0 {
+	if old.(*model.Task).AppointUserId == 0 && new.(*model.Task).AppointUserId > 0 {
 		author := model.GetUserFromToken(c)
 		appointUser := &model.User{}
 		model.ByID(appointUser, new.(*model.Task).AppointUserId)

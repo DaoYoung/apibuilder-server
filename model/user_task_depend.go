@@ -6,3 +6,8 @@ type UserTaskDepend struct {
 	DependId int `json:"depend_id"`
 	UserId   int `json:"user_id"`
 }
+func (mod *UserTaskDepend) UserTask() *UserTask {
+	task := &UserTask{}
+	ByID(task, mod.TaskId)
+	return task
+}

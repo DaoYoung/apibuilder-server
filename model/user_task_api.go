@@ -6,3 +6,8 @@ type UserTaskApi struct {
 	ApiId int `json:"api_id"`
 	UserId   int `json:"user_id"`
 }
+func (mod *UserTaskApi) UserTask() *UserTask {
+	task := &UserTask{}
+	ByID(task, mod.TaskId)
+	return task
+}

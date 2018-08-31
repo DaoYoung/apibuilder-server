@@ -3,7 +3,6 @@ package endpoint
 import (
 	"apibuilder-server/model"
 	"github.com/gin-gonic/gin"
-	"log"
 )
 
 type UserTaskController struct {
@@ -35,7 +34,6 @@ func (action *UserTaskController) afterCreate(c *gin.Context, m model.ResourceIn
 		model.Update(teamTask.TaskId, task)
 	}
 	author := model.GetUserFromToken(c)
-log.Printf("%+v", author)
 	developer := m.(*model.UserTask).Developer()
 	(&model.Notification{}).PoorNew( task.AppointUserId, "task_separate", author.Team().TeamName,author.Username,teamTask.Title,m.(*model.UserTask).Title, developer.Username)
 

@@ -1,13 +1,470 @@
 {
-  "front-version": "2.18.0",
+  "front-version": "2.19.0",
   "version": 3,
   "nodes": [
     {
       "type": "Project",
       "description": "",
       "id": "e18334d4-2cda-4c4e-b67e-3f40b993c31a",
-      "lastModified": "2018-08-15T19:57:15.832+08:00",
+      "lastModified": "2018-08-31T20:10:20.263+08:00",
       "name": "apibuilder"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "615c9131-d5ac-412b-a970-3d85f9172e95",
+      "lastModified": "2018-08-30T15:51:26.448+08:00",
+      "name": "个人任务",
+      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_user_id",
+              "value": "2"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "5035c7b5-3817-45d3-b1be-f4725143a681",
+      "lastModified": "2018-08-31T20:02:09.668+08:00",
+      "name": "list",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "c66ebab7-3b5d-45ce-b968-aafa10c5143b",
+      "lastModified": "2018-08-31T20:02:04.664+08:00",
+      "name": "分解个人任务",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"api_id\":11\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/apis"
+      },
+      "id": "2e3e2b1e-4168-48ad-b26c-279a702dfc6d",
+      "lastModified": "2018-08-31T20:10:20.263+08:00",
+      "name": "绑定api",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"depend_id\":2\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/depends"
+      },
+      "id": "9ebd9b36-f188-4798-99a4-a83276606202",
+      "lastModified": "2018-08-31T20:09:11.723+08:00",
+      "name": "设置依赖",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
+    },
+    {
+      "type": "Service",
+      "id": "c15af3c6-53a3-4aa3-9f42-9889ce935356",
+      "lastModified": "2018-08-31T17:01:06.937+08:00",
+      "name": "团队",
+      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teams"
+      },
+      "id": "25220534-4b47-48ac-a19e-fb5a177f0977",
+      "lastModified": "2018-08-31T17:15:44.002+08:00",
+      "name": "列表",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "c15af3c6-53a3-4aa3-9f42-9889ce935356"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teams"
+      },
+      "id": "6555630c-c0c8-4039-a6c2-3e1b1b1e266b",
+      "lastModified": "2018-08-31T17:07:12.164+08:00",
+      "name": "新建",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "c15af3c6-53a3-4aa3-9f42-9889ce935356"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3",
+      "lastModified": "2018-08-30T15:50:51.534+08:00",
+      "name": "团队任务",
+      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_team_id\":1,\n  \"task_id\":6,\n  \"title\":\"web\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_team_id",
+              "value": "1"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks"
+      },
+      "id": "78131d0d-6119-411c-9d95-b67d860b796c",
+      "lastModified": "2018-08-31T17:12:30.012+08:00",
+      "name": "任务列表",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_team_id\":1,\n  \"task_id\":6,\n  \"title\":\"web\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks"
+      },
+      "id": "f26d083f-dd0c-43f7-ba97-280abb39b6ba",
+      "lastModified": "2018-08-31T17:16:19.380+08:00",
+      "name": "分配团队任务",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"web2123\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks/2"
+      },
+      "id": "0b2a7c7f-5a45-41d1-87a3-c22d38f18792",
+      "lastModified": "2018-08-31T17:13:20.316+08:00",
+      "name": "更新",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
     },
     {
       "type": "Service",
@@ -62,9 +519,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -106,9 +561,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -149,9 +602,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -199,9 +650,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -242,9 +691,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -292,9 +739,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -342,9 +787,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -386,9 +829,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -429,9 +870,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
     },
     {
@@ -480,9 +919,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
     },
     {
@@ -523,9 +960,7 @@
           "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzM0ODY5MDIsImlkIjoieWlkYW8iLCJvcmlnX2lhdCI6MTUzMzQ4MzMwMn0.WqtYA5HDH5OWkzFlc0RP2sWhQUem-MP-aaQV_Ehus3c"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
     },
     {
@@ -568,9 +1003,7 @@
           "value": "application/json"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
     },
     {
@@ -626,9 +1059,7 @@
           "value": "application/json"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
     },
     {
@@ -684,9 +1115,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
     {
@@ -728,9 +1157,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
     {
@@ -783,9 +1210,7 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
     {
@@ -828,8 +1253,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
@@ -878,9 +1302,7 @@
           "value": "application/json"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
     {
@@ -923,8 +1345,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
@@ -973,9 +1394,7 @@
           "value": "application/json"
         }
       ],
-      "metaInfo": {
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
-      },
+      "metaInfo": {},
       "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
     },
     {
@@ -1025,8 +1444,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
       "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
     },
@@ -1076,8 +1494,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
       "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
     },
@@ -1096,7 +1513,57 @@
         },
         "bodyType": "Text",
         "autoSetLength": true,
-        "textBody": "{\n  \"assign_user_id\":22\n}"
+        "textBody": "{\n  \"appoint_user_id\":1\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/workflow/tasks/6"
+      },
+      "id": "27dc6bbd-6fb9-49a1-9487-f2b1797c1255",
+      "lastModified": "2018-08-31T14:05:22.708+08:00",
+      "name": "指定责任人",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlpX2Rhb0BodW5saWppLmNvbSIsImV4cCI6MTUzNTcwODExNCwiaWQiOiJ5aWRhbyIsIm9yaWdfaWF0IjoxNTM1NjIxNzE0LCJwaG9uZSI6IjEzNTY3MTE5MTAzIiwidWlkIjoxfQ.UTT6gXEOYYLUZCi4YxJ-ZtKPUGxr0TKGhmzjOqMz4ww"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "27dc6bbd-6fb9-49a1-9487-f2b1797c1255"
+      },
+      "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"ddd\"\n}"
       },
       "headersType": "Form",
       "uri": {
@@ -1112,8 +1579,8 @@
         "path": "/workflow/tasks/2"
       },
       "id": "a597a4c6-25b5-4129-b06d-1371221b568e",
-      "lastModified": "2018-08-15T14:41:42.315+08:00",
-      "name": "转移",
+      "lastModified": "2018-08-31T15:04:46.829+08:00",
+      "name": "更新",
       "headers": [
         {
           "enabled": true,
@@ -1127,8 +1594,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
       "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
     },
@@ -1190,8 +1656,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1234,8 +1699,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1285,8 +1749,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a"
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1330,8 +1793,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1381,8 +1843,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1426,8 +1887,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a"
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1477,8 +1937,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91"
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1522,8 +1981,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91",
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91"
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1573,8 +2031,7 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
     },
@@ -1624,280 +2081,9 @@
         }
       ],
       "metaInfo": {
-        "IS_FROM_HISTORY": null,
-        "ownerId": "auth0|5b5e5d213bf7372a5b9a9b87"
+        "IS_FROM_HISTORY": null
       },
       "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "0E0C8BF1-1145-4CA8-AEDE-F350B96DBA7B",
-      "lastModified": "2017-03-20T10:12:26.232+08:00",
-      "name": "admin",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "admin.hunliji.com"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "921F0059-3637-4BFD-8997-9B191E7D0125",
-      "lastModified": "2016-01-27T20:01:22.838+08:00",
-      "name": "debug",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "api.hunliji.com"
-        },
-        {
-          "enabled": true,
-          "name": "xdebug",
-          "value": "XDEBUG_SESSION_START"
-        },
-        {
-          "enabled": true,
-          "name": "key",
-          "value": "PHPSTORM"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "id": "2004c598-2ba7-47a7-9315-263e4177ebf4",
-      "lastModified": "2018-08-15T14:34:42.706+08:00",
-      "name": "dev",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "localhost:8080"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlpX2Rhb0BodW5saWppLmNvbSIsImV4cCI6MTUzNDQwMTI3MywiaWQiOiJ5aWRhbyIsIm9yaWdfaWF0IjoxNTM0MzE0ODczLCJwaG9uZSI6IjEzNTY3MTE5MTAzIiwidWlkIjoxfQ.G5frLXncEk5xW5TS61p2e043CbQwznZZFd8jqbFX8vo"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "1845B2EB-0014-4DAC-B9B0-2E40A40CD854",
-      "lastModified": "2017-03-24T15:12:03.621+08:00",
-      "name": "local",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        },
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "api.hunliji.com"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "5f3524a6-0fd2-44d2-bea9-bae5b99264ee",
-      "lastModified": "2017-09-30T14:04:58.278+08:00",
-      "name": "m",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "m.hunliji.com"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "2895515c230178a552596570760c891e"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "A91D5759-E37D-4EA0-AF49-2A57D85F8C60",
-      "lastModified": "2017-04-10T16:17:44.502+08:00",
-      "name": "php1",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "120.27.194.174"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "7b2607ffba7559277b3208d3028015a5"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "95DBBE39-20AA-4801-B159-8425370E0FA7",
-      "lastModified": "2016-09-27T12:07:42.624+08:00",
-      "name": "php2",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "120.27.158.149"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "A7C7410A-6A88-40ED-A889-96DEE3C5B54E",
-      "lastModified": "2016-09-27T12:08:00.173+08:00",
-      "name": "php3",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "121.196.226.229"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "d68c9729-70d8-4f4d-91d3-485f2d7a2365",
-      "lastModified": "2017-08-30T17:02:43.544+08:00",
-      "name": "php4",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "118.178.131.8"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "215cc74a-fc22-4dbc-8b24-2bbc1a04bd53",
-      "lastModified": "2018-02-09T11:41:42.245+08:00",
-      "name": "php5",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "118.178.237.32"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "90BFA1C6-4B06-4212-AA3E-B04B10697E2C",
-      "lastModified": "2017-03-22T11:45:36.494+08:00",
-      "name": "php7",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "www7.hunliji.com"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "44A8D0BC-3006-4DCA-A4A4-FA9D7CF9D944",
-      "lastModified": "2017-11-24T18:04:13.240+08:00",
-      "name": "test",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "admintest.hunliji.com"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "2E9F5375-229D-473B-966E-FE1DB8C98920",
-      "lastModified": "2018-08-15T17:47:00.572+08:00",
-      "name": "test8081",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "admintest.hunliji.com:8082"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
-    },
-    {
-      "type": "Context",
-      "contextType": "Global",
-      "id": "596C4143-8FD0-4468-8C8B-23CFA094C7C5",
-      "lastModified": "2016-09-27T12:05:25.337+08:00",
-      "name": "www",
-      "variables": [
-        {
-          "enabled": true,
-          "name": "domain",
-          "value": "www.hunliji.com"
-        },
-        {
-          "enabled": true,
-          "name": "token",
-          "value": "a498b0b2304724d6c0b370165c93bd12"
-        }
-      ]
     }
   ]
 }

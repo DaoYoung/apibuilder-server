@@ -334,7 +334,7 @@ INSERT INTO `modules` (`id`, `title`, `spid`, `pid`, `author_id`, `created_at`, 
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(10) NOT NULL DEFAULT '0',
-  `type` mediumint(5) NOT NULL DEFAULT '0',
+  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `entity_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `entity_id` int(10) NOT NULL DEFAULT '0',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -344,10 +344,24 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 正在导出表  apibuilder.notifications 的数据：~0 rows (大约)
+-- 正在导出表  apibuilder.notifications 的数据：~7 rows (大约)
 /*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+INSERT INTO `notifications` (`id`, `user_id`, `type`, `entity_type`, `entity_id`, `title`, `message`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, '0', '', 0, '任务指定', '[yidao task222 yidao] 指定了任务（%!s(MISSING)）给%!s(MISSING)', 0, '2018-08-30 18:17:37', '2018-08-30 18:17:37', NULL),
+	(2, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（%!!(string=yidao)!(string=task222)s(MISSING)）给%!!(MISSING)!(MISSING)s(MISSING)', 0, '2018-08-30 18:23:47', '2018-08-30 18:23:47', NULL),
+	(3, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（%!!(string=yidao)!(string=task222)s(MISSING)）给%!!(MISSING)!(MISSING)s(MISSING)', 0, '2018-08-30 18:31:15', '2018-08-30 18:31:15', NULL),
+	(4, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（task222）给yidao', 0, '2018-08-30 18:31:31', '2018-08-30 18:31:31', NULL),
+	(5, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（task222）给yidao', 0, '2018-08-31 14:02:08', '2018-08-31 14:02:08', NULL),
+	(6, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（task222）给yidao', 0, '2018-08-31 14:04:35', '2018-08-31 14:04:35', NULL),
+	(7, 1, '0', '', 0, '任务指定', 'yidao 指定了任务（task222）给yidao', 0, '2018-08-31 14:04:58', '2018-08-31 14:04:58', NULL),
+	(8, 1, 'task_dispatch', '', 0, '任务指定', 'yidao 指定了任务（task222）给yidao', 0, '2018-08-31 17:08:23', '2018-08-31 17:08:23', NULL),
+	(9, 1, 'task_dispatch', '', 0, '分配团队任务', 'yidao 分配团队任务（task222）给', 0, '2018-08-31 17:10:44', '2018-08-31 17:10:44', NULL),
+	(10, 9, 'task_separate', '', 0, '分解任务', ':yidao 分解团队任务（web） => 开发任务（子门店）， 指定给123', 0, '2018-08-31 19:07:44', '2018-08-31 19:07:44', NULL),
+	(11, 2, 'task_develop', '', 0, '开发任务', 'yidao 分配了新开发任务（子门店）给你', 0, '2018-08-31 19:07:44', '2018-08-31 19:07:44', NULL),
+	(12, 9, 'task_separate', '', 0, '分解任务', 'php:yidao 分解团队任务（web） => 开发任务（支付）， 指定给123', 0, '2018-08-31 19:09:40', '2018-08-31 19:09:40', NULL),
+	(13, 2, 'task_develop', '', 0, '开发任务', 'yidao 分配了新开发任务（支付）给你', 0, '2018-08-31 19:09:40', '2018-08-31 19:09:40', NULL);
 /*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.students 结构
@@ -374,10 +388,10 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `priority` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1高 2中 3低',
   `deadline` datetime DEFAULT NULL,
-  `version_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `version_id` int(10) NOT NULL DEFAULT '0',
   `has_prd` tinyint(1) NOT NULL DEFAULT '0',
   `is_check` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0未校验 1申请校验 2打回开发 3校验ok',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已分配 2已分解 3开发中  5完成上线',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0待分配 1已分配 2开发中 3测试中 4已上线 5终止，归档下线',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
@@ -386,13 +400,13 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 
 -- 正在导出表  apibuilder.tasks 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` (`id`, `author_id`, `appoint_user_id`, `title`, `description`, `priority`, `deadline`, `version_tag`, `has_prd`, `is_check`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 0, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 20:07:39', '2018-08-14 20:07:39', NULL),
-	(2, 1, 22, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 20:18:25', '2018-08-16 18:33:10', NULL),
-	(3, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-14 21:09:23', '2018-08-14 21:09:23', NULL),
-	(4, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-15 14:40:47', '2018-08-15 14:40:47', NULL),
-	(5, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-16 18:33:07', '2018-08-16 18:33:07', NULL),
-	(6, 1, 1, 'task222', 'test33', 1, '2018-08-30 23:04:05', 'v1', 0, 0, 0, '2018-08-30 17:48:34', '2018-08-30 18:07:43', NULL);
+INSERT INTO `tasks` (`id`, `author_id`, `appoint_user_id`, `title`, `description`, `priority`, `deadline`, `version_id`, `has_prd`, `is_check`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 0, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 0, '2018-08-14 20:07:39', '2018-08-31 07:39:43', NULL),
+	(2, 1, 22, 'ddd', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 0, '2018-08-14 20:18:25', '2018-08-31 07:39:44', NULL),
+	(3, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 0, '2018-08-14 21:09:23', '2018-08-31 07:39:46', NULL),
+	(4, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 0, '2018-08-15 14:40:47', '2018-08-31 07:39:47', NULL),
+	(5, 1, 2, 'task1', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 0, '2018-08-16 18:33:07', '2018-08-31 07:39:49', NULL),
+	(6, 1, 9, 'task222', 'test33', 1, '2018-08-30 23:04:05', 1, 0, 0, 2, '2018-08-30 17:48:34', '2018-08-31 18:20:07', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.task_containers 结构
@@ -439,10 +453,15 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  apibuilder.teams 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+INSERT INTO `teams` (`id`, `team_name`, `lead_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'php', 1, '2018-08-31 17:03:29', '2018-08-31 11:08:46', NULL),
+	(2, 'ios', 1, '2018-08-31 17:04:52', '2018-08-31 11:08:50', NULL),
+	(3, 'android', 6, '2018-08-31 17:05:28', '2018-08-31 11:08:56', NULL),
+	(4, 'web111', 6, '2018-08-31 17:07:10', '2018-08-31 17:07:10', NULL);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.team_tasks 结构
@@ -454,17 +473,22 @@ CREATE TABLE IF NOT EXISTS `team_tasks` (
   `task_id` int(10) NOT NULL DEFAULT '0',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `priority` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1高 2中 3低',
   `deadline` datetime DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='团队任务';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='团队任务';
 
 -- 正在导出表  apibuilder.team_tasks 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `team_tasks` DISABLE KEYS */;
+INSERT INTO `team_tasks` (`id`, `author_id`, `dispatch_user_id`, `appoint_team_id`, `task_id`, `title`, `description`, `deadline`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 0, 1, 6, 'web', 'sdfasdf', '2018-08-30 23:04:05', 0, '2018-08-31 16:57:39', '2018-08-31 16:57:39', NULL),
+	(2, 1, 0, 1, 6, 'web2123', 'sdfasdf', '2018-08-30 23:04:05', 0, '2018-08-31 17:07:26', '2018-08-31 17:13:11', NULL),
+	(3, 1, 0, 1, 6, 'web', 'sdfasdf', '2018-08-30 23:04:05', 0, '2018-08-31 17:08:23', '2018-08-31 17:08:23', NULL),
+	(4, 1, 0, 1, 6, 'web', 'sdfasdf', '2018-08-30 23:04:05', 0, '2018-08-31 17:10:43', '2018-08-31 17:10:43', NULL),
+	(5, 1, 0, 0, 0, '子门店', 'sdfasdf', '2018-08-30 23:04:05', 0, '2018-08-31 18:17:52', '2018-08-31 18:17:52', NULL);
 /*!40000 ALTER TABLE `team_tasks` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.users 结构
@@ -490,8 +514,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- 正在导出表  apibuilder.users 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `username`, `password`, `avatar`, `email`, `phone`, `status`, `role_id`, `team_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 'yidao', '123123', 'sql.png', 'yi_dao@hunliji.com', '13567119103', 1, 0, 0, '2018-08-05 23:33:43', '2018-08-05 23:34:06', NULL),
-	(2, '123', '123123', 'sql.png', 'yi_dao2@hunliji.com', '13567119102', 0, 0, 0, '2018-08-05 23:50:05', '2018-08-06 03:59:41', NULL);
+	(1, 'yidao', '123123', 'sql.png', 'yi_dao@hunliji.com', '13567119103', 1, 0, 1, '2018-08-05 23:33:43', '2018-08-31 10:20:31', NULL),
+	(2, '123', '123123', 'sql.png', 'yi_dao2@hunliji.com', '13567119102', 0, 0, 2, '2018-08-05 23:50:05', '2018-08-31 10:20:33', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.user_roles 结构
@@ -515,6 +539,7 @@ CREATE TABLE IF NOT EXISTS `user_tasks` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `author_id` int(10) NOT NULL DEFAULT '0',
   `appoint_user_id` int(10) NOT NULL DEFAULT '0' COMMENT '指定人',
+  `team_task_id` int(10) NOT NULL DEFAULT '0',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `priority` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1高 2中 3低',
@@ -526,11 +551,65 @@ CREATE TABLE IF NOT EXISTS `user_tasks` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 正在导出表  apibuilder.user_tasks 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `user_tasks` DISABLE KEYS */;
+INSERT INTO `user_tasks` (`id`, `author_id`, `appoint_user_id`, `team_task_id`, `title`, `description`, `priority`, `deadline`, `depend_id`, `bind_api_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 2, 1, '子门店', 'sdfasdf', 0, '2018-08-30 23:04:05', 0, 0, 0, '2018-08-31 18:19:06', '2018-08-31 18:19:06', NULL),
+	(2, 1, 2, 1, '子门店', 'sdfasdf', 0, '2018-08-30 23:04:05', 0, 0, 0, '2018-08-31 18:19:06', '2018-08-31 18:19:06', NULL),
+	(3, 1, 2, 1, '子门店', 'sdfasdf', 0, '2018-08-30 23:04:05', 0, 0, 0, '2018-08-31 18:20:07', '2018-08-31 18:20:07', NULL),
+	(4, 1, 2, 1, '子门店', 'sdfasdf', 0, '2018-08-30 23:04:05', 0, 0, 0, '2018-08-31 19:07:43', '2018-08-31 19:07:43', NULL),
+	(5, 1, 2, 1, '支付', 'sdfasdf', 0, '2018-08-30 23:04:05', 0, 0, 0, '2018-08-31 19:09:40', '2018-08-31 19:09:40', NULL);
 /*!40000 ALTER TABLE `user_tasks` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.user_task_apis 结构
+CREATE TABLE IF NOT EXISTS `user_task_apis` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `task_id` int(10) NOT NULL DEFAULT '0',
+  `api_id` int(10) NOT NULL DEFAULT '0',
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.user_task_apis 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `user_task_apis` DISABLE KEYS */;
+INSERT INTO `user_task_apis` (`id`, `task_id`, `api_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 11, 1, '2018-08-31 20:10:07', '2018-08-31 20:10:07', NULL);
+/*!40000 ALTER TABLE `user_task_apis` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.user_task_depends 结构
+CREATE TABLE IF NOT EXISTS `user_task_depends` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `task_id` int(10) NOT NULL DEFAULT '0',
+  `depend_id` int(10) NOT NULL DEFAULT '0',
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.user_task_depends 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `user_task_depends` DISABLE KEYS */;
+INSERT INTO `user_task_depends` (`id`, `task_id`, `depend_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 2, 1, '2018-08-31 20:08:52', '2018-08-31 20:08:52', NULL);
+/*!40000 ALTER TABLE `user_task_depends` ENABLE KEYS */;
+
+-- 导出  表 apibuilder.versions 结构
+CREATE TABLE IF NOT EXISTS `versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` int(11) DEFAULT NULL,
+  `pid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 正在导出表  apibuilder.versions 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `versions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `versions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

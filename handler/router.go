@@ -46,6 +46,11 @@ func Serve(engine *gin.Engine) {
 	task.Use(middleware.AuthHandlerFunc)
 	{
 		curdRoutes(task, endpoint.TaskController{}.Rester())
+		curdRoutes(task, endpoint.TeamController{}.Rester())
+		curdRoutes(task, endpoint.TeamTaskController{}.Rester())
+		curdRoutes(task, endpoint.UserTaskController{}.Rester())
+		curdRoutes(task, endpoint.UserTaskApiController{}.Rester())
+		curdRoutes(task, endpoint.UserTaskDependController{}.Rester())
 
 	}
 	//todo user Permission

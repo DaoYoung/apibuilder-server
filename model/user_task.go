@@ -6,11 +6,20 @@ type UserTask struct {
 	BaseFields
 	AuthorId     int       `json:"author_id"`
 	AppointUserId int       `json:"appoint_user_id"`
+	TeamTaskId int       `json:"team_task_id"`
 	Title        string    `json:"title"`
 	Description  string    `json:"description"`
 	Priority     int       `json:"priority"`
 	Deadline     time.Time `json:"deadline"`
-	DependId      int       `json:"depend_id"`
-	BindApiId     int       `json:"bind_api_id"`
 	Status       int       `json:"status"`
+}
+func (mod *UserTask) TeamTask() *TeamTask {
+	task := &TeamTask{}
+	ByID(task, mod.TeamTaskId)
+	return task
+}
+func (mod *UserTask) Developer() *User {
+	user := &User{}
+	ByID(user, mod.AppointUserId)
+	return user
 }

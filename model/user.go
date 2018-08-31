@@ -14,6 +14,7 @@ type User struct {
 	Phone    string `json:"phone"`
 	Status   int    `json:"status"`
 	RoleId   int    `json:"role_id"`
+	TeamId   int    `json:"team_id"`
 }
 
 func CheckUserPasswd(username string, passwd string) *User {
@@ -30,4 +31,10 @@ func GetUserFromToken(c *gin.Context) *User {
 	user := new(User)
 	ByID(user, int(claims["uid"].(float64)))
 	return user
+}
+
+func (mod *User) Team() *Team {
+	team := &Team{}
+	ByID(team, mod.TeamId)
+	return team
 }

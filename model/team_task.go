@@ -10,7 +10,18 @@ type TeamTask struct {
 	TaskId         int       `json:"task_id"`
 	Title          string    `json:"title"`
 	Description    string    `json:"description"`
-	Priority       int       `json:"priority"`
 	Deadline       time.Time `json:"deadline"`
 	Status         int       `json:"status"`
+}
+
+func (mod *TeamTask) Task() *Task {
+	task := &Task{}
+	ByID(task, mod.TaskId)
+	return task
+}
+
+func (mod *TeamTask) Team() *Team {
+	team := &Team{}
+	ByID(team, mod.AppointTeamId)
+	return team
 }

@@ -3,12 +3,12 @@ package endpoint
 import (
 	"apibuilder-server/model"
 	"github.com/gin-gonic/gin"
-	"apibuilder-server/helper"
 )
 
 type TaskController struct {
 	Controller
 }
+
 func (action *TaskController) model() model.ResourceInterface {
 	return &(model.Task{})
 }
@@ -17,7 +17,7 @@ func (action *TaskController) modelSlice() interface{} {
 }
 func (action TaskController) Rester() (actionPtr *TaskController) {
 	action.init(&action)
-	return  &action
+	return &action
 }
 
 func (action *TaskController) beforeCreate(c *gin.Context, m model.ResourceInterface) {
@@ -30,7 +30,6 @@ func (this *TaskController) afterUpdate(c *gin.Context, old model.ResourceInterf
 		appointUser := &model.User{}
 		model.ByID(appointUser, new.(*model.Task).AppointUserId)
 		(&model.Notification{}).PoorNew(
-			new.(*model.Task).AppointUserId,
-			helper.Speak("task_appoint", author.Username, new.(*model.Task).Title, appointUser.Username))
+			new.(*model.Task).AppointUserId, "task_appoint", author.Username, new.(*model.Task).Title, appointUser.Username)
 	}
 }

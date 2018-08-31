@@ -2,6 +2,15 @@ package model
 
 import "time"
 
+const (
+	StatusInit      = 0
+	TaskStatusDispatch   = 1
+	TaskStatusDevelop   = 2
+	TaskStatusTest      = 3
+	TaskStatusPublish   = 4
+	TaskStatusTerminate = 3
+)
+
 type Task struct {
 	BaseFields
 	AuthorId      int       `json:"author_id"`
@@ -10,8 +19,8 @@ type Task struct {
 	Description   string    `json:"description"`
 	Priority      int       `json:"priority"`
 	Deadline      time.Time `json:"deadline"`
-	VersionTag   string    `json:"version_tag"`
-	HasPrd       int       `json:"has_prd"`
-	IsCheck      int       `json:"is_check"`
+	VersionId     string    `json:"version_id"`
+	HasPrd        int       `json:"has_prd"`
+	IsCheck       int       `json:"is_check"`
 	Status        int       `json:"status"`
 }

@@ -11,3 +11,8 @@ func (mod *UserTaskDepend) UserTask() *UserTask {
 	ByID(task, mod.TaskId)
 	return task
 }
+func (mod *UserTaskDepend) DependTask() *UserTask {
+	task := &UserTask{}
+	ByID(task, mod.DependId)
+	return task
+}

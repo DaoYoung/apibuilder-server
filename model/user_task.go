@@ -23,10 +23,12 @@ func (mod *UserTask) Developer() *User {
 	ByID(user, mod.AppointUserId)
 	return user
 }
-func (mod *UserTaskDepend) Depends() []UserTaskDepend {
-	res := []UserTaskDepend{}
-	condition := make(map[string]interface{})
-	condition["task_id"] = mod.TaskId
-	FindListWhereKV(res, "task_id=?", mod.TaskId, []string{"*"})
-	return res
+func (mod *UserTask) Depends() []*UserTask {
+	depends := []UserTaskDepend{}
+	FindListWhereKV(depends, "task_id=?", mod.ID, []string{"*"})
+	tasks := []*UserTask{}
+	for _, dep := range depends {
+		tasks = append(tasks, dep.DependTask())
+	}
+	return tasks
 }

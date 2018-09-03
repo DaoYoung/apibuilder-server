@@ -51,6 +51,10 @@ func Serve(engine *gin.Engine) {
 		curdRoutes(task, endpoint.UserTaskController{}.Rester())
 		curdRoutes(task, endpoint.UserTaskApiController{}.Rester())
 		curdRoutes(task, endpoint.UserTaskDependController{}.Rester())
+		//todo 任务之间的关联，树形图谱
+		//todo 任务的操作流，每个节点的状态
+		//todo 整体任务的进度流，整个图谱的进展
+		//todo 一般需求任务，润色任务（一个任务，流经多个人加工，最后验收上线），线上bug
 
 	}
 	//todo user Permission

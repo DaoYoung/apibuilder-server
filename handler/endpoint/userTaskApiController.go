@@ -33,15 +33,11 @@ func (action *UserTaskApiController) beforeCreate(c *gin.Context, m model.Resour
 }
 func (action *UserTaskApiController) afterCreate(c *gin.Context, m model.ResourceInterface) {
 	userTask := m.(*model.UserTaskApi).UserTask()
-	task := teamTask.Task()
-	if task.Status == model.TaskStatusDispatch{
-		task = &model.Task{}
-		task.Status = model.TaskStatusDevelop
-		model.Update(teamTask.TaskId, task)
+	api := m.(*model.UserTaskApi).Api()
+	tasks := userTask.Depends()
+	for _, task := range tasks {
+		developer := task.Developer()
+		(&model.Notification{}).PoorNew(developer.ID, "task_bind_api", userTask.Title, api.Title)
 	}
-	author := model.GetUserFromToken(c)
-	developer := m.(*model.UserTask).Developer()
-	(&model.Notification{}).PoorNew( task.AppointUserId, "task_separate", author.Team().TeamName,author.Username,teamTask.Title,m.(*model.UserTask).Title, developer.Username)
 
-	(&model.Notification{}).PoorNew( m.(*model.UserTask).AppointUserId, "task_develop",author.Username,m.(*model.UserTask).Title)
 }

@@ -11,3 +11,9 @@ func (mod *UserTaskApi) UserTask() *UserTask {
 	ByID(task, mod.TaskId)
 	return task
 }
+func (mod *UserTaskApi) Api() *Api {
+	api := &Api{}
+	ByID(api, mod.ApiId)
+	return api
+}
+

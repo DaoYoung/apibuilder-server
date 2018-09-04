@@ -11,20 +11,13 @@ func Serve(engine *gin.Engine) {
 	mkdoc := engine.Group("/doc")
 	mkdoc.Use(middleware.AuthHandlerFunc)
 	{
-		//apiRester := endpoint.ApiController{}.Rester().(*endpoint.ApiController)
 		curdRoutes(mkdoc, endpoint.ApiNoteController{}.Rester(), "list", "create", "update", "delete")
 		curdRoutes(mkdoc, endpoint.ModelNoteController{}.Rester(), "list", "create", "update", "delete")
-		//mkdoc.POST("/api/:id/render", endpoint.RenderApi)//对接
-		//mkdoc.POST("/api/test", endpoint.NoteApi)//测试
-		//mkdoc.POST("/api/handover", endpoint.NoteApi)//离职交接责任人
-		//mkdoc.POST("/task/:id/translate", endpoint.NoteApi)//变更任务对接人，进度
-		//mkdoc.POST("/task/:id/test", endpoint.NoteApi)//测试
 		curdRoutes(mkdoc,  endpoint.ApiController{}.Rester())
 		curdRoutes(mkdoc,  endpoint.ModuleController{}.Rester())
 		curdRoutes(mkdoc,  endpoint.ModelController{}.Rester())
 		curdRoutes(mkdoc,  endpoint.ModelMapController{}.Rester(), "list", "create", "update", "delete")
 	}
-
 
 	engine.POST("/auth/login", middleware.AuthMiddleware.LoginHandler)
 	engine.POST("/auth/reg", endpoint.UserController{}.Rester().Create)
@@ -51,7 +44,7 @@ func Serve(engine *gin.Engine) {
 		curdRoutes(task, endpoint.UserTaskController{}.Rester())
 		curdRoutes(task, endpoint.UserTaskApiController{}.Rester())
 		curdRoutes(task, endpoint.UserTaskDependController{}.Rester())
-		//todo 任务之间的关联，树形图谱
+		//todo UserTask之间的关联，树形图谱
 		//todo 任务的操作流，每个节点的状态
 		//todo 整体任务的进度流，整个图谱的进展
 		//todo 一般需求任务，润色任务（一个任务，流经多个人加工，最后验收上线），线上bug

@@ -25,6 +25,9 @@ func (mod BaseFields) InfoFields() []string {
 func (mod BaseFields) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields()
 }
+func (mod BaseFields) Display() {
+
+}
 
 
 
@@ -32,6 +35,7 @@ type ResourceInterface interface {
 	ListFields() []string
 	InfoFields() []string
 	ForbidUpdateFields() []string
+	Display()
 }
 
 type ForbidUpdateResource struct{}
@@ -40,11 +44,9 @@ func (bf ForbidUpdateResource) ForbidUpdate() bool {
 	return true
 }
 
-func ByID(res ResourceInterface, id int) ResourceInterface {
+func ByID(res ResourceInterface, id int) {
 
-	if err := app.Db.Where("id = ?", id).Last(res).Error; err == nil {
-		return res
-	} else {
+	if err := app.Db.Where("id = ?", id).Last(res).Error; err != nil {
 		panic(NotFoundDaoError(errors.New("ByID:(" + strconv.Itoa(id) + ") data not found ")))
 	}
 }
@@ -72,7 +74,8 @@ func Find(res ResourceInterface, where map[string]interface{}) ResourceInterface
 
 func Update(id int, res ResourceInterface) ResourceInterface {
 	if err := app.Db.Model(res).Where("id = ?", id).Updates(res).Error; err == nil {
-		return ByID(res, id)
+		ByID(res, id)
+		return res
 	} else {
 		panic(QueryDaoError(err))
 	}
@@ -81,7 +84,8 @@ func Update(id int, res ResourceInterface) ResourceInterface {
 func UpdateWhere(where map[string]interface{}, res ResourceInterface) ResourceInterface {
 	if err := app.Db.Model(res).Where(where).Updates(res).Error; err == nil {
 		if val, ok := where["id"]; ok {
-			return ByID(res, val.(int))
+			ByID(res, val.(int))
+			return res
 		}
 		return res
 	} else {

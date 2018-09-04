@@ -24,3 +24,8 @@ type Task struct {
 	IsCheck       int       `json:"is_check"`
 	Status        int       `json:"status"`
 }
+
+func (mod *Task) Relations()  {
+	teamTasks := &[]TeamTask{}
+	FindListWhereKV(teamTasks, "task_id=?", mod.ID, []string{"*"})
+}

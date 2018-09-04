@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+	)
 
 type UserTask struct {
 	BaseFields
@@ -24,10 +26,10 @@ func (mod *UserTask) Developer() *User {
 	return user
 }
 func (mod *UserTask) Depends() []*UserTask {
-	depends := []UserTaskDepend{}
+	depends := &[]UserTaskDepend{}
 	FindListWhereKV(depends, "task_id=?", mod.ID, []string{"*"})
 	tasks := []*UserTask{}
-	for _, dep := range depends {
+	for _, dep := range *depends {
 		tasks = append(tasks, dep.DependTask())
 	}
 	return tasks

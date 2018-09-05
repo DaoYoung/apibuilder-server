@@ -47,6 +47,9 @@ type Controller struct {
 	RestModelSlice   func() interface{} //https://golang.org/doc/faq#convert_slice_of_interface
 	*EmptyRest
 }
+func (this *Controller) getInfoFields(){
+
+}
 func (this *Controller) init(r ControllerInterface){
 	if r == nil {
 		panic(NOContentError(errors.New("param r: is not a controller")))
@@ -86,7 +89,7 @@ func (this *Controller) Create(c *gin.Context) {
 func (this *Controller) Info(c *gin.Context) {
 	obj := this.RestModel()
 	id, _ := strconv.Atoi(c.Param(GetRouteID(this.Rester)))
-	model.ByID(obj, id)
+	model.ByID(obj, id, this.InfoFields...)
 	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
 

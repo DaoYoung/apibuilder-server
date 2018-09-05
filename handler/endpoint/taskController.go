@@ -18,7 +18,7 @@ func (action *TaskController) modelSlice() interface{} {
 func (action TaskController) Rester() (actionPtr *TaskController) {
 	action.init(&action)
 	(&action).InfoFields = []string{"*","Relations()"}
-	(&action).ListFields = []string{"*","Relations()"}
+	(&action).ListFields = []string{"id","title","Relations()"}
 	return &action
 }
 

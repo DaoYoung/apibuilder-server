@@ -9,8 +9,7 @@ import (
 	"strings"
 	"reflect"
 	"fmt"
-	"log"
-)
+		)
 
 //todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
 type BaseFields struct {
@@ -54,21 +53,15 @@ func filterFuncFields(f *[]string) (r []string){
 
 		if fLen == i{
 			fSlice = fSlice[:i]
-			log.Print(i, e, fSlice)
 		}else {
-			log.Print(i, e)
 			fSlice = append(fSlice[:i], fSlice[i+1:]...)
 		}
 	}
 	*f = fSlice
 	return  r
 }
-func DisplayExtraFields(r ResourceInterface, f []string){
+func displayExtraFields(r interface{}, f []string){
 	v := reflect.ValueOf(r)
-	//if v.Kind() == reflect.Ptr {
-	//	v = v.Elem()
-	//}
-	//log.Print(f)
 	for _,fun := range f{
 		mv := v.MethodByName(strings.Replace(fun, "()", "", -1)) //获取对应的方法
 		v.NumMethod()
@@ -79,27 +72,47 @@ func DisplayExtraFields(r ResourceInterface, f []string){
 		mv.Call(nil)
 	}
 }
-func ByID(res ResourceInterface, id int, field ...string) {
+func ByID(res ResourceInterface, id int, fields ...string) {
 	var funcFields []string
-	if len(field) == 0{
-		field = append(field, "*")
+	if len(fields) == 0{
+		fields = append(fields, "*")
 	}else{
-		funcFields = filterFuncFields(&field)
-		log.Print(funcFields, &field)
+		funcFields = filterFuncFields(&fields)
 	}
-	if err := app.Db.Select(field).Where("id = ?", id).Last(res).Error; err != nil {
+	if err := app.Db.Select(fields).Where("id = ?", id).Last(res).Error; err != nil {
 		panic(NotFoundDaoError(errors.New("ByID:(" + strconv.Itoa(id) + ") data not found ")))
 	}else{
 		if funcFields != nil {
-			DisplayExtraFields(res, funcFields)
+			displayExtraFields(res, funcFields)
 		}
 	}
 }
 
-func FindListWhereMap(res interface{}, where map[string]interface{}, order string, page int, limit int) {
+func FindListWhereMap(res interface{}, where map[string]interface{}, order string, page int, limit int, fields ...string) {
+	var funcFields []string
+	if len(fields) == 0{
+		fields = append(fields, "*")
+	}else{
+		funcFields = filterFuncFields(&fields)
+	}
 	offset := limit * (page - 1)
-	if err := app.Db.Where(where).Order(order).Offset(offset).Limit(limit).Find(res).Error; err != nil {
+	if err := app.Db.Select(fields).Where(where).Order(order).Offset(offset).Limit(limit).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
+	}else{
+		if funcFields != nil {
+			var count int
+			v := reflect.ValueOf(res)
+			if v.Kind() == reflect.Ptr{
+				v = v.Elem()
+			}
+			if v.Kind()==reflect.Slice{
+				count = v.Len()
+			}
+			for i := 0; i < count; i++ {
+				f := v.Index(i).Addr().Interface()
+				displayExtraFields(f, funcFields)
+			}
+		}
 	}
 }
 func FindListWhereKV(res interface{}, whereField string, whereValue interface{}, fields []string) {

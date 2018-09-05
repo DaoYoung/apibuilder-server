@@ -101,7 +101,7 @@ func (this *Controller) List(c *gin.Context) {
 	obj := this.RestModelSlice()
 	condition := this.Rester.listCondition(c)
 	condition = helper.MapUrlQuery(condition, c.Request.URL.Query(), this.RestModel())
-	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage)
+	model.FindListWhereMap(obj, condition, "id desc", page, app.Config.PerPage, this.ListFields...)
 	helper.ReturnSuccess(c, http.StatusOK, obj)
 }
 

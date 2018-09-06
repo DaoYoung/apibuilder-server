@@ -9,7 +9,7 @@ import (
 	"strings"
 	"reflect"
 	"fmt"
-		)
+)
 
 //todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
 type BaseFields struct {
@@ -19,69 +19,80 @@ type BaseFields struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
-func (mod BaseFields) ListFields() []string {
-	return []string{"*"}
-}
-func (mod BaseFields) InfoFields() []string {
-	return mod.ListFields()
-}
 func (mod BaseFields) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields()
 }
-
-
+func (mod BaseFields) ForbidUpdate() bool {
+	return false
+}
+func ZeroForbidFields(r ResourceInterface) {
+	ref := reflect.ValueOf(r).Elem()
+	fields := r.ForbidUpdateFields()
+	for _, v := range fields {
+		if structField := ref.FieldByName(helper.CamelString(v)); structField.IsValid() {
+			structField.Set(reflect.Zero(structField.Type()))
+		}
+	}
+}
 type ResourceInterface interface {
-	ListFields() []string
-	InfoFields() []string
 	ForbidUpdateFields() []string
-
+	ForbidUpdate() bool
 }
 
-type ForbidUpdateResource struct{}
-
-func (bf ForbidUpdateResource) ForbidUpdate() bool {
-	return true
-}
-func filterFuncFields(f *[]string) (r []string){
+func filterFuncFields(f *[]string) (r []string) {
 	fSlice := *f
-	fLen := len(fSlice)-1
-	for i,e := range fSlice{
-		if !strings.Contains(e, "()"){
+	fLen := len(fSlice) - 1
+	for i, e := range fSlice {
+		if !strings.Contains(e, "()") {
 			continue
 		}
 		r = append(r, e)
 
-		if fLen == i{
+		if fLen == i {
 			fSlice = fSlice[:i]
-		}else {
+		} else {
 			fSlice = append(fSlice[:i], fSlice[i+1:]...)
 		}
 	}
 	*f = fSlice
-	return  r
+	return r
 }
-func displayExtraFields(r interface{}, f []string){
+func displayExtraFields(r interface{}, extras []string) {
 	v := reflect.ValueOf(r)
-	for _,fun := range f{
+	for _, fun := range extras {
 		mv := v.MethodByName(strings.Replace(fun, "()", "", -1)) //获取对应的方法
 		v.NumMethod()
-		if !mv.IsValid() {            //判断方法是否存在
-			fmt.Println("Func " + fun +" not exist")
+		if !mv.IsValid() { //判断方法是否存在
+			fmt.Println("Func " + fun + " not exist")
 			return
 		}
 		mv.Call(nil)
 	}
 }
+func displayExtraFieldsList(res interface{}, extras []string) {
+	var count int
+	v := reflect.ValueOf(res)
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+	if v.Kind() == reflect.Slice {
+		count = v.Len()
+	}
+	for i := 0; i < count; i++ {
+		f := v.Index(i).Addr().Interface()
+		displayExtraFields(f, extras)
+	}
+}
 func ByID(res ResourceInterface, id int, fields ...string) {
 	var funcFields []string
-	if len(fields) == 0{
+	if len(fields) == 0 {
 		fields = append(fields, "*")
-	}else{
+	} else {
 		funcFields = filterFuncFields(&fields)
 	}
 	if err := app.Db.Select(fields).Where("id = ?", id).Last(res).Error; err != nil {
 		panic(NotFoundDaoError(errors.New("ByID:(" + strconv.Itoa(id) + ") data not found ")))
-	}else{
+	} else {
 		if funcFields != nil {
 			displayExtraFields(res, funcFields)
 		}
@@ -90,28 +101,17 @@ func ByID(res ResourceInterface, id int, fields ...string) {
 
 func FindListWhereMap(res interface{}, where map[string]interface{}, order string, page int, limit int, fields ...string) {
 	var funcFields []string
-	if len(fields) == 0{
+	if len(fields) == 0 {
 		fields = append(fields, "*")
-	}else{
+	} else {
 		funcFields = filterFuncFields(&fields)
 	}
 	offset := limit * (page - 1)
 	if err := app.Db.Select(fields).Where(where).Order(order).Offset(offset).Limit(limit).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
-	}else{
+	} else {
 		if funcFields != nil {
-			var count int
-			v := reflect.ValueOf(res)
-			if v.Kind() == reflect.Ptr{
-				v = v.Elem()
-			}
-			if v.Kind()==reflect.Slice{
-				count = v.Len()
-			}
-			for i := 0; i < count; i++ {
-				f := v.Index(i).Addr().Interface()
-				displayExtraFields(f, funcFields)
-			}
+			displayExtraFieldsList(res, funcFields)
 		}
 	}
 }

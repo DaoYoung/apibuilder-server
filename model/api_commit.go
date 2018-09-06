@@ -7,7 +7,6 @@ type ApiCommit struct {
 	AuthorId      int
 	CommitMessage string
 	Changes       JSON
-	ForbidUpdateResource
 }
 
 func CreateCommit(chs []byte, msg string, taskId int , apiId int, authorId int) interface{} {

@@ -16,7 +16,6 @@ type ApiLog struct {
 	Type       int    `json:"type"`
 	EntityId   int    `json:"entity_id"`
 	EntityType string `json:"entity_type"`
-	ForbidUpdateResource
 }
 
 func CreateLog(uid int, logType int, entityId int, entityType ...string) interface{} {

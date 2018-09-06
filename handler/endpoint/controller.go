@@ -107,10 +107,14 @@ func (this *Controller) List(c *gin.Context) {
 
 func (this *Controller) Update(c *gin.Context) {
 	obj := this.RestModel()
+	if obj.ForbidUpdate(){
+		panic(ForbidError(errors.New("forbid update model:" + reflect.TypeOf(obj).Name())))
+	}
 	err := c.BindJSON(obj)
 	if err != nil {
 		panic(JsonTypeError(err))
 	}
+	model.ZeroForbidFields(obj)
 	condition := this.Rester.updateCondition(c, GetRouteID(this.Rester))
 	if val, ok := condition["id"]; ok {
 		old := this.RestModel()

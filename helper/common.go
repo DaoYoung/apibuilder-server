@@ -21,8 +21,10 @@ func Contains(intSlice []string, searchInt string) bool {
 
 func SetForbidUpdateFields(fs ...string) []string {
 	res := []string{"id", "created_at", "updated_at", "deleted_at"}
-	for _, value := range fs {
-		res = append(res, value)
+	if len(fs) > 0 {
+		for _, value := range fs {
+			res = append(res, value)
+		}
 	}
 	return res
 }

@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"time"
+	"apibuilder-server/helper"
+)
 
 const (
 	StatusInit          = 0
@@ -30,4 +33,7 @@ func (mod *Task) Relations() {
 	teamTasks := &[]TeamTask{}
 	FindListWhereKV(teamTasks, "task_id=?", mod.ID, []string{"*"})
 	mod.ExtraTeamTask = teamTasks
+}
+func (mod Task) ForbidUpdateFields() []string {
+	return helper.SetForbidUpdateFields("status")
 }

@@ -34,7 +34,7 @@ func main() {
 	}
 	middleware.InitJWT()
 	//// Disable Console Color, you don't need console color when writing the logs to file.
-	//gin.DisableConsoleColor()
+	//gin.DisableConsoleColor() 
 	//
 	//// Logging to a file.
 	//f, _ := os.Create("gin.log")

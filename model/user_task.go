@@ -27,7 +27,7 @@ func (mod *UserTask) Developer() *User {
 }
 func (mod *UserTask) Depends() []*UserTask {
 	depends := &[]UserTaskDepend{}
-	FindListWhereKV(depends, "task_id=?", mod.ID, []string{"*"})
+	FindListWhereKV(depends, "task_id=?", mod.ID)
 	tasks := []*UserTask{}
 	for _, dep := range *depends {
 		tasks = append(tasks, dep.DependTask())

@@ -121,7 +121,7 @@ func (this *ApiController)NoteApiDetail(c *gin.Context) {
 	var resouce model.ApiNote
 	apiNotes := &([]model.ApiNote{})
 	id, _ := strconv.Atoi(c.Param("id"))
-	model.FindListWhereKV(apiNotes, "api_id in (?)", id, resouce.ListFields())
+	model.FindListWhereKV(apiNotes, "api_id in (?)", id, resouce.ListFields()...)
 	apiModel := new(model.ApiModel)
 	for key,val := range *apiNotes{
 		apiModelNotes := &([]model.ApiModelNote{})

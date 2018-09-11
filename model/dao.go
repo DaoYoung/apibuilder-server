@@ -115,10 +115,19 @@ func FindListWhereMap(res interface{}, where map[string]interface{}, order strin
 		}
 	}
 }
-func FindListWhereKV(res interface{}, whereField string, whereValue interface{}, fields []string) {
-	//todo 判断res类型
+func FindListWhereKV(res interface{}, whereField string, whereValue interface{}, fields ...string) {
+	var funcFields []string
+	if len(fields) == 0 {
+		fields = append(fields, "*")
+	} else {
+		funcFields = filterFuncFields(&fields)
+	}
 	if err := app.Db.Select(fields).Where(whereField, whereValue).Find(res).Error; err != nil {
 		panic(QueryDaoError(err))
+	} else {
+		if funcFields != nil {
+			displayExtraFieldsList(res, funcFields)
+		}
 	}
 }
 

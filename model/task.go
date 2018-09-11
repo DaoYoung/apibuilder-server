@@ -31,7 +31,7 @@ type Task struct {
 
 func (mod *Task) Relations() {
 	teamTasks := &[]TeamTask{}
-	FindListWhereKV(teamTasks, "task_id=?", mod.ID, []string{"*"})
+	FindListWhereKV(teamTasks, "task_id=?", mod.ID, "id", "title", "status")
 	mod.ExtraTeamTask = teamTasks
 }
 func (mod Task) ForbidUpdateFields() []string {

@@ -4,14 +4,15 @@ import "time"
 
 type TeamTask struct {
 	BaseFields
-	AuthorId       int       `json:"author_id"`
-	DispatchUserId int       `json:"dispatch_user_id"`
-	AppointTeamId  int       `json:"appoint_team_id"`
-	TaskId         int       `json:"task_id"`
-	Title          string    `json:"title"`
-	Description    string    `json:"description"`
-	Deadline       time.Time `json:"deadline"`
-	Status         int       `json:"status"`
+	AuthorId       int       `json:"author_id,omitempty"`
+	DispatchUserId int       `json:"dispatch_user_id,omitempty"`
+	AppointTeamId  int       `json:"appoint_team_id,omitempty"`
+	TaskId         int       `json:"task_id,omitempty"`
+	Title          string    `json:"title,omitempty"`
+	Description    string    `json:"description,omitempty"`
+	Deadline       *time.Time `json:"deadline,omitempty"`
+	Status         int       `json:"status,omitempty"`
+	ExtraUserTask *[]UserTask `gorm:"-" json:"user_task,omitempty"`
 }
 
 func (mod *TeamTask) Task() *Task {

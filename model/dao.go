@@ -14,9 +14,9 @@ import (
 //todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
 type BaseFields struct {
 	ID        int        `gorm:"primary_key" json:"id"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at"`
+	CreatedAt *time.Time  `json:"created_at,omitempty"`
+	UpdatedAt *time.Time  `json:"updated_at,omitempty"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
 func (mod BaseFields) ForbidUpdateFields() []string {

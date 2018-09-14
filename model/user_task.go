@@ -6,14 +6,14 @@ import (
 
 type UserTask struct {
 	BaseFields
-	AuthorId     int       `json:"author_id"`
-	AppointUserId int       `json:"appoint_user_id"`
-	TeamTaskId int       `json:"team_task_id"`
+	AuthorId     int       `json:"author_id,omitempty"`
+	AppointUserId int       `json:"appoint_user_id,omitempty"`
+	TeamTaskId int       `json:"team_task_id,omitempty"`
 	Title        string    `json:"title"`
-	Description  string    `json:"description"`
-	Priority     int       `json:"priority"`
-	Deadline     time.Time `json:"deadline"`
-	Status       int       `json:"status"`
+	Description  string    `json:"description,omitempty"`
+	Priority     int       `json:"priority,omitempty"`
+	Deadline     *time.Time `json:"deadline,omitempty"`
+	Status       int       `json:"status,omitempty"`
 }
 func (mod *UserTask) TeamTask() *TeamTask {
 	task := &TeamTask{}

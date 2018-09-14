@@ -17,22 +17,24 @@ const (
 type Task struct {
 	BaseFields
 	AuthorId      int        `json:"author_id"`
-	AppointUserId int        `json:"appoint_user_id"`
+	AppointUserId int        `json:"appoint_user_id,omitempty"`
 	Title         string     `json:"title"`
-	Description   string     `json:"description"`
-	Priority      int        `json:"priority"`
-	Deadline      time.Time  `json:"deadline"`
-	VersionId     string     `json:"version_id"`
-	HasPrd        int        `json:"has_prd"`
-	IsCheck       int        `json:"is_check"`
-	Status        int        `json:"status"`
-	ExtraTeamTask *[]TeamTask `gorm:"-" json:"team_task"`
+	Description   string     `json:"description,omitempty"`
+	Priority      int        `json:"priority,omitempty"`
+	Deadline      *time.Time  `json:"deadline,omitempty"`
+	VersionId     string     `json:"version_id,omitempty"`
+	HasPrd        int        `json:"has_prd,omitempty"`
+	IsCheck       int        `json:"is_check,omitempty"`
+	Status        int        `json:"status,omitempty"`
+	ExtraTeamTask *[]TeamTask `gorm:"-" json:"team_task,omitempty"`
 }
 
-func (mod *Task) Relations() {
+func (mod *Task) ExTeamTasks() {
 	teamTasks := &[]TeamTask{}
 	FindListWhereKV(teamTasks, "task_id=?", mod.ID, "id", "title", "status")
-	mod.ExtraTeamTask = teamTasks
+	if  len(*teamTasks) >0 {
+		mod.ExtraTeamTask = teamTasks
+	}
 }
 func (mod Task) ForbidUpdateFields() []string {
 	return helper.SetForbidUpdateFields("status")

@@ -34,7 +34,7 @@ func (action *UserTaskApiController) beforeCreate(c *gin.Context, m model.Resour
 func (action *UserTaskApiController) afterCreate(c *gin.Context, m model.ResourceInterface) {
 	userTask := m.(*model.UserTaskApi).UserTask()
 	api := m.(*model.UserTaskApi).Api()
-	tasks := userTask.Depends()
+	tasks := userTask.DependTasks()
 	for _, task := range tasks {
 		developer := task.Developer()
 		(&model.Notification{}).PoorNew(developer.ID, "task_bind_api", userTask.Title, api.Title)

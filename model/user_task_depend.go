@@ -2,9 +2,9 @@ package model
 
 type UserTaskDepend struct {
 	BaseFields
-	TaskId   int `json:"task_id"`
-	DependId int `json:"depend_id"`
-	UserId   int `json:"user_id"`
+	TaskId   int `json:"task_id,omitempty"`
+	DependId int `json:"depend_id,omitempty"`
+	UserId   int `json:"user_id,omitempty"`
 }
 func (mod *UserTaskDepend) UserTask() *UserTask {
 	task := &UserTask{}

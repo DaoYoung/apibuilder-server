@@ -18,7 +18,7 @@ type TeamTask struct {
 
 func (mod *TeamTask) UserTasks() {
 	userTasks := &[]UserTask{}
-	FindListWhereKV(userTasks, "team_task_id=?", mod.ID, "id", "title", "appoint_user_id", "status", "Developer()")
+	FindListWhereKV(userTasks, "team_task_id=?", mod.ID, "id", "title", "appoint_user_id", "status", "Developer()", "Depends()")
 	if len(*userTasks) > 0 {
 		mod.ExtraUserTask = userTasks
 	}

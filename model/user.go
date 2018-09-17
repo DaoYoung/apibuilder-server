@@ -7,14 +7,14 @@ import (
 
 type User struct {
 	BaseFields
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Avatar   string `json:"avatar"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Status   int    `json:"status"`
-	RoleId   int    `json:"role_id"`
-	TeamId   int    `json:"team_id"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Avatar   string `json:"avatar,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Phone    string `json:"phone,omitempty"`
+	Status   int    `json:"status,omitempty"`
+	RoleId   int    `json:"role_id,omitempty"`
+	TeamId   int    `json:"team_id,omitempty"`
 }
 
 func CheckUserPasswd(username string, passwd string) *User {

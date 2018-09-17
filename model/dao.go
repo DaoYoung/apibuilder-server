@@ -9,6 +9,7 @@ import (
 	"strings"
 	"reflect"
 	"fmt"
+	"log"
 )
 
 //todo view id 客户端注册需要哪些字段，根据场景返回相应字段，避免服务端来关心UI调整
@@ -40,20 +41,15 @@ type ResourceInterface interface {
 }
 
 func filterFuncFields(f *[]string) (r []string) {
-	fSlice := *f
-	fLen := len(fSlice) - 1
-	for i, e := range fSlice {
+	var fSlice  []string
+	for _, e := range *f {
 		if !strings.Contains(e, "()") {
+			fSlice = append(fSlice, e)
 			continue
 		}
 		r = append(r, e)
-
-		if fLen == i {
-			fSlice = fSlice[:i]
-		} else {
-			fSlice = append(fSlice[:i], fSlice[i+1:]...)
-		}
 	}
+	log.Print(r,fSlice)
 	*f = fSlice
 	return r
 }

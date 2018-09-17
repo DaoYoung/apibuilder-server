@@ -2,19 +2,21 @@ package model
 
 import (
 	"time"
-	)
+)
 
 type UserTask struct {
 	BaseFields
-	AuthorId     int       `json:"author_id,omitempty"`
-	AppointUserId int       `json:"appoint_user_id,omitempty"`
-	TeamTaskId int       `json:"team_task_id,omitempty"`
-	Title        string    `json:"title"`
-	Description  string    `json:"description,omitempty"`
-	Priority     int       `json:"priority,omitempty"`
-	Deadline     *time.Time `json:"deadline,omitempty"`
-	Status       int       `json:"status,omitempty"`
+	AuthorId       int        `json:"author_id,omitempty"`
+	AppointUserId  int        `json:"appoint_user_id,omitempty"`
+	TeamTaskId     int        `json:"team_task_id,omitempty"`
+	Title          string     `json:"title"`
+	Description    string     `json:"description,omitempty"`
+	Priority       int        `json:"priority,omitempty"`
+	Deadline       *time.Time `json:"deadline,omitempty"`
+	Status         int        `json:"status,omitempty"`
+	ExtraDeveloper *User      `gorm:"-" json:"developer,omitempty"`
 }
+
 func (mod *UserTask) TeamTask() *TeamTask {
 	task := &TeamTask{}
 	ByID(task, mod.TeamTaskId)
@@ -22,7 +24,8 @@ func (mod *UserTask) TeamTask() *TeamTask {
 }
 func (mod *UserTask) Developer() *User {
 	user := &User{}
-	ByID(user, mod.AppointUserId)
+	ByID(user, mod.AppointUserId,"id","username","avatar")
+	mod.ExtraDeveloper = user
 	return user
 }
 func (mod *UserTask) Depends() []*UserTask {

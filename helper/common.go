@@ -5,7 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/url"
 	"strings"
-)
+	"github.com/satori/go.uuid"
+	)
 
 func Contains(intSlice []string, searchInt string) bool {
 	if len(intSlice) == 0 {
@@ -144,3 +145,10 @@ func CamelString(s string) string {
 	return string(data[:])
 }
 
+func NewUuid() string {
+	uuid, err := uuid.NewV4()
+	if err != nil {
+		panic(err)
+	}
+	return  uuid.String()
+}

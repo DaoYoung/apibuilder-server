@@ -144,13 +144,13 @@ func Update(id int, res ResourceInterface) ResourceInterface {
 	}
 }
 
-func UpdateWhere(where map[string]interface{}, res ResourceInterface) ResourceInterface {
-	if err := app.Db.Model(res).Where(where).Updates(res).Error; err == nil {
+func UpdateWhere(where map[string]interface{}, res ResourceInterface, changes map[string]interface{}) ResourceInterface {
+	if err := app.Db.Model(res).Where(where).Updates(changes).Error; err == nil {
 		if val, ok := where["id"]; ok {
 			ByID(res, val.(int))
 			return res
 		}
-		return res
+		return Find(res, where)
 	} else {
 		panic(QueryDaoError(err))
 	}

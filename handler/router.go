@@ -51,6 +51,12 @@ func Serve(engine *gin.Engine) {
 
 	}
 	//todo user Permission
+	test := engine.Group("/test")
+	//test.Use(middleware.AuthHandlerFunc)
+	{
+		curdRoutes(test, endpoint.SceneController{}.Rester())
+		test.GET("/no/:serial_no", endpoint.SceneController{}.Rester().Match)
+	}
 }
 
 func curdRoutes(group *gin.RouterGroup, controller endpoint.ControllerInterface, actions ...string) {

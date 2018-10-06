@@ -56,6 +56,7 @@ func Serve(engine *gin.Engine) {
 	{
 		curdRoutes(test, endpoint.SceneController{}.Rester())
 		test.GET("/no/:serial_no", endpoint.SceneController{}.Rester().Match)
+		test.GET("/record/:serial_no", endpoint.SceneController{}.Rester().Match)
 	}
 }
 

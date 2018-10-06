@@ -1,21 +1,20 @@
 {
-  "front-version": "2.19.0",
+  "front-version": "2.19.1",
   "version": 3,
   "nodes": [
     {
       "type": "Project",
       "description": "",
-      "id": "e18334d4-2cda-4c4e-b67e-3f40b993c31a",
-      "lastModified": "2018-08-31T20:10:20.263+08:00",
+      "id": "289c5017-91c2-4561-bcc6-a37ade21e013",
+      "lastModified": "2018-10-06T18:59:07.502+08:00",
       "name": "apibuilder"
     },
     {
       "type": "Service",
-      "description": "",
-      "id": "615c9131-d5ac-412b-a970-3d85f9172e95",
-      "lastModified": "2018-08-30T15:51:26.448+08:00",
-      "name": "个人任务",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "id": "f42ecfb8-8ae7-4c4c-b310-f91580962985",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "1需求任务",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -31,58 +30,7 @@
         },
         "bodyType": "Text",
         "autoSetLength": true,
-        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
-      },
-      "headersType": "Form",
-      "uri": {
-        "query": {
-          "delimiter": "&",
-          "items": [
-            {
-              "enabled": true,
-              "name": "appoint_user_id",
-              "value": "2"
-            }
-          ]
-        },
-        "scheme": {
-          "name": "http",
-          "version": "V11"
-        },
-        "host": "{domain}",
-        "path": "/workflow/usertasks"
-      },
-      "id": "5035c7b5-3817-45d3-b1be-f4725143a681",
-      "lastModified": "2018-08-31T20:02:09.668+08:00",
-      "name": "list",
-      "headers": [
-        {
-          "enabled": true,
-          "name": "Authorization",
-          "value": "Bearer {token}"
-        }
-      ],
-      "metaInfo": {
-        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
-      },
-      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
-    },
-    {
-      "type": "Request",
-      "method": {
-        "requestBody": true,
-        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-        "name": "POST"
-      },
-      "body": {
-        "formBody": {
-          "overrideContentType": true,
-          "encoding": "application/x-www-form-urlencoded",
-          "items": []
-        },
-        "bodyType": "Text",
-        "autoSetLength": true,
-        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+        "textBody": "{\n  \"title\":\"test33\"\n}"
       },
       "headersType": "Form",
       "uri": {
@@ -95,166 +43,10 @@
           "version": "V11"
         },
         "host": "{domain}",
-        "path": "/workflow/usertasks"
+        "path": "/workflow/tasks"
       },
-      "id": "c66ebab7-3b5d-45ce-b968-aafa10c5143b",
-      "lastModified": "2018-08-31T20:02:04.664+08:00",
-      "name": "分解个人任务",
-      "headers": [
-        {
-          "enabled": true,
-          "name": "Authorization",
-          "value": "Bearer {token}"
-        },
-        {
-          "enabled": true,
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "metaInfo": {
-        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
-      },
-      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
-    },
-    {
-      "type": "Request",
-      "method": {
-        "requestBody": true,
-        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-        "name": "POST"
-      },
-      "body": {
-        "formBody": {
-          "overrideContentType": true,
-          "encoding": "application/x-www-form-urlencoded",
-          "items": []
-        },
-        "bodyType": "Text",
-        "autoSetLength": true,
-        "textBody": "{\n  \"api_id\":11\n}"
-      },
-      "headersType": "Form",
-      "uri": {
-        "query": {
-          "delimiter": "&",
-          "items": []
-        },
-        "scheme": {
-          "name": "http",
-          "version": "V11"
-        },
-        "host": "{domain}",
-        "path": "/workflow/usertasks/1/apis"
-      },
-      "id": "2e3e2b1e-4168-48ad-b26c-279a702dfc6d",
-      "lastModified": "2018-08-31T20:10:20.263+08:00",
-      "name": "绑定api",
-      "headers": [
-        {
-          "enabled": true,
-          "name": "Authorization",
-          "value": "Bearer {token}"
-        },
-        {
-          "enabled": true,
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "metaInfo": {
-        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
-      },
-      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
-    },
-    {
-      "type": "Request",
-      "method": {
-        "requestBody": true,
-        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
-        "name": "POST"
-      },
-      "body": {
-        "formBody": {
-          "overrideContentType": true,
-          "encoding": "application/x-www-form-urlencoded",
-          "items": []
-        },
-        "bodyType": "Text",
-        "autoSetLength": true,
-        "textBody": "{\n  \"depend_id\":2\n}"
-      },
-      "headersType": "Form",
-      "uri": {
-        "query": {
-          "delimiter": "&",
-          "items": []
-        },
-        "scheme": {
-          "name": "http",
-          "version": "V11"
-        },
-        "host": "{domain}",
-        "path": "/workflow/usertasks/1/depends"
-      },
-      "id": "9ebd9b36-f188-4798-99a4-a83276606202",
-      "lastModified": "2018-08-31T20:09:11.723+08:00",
-      "name": "设置依赖",
-      "headers": [
-        {
-          "enabled": true,
-          "name": "Authorization",
-          "value": "Bearer {token}"
-        },
-        {
-          "enabled": true,
-          "name": "Content-Type",
-          "value": "application/json"
-        }
-      ],
-      "metaInfo": {
-        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
-      },
-      "parentId": "615c9131-d5ac-412b-a970-3d85f9172e95"
-    },
-    {
-      "type": "Service",
-      "id": "c15af3c6-53a3-4aa3-9f42-9889ce935356",
-      "lastModified": "2018-08-31T17:01:06.937+08:00",
-      "name": "团队",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
-    },
-    {
-      "type": "Request",
-      "method": {
-        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
-        "name": "GET"
-      },
-      "body": {
-        "formBody": {
-          "overrideContentType": true,
-          "encoding": "application/x-www-form-urlencoded",
-          "items": []
-        },
-        "bodyType": "Text",
-        "autoSetLength": true,
-        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
-      },
-      "headersType": "Form",
-      "uri": {
-        "query": {
-          "delimiter": "&",
-          "items": []
-        },
-        "scheme": {
-          "name": "http",
-          "version": "V11"
-        },
-        "host": "{domain}",
-        "path": "/workflow/teams"
-      },
-      "id": "25220534-4b47-48ac-a19e-fb5a177f0977",
-      "lastModified": "2018-08-31T17:15:44.002+08:00",
+      "id": "dd40474f-b510-424f-8b26-8b66b2e8ebfa",
+      "lastModified": "2018-10-06T18:58:52.600+08:00",
       "name": "列表",
       "headers": [
         {
@@ -263,8 +55,10 @@
           "value": "Bearer {token}"
         }
       ],
-      "metaInfo": {},
-      "parentId": "c15af3c6-53a3-4aa3-9f42-9889ce935356"
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
+      },
+      "parentId": "f42ecfb8-8ae7-4c4c-b310-f91580962985"
     },
     {
       "type": "Request",
@@ -281,7 +75,7 @@
         },
         "bodyType": "Text",
         "autoSetLength": true,
-        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
+        "textBody": "{\n  \"assign_user_id\":2,\n  \"title\":\"task1\",\n  \"description\":\"test33\",\n  \"priority\":1,\n  \"deadline\":\"2018-08-30T15:04:05Z\",\n  \"version_tag\":\"v1\"\n}"
       },
       "headersType": "Form",
       "uri": {
@@ -294,33 +88,135 @@
           "version": "V11"
         },
         "host": "{domain}",
-        "path": "/workflow/teams"
+        "path": "/workflow/tasks"
       },
-      "id": "6555630c-c0c8-4039-a6c2-3e1b1b1e266b",
-      "lastModified": "2018-08-31T17:07:12.164+08:00",
-      "name": "新建",
+      "id": "e978fed5-6402-47e6-b684-e1bfd649ef78",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "创建",
       "headers": [
-        {
-          "enabled": true,
-          "name": "Content-Type",
-          "value": "application/json"
-        },
         {
           "enabled": true,
           "name": "Authorization",
           "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
         }
       ],
-      "metaInfo": {},
-      "parentId": "c15af3c6-53a3-4aa3-9f42-9889ce935356"
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
+      },
+      "parentId": "f42ecfb8-8ae7-4c4c-b310-f91580962985"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":1\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/tasks/6"
+      },
+      "id": "2e87c227-9e60-4db4-a13c-b97a17d2d719",
+      "lastModified": "2018-10-06T18:59:07.503+08:00",
+      "name": "指定责任人",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "27dc6bbd-6fb9-49a1-9487-f2b1797c1255"
+      },
+      "parentId": "f42ecfb8-8ae7-4c4c-b310-f91580962985"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"ddd\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/tasks/2"
+      },
+      "id": "72c9ab70-9e25-4c59-83d9-6345e50d4c69",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "更新",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
+      },
+      "parentId": "f42ecfb8-8ae7-4c4c-b310-f91580962985"
     },
     {
       "type": "Service",
       "description": "",
-      "id": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3",
-      "lastModified": "2018-08-30T15:50:51.534+08:00",
-      "name": "团队任务",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "id": "52927070-4de3-456d-b505-ad425d4f54de",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "2团队任务",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -357,8 +253,8 @@
         "host": "{domain}",
         "path": "/workflow/teamtasks"
       },
-      "id": "78131d0d-6119-411c-9d95-b67d860b796c",
-      "lastModified": "2018-08-31T17:12:30.012+08:00",
+      "id": "2136d79e-4eff-4afa-a000-6f2ba38387ee",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
       "name": "任务列表",
       "headers": [
         {
@@ -368,7 +264,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
+      "parentId": "52927070-4de3-456d-b505-ad425d4f54de"
     },
     {
       "type": "Request",
@@ -400,8 +296,8 @@
         "host": "{domain}",
         "path": "/workflow/teamtasks"
       },
-      "id": "f26d083f-dd0c-43f7-ba97-280abb39b6ba",
-      "lastModified": "2018-08-31T17:16:19.380+08:00",
+      "id": "3573dd13-1b44-4c47-b4ca-902bf8294c0f",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
       "name": "分配团队任务",
       "headers": [
         {
@@ -416,7 +312,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
+      "parentId": "52927070-4de3-456d-b505-ad425d4f54de"
     },
     {
       "type": "Request",
@@ -448,8 +344,8 @@
         "host": "{domain}",
         "path": "/workflow/teamtasks/2"
       },
-      "id": "0b2a7c7f-5a45-41d1-87a3-c22d38f18792",
-      "lastModified": "2018-08-31T17:13:20.316+08:00",
+      "id": "a51ac31e-e6b0-487e-bb45-545ae2dfcf99",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
       "name": "更新",
       "headers": [
         {
@@ -464,15 +360,871 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "e6fd3a0d-0d63-42ac-a20d-022c883ce3b3"
+      "parentId": "52927070-4de3-456d-b505-ad425d4f54de"
     },
     {
       "type": "Service",
       "description": "",
-      "id": "3f8fd486-9149-45f1-afaa-500c9b91eeb9",
-      "lastModified": "2018-08-06T10:49:41.669+08:00",
+      "id": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "3个人任务",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_user_id",
+              "value": "2"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "c56badc7-86a2-4e48-8e62-38e005127196",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "list",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "6ccbd3c6-5316-436f-8791-4fe9148b9c82",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "分解个人任务",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"api_id\":11\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/apis"
+      },
+      "id": "030d2f14-89aa-433b-b73a-3439623021d8",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "绑定api",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"depend_id\":2\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/depends"
+      },
+      "id": "f9deac84-80fd-4c37-9926-4218703d9ec0",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "设置依赖",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_user_id",
+              "value": "2"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/5"
+      },
+      "id": "e0d42af8-bc5b-4c8b-9725-2f3f67ebcbfa",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
+      "name": "详情",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "4e9f686a-2a5c-417a-b07f-9c59ef5079d8"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "5684fa40-39fe-4459-afb0-83ab0bb02485",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "个人任务",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_user_id",
+              "value": "2"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "f38978ad-3f9b-4903-9fdc-37e982f0eb88",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "list",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "5684fa40-39fe-4459-afb0-83ab0bb02485"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_user_id\":2,\n  \"team_task_id\":1,\n  \"title\":\"支付\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks"
+      },
+      "id": "ce7a3dc0-f317-4e5c-8b3b-bac52b8343d8",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "分解个人任务",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "5684fa40-39fe-4459-afb0-83ab0bb02485"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"api_id\":11\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/apis"
+      },
+      "id": "2fc95300-1479-485a-8497-76f9b23e90f7",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "绑定api",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "5684fa40-39fe-4459-afb0-83ab0bb02485"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"depend_id\":2\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/usertasks/1/depends"
+      },
+      "id": "d325a9fa-5586-47b8-8c59-e55650f6670d",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "设置依赖",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c66ebab7-3b5d-45ce-b968-aafa10c5143b"
+      },
+      "parentId": "5684fa40-39fe-4459-afb0-83ab0bb02485"
+    },
+    {
+      "type": "Service",
+      "id": "651f888c-d549-4e73-bf9b-1714bdd00222",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
+      "name": "团队",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teams"
+      },
+      "id": "0f5eadf4-8ab3-46e5-a029-a1781345950f",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
+      "name": "列表",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "651f888c-d549-4e73-bf9b-1714bdd00222"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"lead_id\":6,\n  \"team_name\":\"web111\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teams"
+      },
+      "id": "1a3b5853-235d-496d-a0e9-aed84d31d17e",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
+      "name": "新建",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "651f888c-d549-4e73-bf9b-1714bdd00222"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "8e75d9f4-49de-41b2-a5f0-97dbd16a84c9",
+      "lastModified": "2018-09-03T22:15:37.962+08:00",
+      "name": "团队任务",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_team_id\":1,\n  \"task_id\":6,\n  \"title\":\"web\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "appoint_team_id",
+              "value": "1"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks"
+      },
+      "id": "ed4be785-6ced-44ea-b25e-12888b545e09",
+      "lastModified": "2018-09-03T22:15:37.963+08:00",
+      "name": "任务列表",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "8e75d9f4-49de-41b2-a5f0-97dbd16a84c9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"appoint_team_id\":1,\n  \"task_id\":6,\n  \"title\":\"web\",\n  \"description\":\"sdfasdf\",\n  \"deadline\":\"2018-08-30T15:04:05Z\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks"
+      },
+      "id": "f57bc31b-9912-401c-b3cc-619b01c29efd",
+      "lastModified": "2018-09-03T22:15:37.963+08:00",
+      "name": "分配团队任务",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "8e75d9f4-49de-41b2-a5f0-97dbd16a84c9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"web2123\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/workflow/teamtasks/2"
+      },
+      "id": "7d01a45f-24bc-46b6-9c02-4ce080a6518d",
+      "lastModified": "2018-09-03T22:15:37.963+08:00",
+      "name": "更新",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "8e75d9f4-49de-41b2-a5f0-97dbd16a84c9"
+    },
+    {
+      "type": "Service",
+      "id": "05bcbe0d-312f-4040-9580-1a3c537f776e",
+      "lastModified": "2018-10-04T18:10:06.919+08:00",
+      "name": "场景",
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"t1\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/test/scenes/2"
+      },
+      "id": "cc20a7a2-efa1-4019-95c4-5911debb2221",
+      "lastModified": "2018-10-04T19:38:29.650+08:00",
+      "name": "密钥详情",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "05bcbe0d-312f-4040-9580-1a3c537f776e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"t1\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/test/scenes"
+      },
+      "id": "01e041ab-a30e-449f-b7ba-91dd3e78136c",
+      "lastModified": "2018-10-04T20:20:56.040+08:00",
+      "name": "生成密钥",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlpX2Rhb0BodW5saWppLmNvbSIsImV4cCI6MTUzODc1MDc5OSwiaWQiOiJ5aWRhbyIsIm9yaWdfaWF0IjoxNTM2MTU4Nzk5LCJwaG9uZSI6IjEzNTY3MTE5MTAzIiwidWlkIjoxfQ.Lxa9A7Cf-uLR6_f5Jti5rHuaUxEa7LFZi1Bc8WtM8Zw"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "cc20a7a2-efa1-4019-95c4-5911debb2221"
+      },
+      "parentId": "05bcbe0d-312f-4040-9580-1a3c537f776e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"title\":\"t1\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/test/no/ee99f4cc-e3cc-472f-959f-3e35626a59ef"
+      },
+      "id": "49248158-8363-4ed5-8097-63c40f43fbb6",
+      "lastModified": "2018-10-04T21:15:04.941+08:00",
+      "name": "通过密钥匹配设备",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "05bcbe0d-312f-4040-9580-1a3c537f776e"
+    },
+    {
+      "type": "Service",
+      "description": "",
+      "id": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "注释",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -504,8 +1256,8 @@
         "host": "{domain}",
         "path": "/doc/apis/14/notes"
       },
-      "id": "13f107ad-a0e8-468f-8520-c779c5615bf8",
-      "lastModified": "2018-08-15T19:53:29.798+08:00",
+      "id": "c14a93a0-66be-4b24-aa7a-b09faf216708",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "api注解",
       "headers": [
         {
@@ -520,7 +1272,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -551,8 +1303,8 @@
         "host": "{domain}",
         "path": "/doc/apis/2/notes"
       },
-      "id": "b585090c-8ef2-4150-a8ce-cee1eb69c0c4",
-      "lastModified": "2018-08-15T19:56:12.423+08:00",
+      "id": "9e1a85e0-7eca-423f-ba12-fd017cb7372a",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "api注解详情",
       "headers": [
         {
@@ -562,7 +1314,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -592,8 +1344,8 @@
         "host": "{domain}",
         "path": "/doc/models"
       },
-      "id": "c5a05810-e4d9-4aa4-b353-0be1c742fb8c",
-      "lastModified": "2018-08-15T19:48:09.213+08:00",
+      "id": "1b93ab9b-2a04-4d38-b7a4-f20b91d9d9cc",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "model列表",
       "headers": [
         {
@@ -603,7 +1355,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -635,8 +1387,8 @@
         "host": "{domain}",
         "path": "/doc/models"
       },
-      "id": "45d5b1ec-47ba-4445-9256-58d34f94a62d",
-      "lastModified": "2018-08-15T19:50:48.898+08:00",
+      "id": "2cf47459-93e6-4cfc-9245-8314e959c834",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "model创建",
       "headers": [
         {
@@ -651,7 +1403,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -681,8 +1433,8 @@
         "host": "{domain}",
         "path": "/doc/models/15"
       },
-      "id": "673224a9-70c7-4612-9e8e-1d27424c09e6",
-      "lastModified": "2018-08-15T19:50:58.785+08:00",
+      "id": "f2520291-0535-48c7-ae23-bedae82f31a5",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "model删除",
       "headers": [
         {
@@ -692,7 +1444,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -724,8 +1476,8 @@
         "host": "{domain}",
         "path": "/doc/models/14"
       },
-      "id": "74a4f16d-10b8-4a88-a958-d77caacead29",
-      "lastModified": "2018-08-15T19:49:35.360+08:00",
+      "id": "cc4a3803-f89b-4426-b55c-e02ba6ad7b53",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "model更新",
       "headers": [
         {
@@ -740,7 +1492,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -772,8 +1524,8 @@
         "host": "{domain}",
         "path": "/doc/models/14/notes"
       },
-      "id": "1f42c87b-21be-4c58-a102-7dd0b93acc73",
-      "lastModified": "2018-08-15T19:56:42.074+08:00",
+      "id": "d466eeb9-01ff-4b80-8b53-baa17dca9106",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "model注解",
       "headers": [
         {
@@ -788,7 +1540,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -819,8 +1571,8 @@
         "host": "{domain}",
         "path": "/doc/models/14/notes"
       },
-      "id": "0ab9d12f-b43c-4ee1-aa67-d984cc384b64",
-      "lastModified": "2018-08-15T19:56:58.604+08:00",
+      "id": "a13ac96e-6c39-4caf-b9e6-ffe675c312ec",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "model注解详情",
       "headers": [
         {
@@ -830,7 +1582,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Request",
@@ -860,8 +1612,8 @@
         "host": "{domain}",
         "path": "/doc/models/14"
       },
-      "id": "283cad30-50e2-415b-b24c-e3d8fe3d1cf5",
-      "lastModified": "2018-08-15T19:57:15.832+08:00",
+      "id": "1df5306b-ccba-4548-aa8d-157f7201930c",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "model详情",
       "headers": [
         {
@@ -871,15 +1623,15 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "3f8fd486-9149-45f1-afaa-500c9b91eeb9"
+      "parentId": "d2ce3e8a-1710-4be6-bc5d-37f1a17a35b9"
     },
     {
       "type": "Service",
       "description": "",
-      "id": "daf1f306-8166-4629-b092-a8dfc70eead4",
-      "lastModified": "2018-08-06T10:49:41.669+08:00",
+      "id": "a589e920-509f-4a2c-9b58-4a59d7c32b9e",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "用户",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -909,8 +1661,8 @@
         "host": "{domain}",
         "path": "/auth/profile"
       },
-      "id": "10d206a5-3e71-4725-a078-4f6abcdb8e1b",
-      "lastModified": "2018-08-09T19:34:13.647+08:00",
+      "id": "0e8d9b86-5254-4760-8c94-c515a73f09c9",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "个人资料",
       "headers": [
         {
@@ -920,7 +1672,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
     },
     {
       "type": "Request",
@@ -950,8 +1702,8 @@
         "host": "{domain}",
         "path": "/auth/refresh_token"
       },
-      "id": "ff3421a2-f4d1-4bfa-8c7a-0b4fef1f718a",
-      "lastModified": "2018-08-06T10:49:41.669+08:00",
+      "id": "d50722e7-6ca3-480f-92a0-1205f53fc533",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "更新token",
       "headers": [
         {
@@ -961,7 +1713,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
     },
     {
       "type": "Request",
@@ -993,8 +1745,8 @@
         "host": "{domain}",
         "path": "/auth/reg"
       },
-      "id": "0d41757a-aec3-4aac-a1ab-88a36c6cd1ea",
-      "lastModified": "2018-08-06T10:49:41.669+08:00",
+      "id": "9cff0863-0bbb-4eaf-9eb9-c30ec77b79d2",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "注册",
       "headers": [
         {
@@ -1004,7 +1756,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
     },
     {
       "type": "Request",
@@ -1049,8 +1801,8 @@
         "host": "{domain}",
         "path": "/auth/login"
       },
-      "id": "6dff84cb-e2fa-4fd1-9845-5312ea55ebf8",
-      "lastModified": "2018-08-06T10:49:41.669+08:00",
+      "id": "f246f1f1-2338-4c25-b2a2-336ab77ac0d9",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "登录",
       "headers": [
         {
@@ -1060,15 +1812,15 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "daf1f306-8166-4629-b092-a8dfc70eead4"
+      "parentId": "a589e920-509f-4a2c-9b58-4a59d7c32b9e"
     },
     {
       "type": "Service",
       "description": "",
-      "id": "83a828b0-df39-4768-adb3-6027d34f8549",
-      "lastModified": "2018-08-09T16:15:42.635+08:00",
+      "id": "0bc0a61f-12ba-4a91-abf1-a42220cb1022",
+      "lastModified": "2018-09-25T21:35:48.115+08:00",
       "name": "管理",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -1100,8 +1852,8 @@
         "host": "{domain}",
         "path": "/admin/containers"
       },
-      "id": "6169c65f-1e61-4726-ba1c-16676e0ca0ad",
-      "lastModified": "2018-08-15T14:35:14.680+08:00",
+      "id": "490274ff-c911-4724-9dcb-310179e3ba22",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境add",
       "headers": [
         {
@@ -1116,7 +1868,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1147,8 +1899,8 @@
         "host": "{domain}",
         "path": "/admin/containers/30"
       },
-      "id": "e1f55ee6-ef1c-4ddb-a7db-e67a6ba9c909",
-      "lastModified": "2018-08-15T14:37:08.044+08:00",
+      "id": "d9484836-3f5a-400e-86ad-d3189eb85b3d",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境info",
       "headers": [
         {
@@ -1158,7 +1910,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1200,8 +1952,8 @@
         "host": "{domain}",
         "path": "/admin/containers"
       },
-      "id": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7",
-      "lastModified": "2018-08-15T14:37:19.379+08:00",
+      "id": "643a1691-8721-42f1-80c9-fba8a73f7bfc",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境list",
       "headers": [
         {
@@ -1211,7 +1963,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1242,8 +1994,8 @@
         "host": "{domain}",
         "path": "/admin/containers/2/params"
       },
-      "id": "d75e5e21-6180-4d7d-aa4d-777124c22856",
-      "lastModified": "2018-08-15T14:39:54.799+08:00",
+      "id": "df099ee5-5655-49dc-8b66-71e6085e998c",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境变量LIST",
       "headers": [
         {
@@ -1255,7 +2007,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1287,8 +2039,8 @@
         "host": "{domain}",
         "path": "/admin/container/1/params/"
       },
-      "id": "3c1c7124-9a62-43f6-8be6-822c9b495c4d",
-      "lastModified": "2018-08-14T21:16:12.746+08:00",
+      "id": "8aa1dca3-db98-4907-9b61-bb24084f5f4c",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境变量new",
       "headers": [
         {
@@ -1303,7 +2055,7 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1334,8 +2086,8 @@
         "host": "{domain}",
         "path": "/admin/containers/2/deploys"
       },
-      "id": "57469cdb-29aa-4624-bdca-931438420cdd",
-      "lastModified": "2018-08-15T14:40:00.369+08:00",
+      "id": "7f41a828-dce6-4bf4-9321-e381b2e6c5f5",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境部署list",
       "headers": [
         {
@@ -1347,7 +2099,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Request",
@@ -1379,8 +2131,8 @@
         "host": "{domain}",
         "path": "/admin/containers/2/deploys"
       },
-      "id": "4e0f7c6f-753f-4fbe-9abc-b7528e123450",
-      "lastModified": "2018-08-15T14:38:57.543+08:00",
+      "id": "e51d6228-2c28-4f93-af15-fc7c8c12b498",
+      "lastModified": "2018-09-25T21:35:48.116+08:00",
       "name": "环境部署new",
       "headers": [
         {
@@ -1395,14 +2147,62 @@
         }
       ],
       "metaInfo": {},
-      "parentId": "83a828b0-df39-4768-adb3-6027d34f8549"
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"team_id\":2\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/admin/container/30/deploys/1"
+      },
+      "id": "fea54ac2-2138-477d-be73-e131d8a5fd13",
+      "lastModified": "2018-08-12T23:56:53.023+08:00",
+      "name": "环境部署update",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer {token}"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "0bc0a61f-12ba-4a91-abf1-a42220cb1022"
     },
     {
       "type": "Service",
-      "id": "92fc8296-e45f-4004-9da6-ba217c5d6ada",
-      "lastModified": "2018-08-13T19:55:08.518+08:00",
+      "id": "d571040c-eb2b-4869-82b1-91169dca5aa9",
+      "lastModified": "2018-09-03T22:15:37.964+08:00",
       "name": "需求任务",
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -1433,8 +2233,8 @@
         "host": "{domain}",
         "path": "/workflow/tasks"
       },
-      "id": "461ec97f-ce7d-4e1f-97c7-20e9a70ef6bc",
-      "lastModified": "2018-08-15T14:40:35.495+08:00",
+      "id": "4e326be5-ed25-47db-8632-8aebed514bb6",
+      "lastModified": "2018-09-03T22:15:37.964+08:00",
       "name": "列表",
       "headers": [
         {
@@ -1446,7 +2246,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
-      "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
+      "parentId": "d571040c-eb2b-4869-82b1-91169dca5aa9"
     },
     {
       "type": "Request",
@@ -1478,8 +2278,8 @@
         "host": "{domain}",
         "path": "/workflow/tasks"
       },
-      "id": "611dc17f-c102-4998-951f-e3a27d500590",
-      "lastModified": "2018-08-15T14:40:55.878+08:00",
+      "id": "80ac6331-5535-478f-ac29-3640d3db1a9d",
+      "lastModified": "2018-09-03T22:15:37.964+08:00",
       "name": "创建",
       "headers": [
         {
@@ -1496,7 +2296,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
-      "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
+      "parentId": "d571040c-eb2b-4869-82b1-91169dca5aa9"
     },
     {
       "type": "Request",
@@ -1528,8 +2328,8 @@
         "host": "localhost:8080",
         "path": "/workflow/tasks/6"
       },
-      "id": "27dc6bbd-6fb9-49a1-9487-f2b1797c1255",
-      "lastModified": "2018-08-31T14:05:22.708+08:00",
+      "id": "fa13bd65-0201-4216-807c-744df00bf869",
+      "lastModified": "2018-09-03T22:15:37.964+08:00",
       "name": "指定责任人",
       "headers": [
         {
@@ -1546,7 +2346,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "27dc6bbd-6fb9-49a1-9487-f2b1797c1255"
       },
-      "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
+      "parentId": "d571040c-eb2b-4869-82b1-91169dca5aa9"
     },
     {
       "type": "Request",
@@ -1578,8 +2378,8 @@
         "host": "{domain}",
         "path": "/workflow/tasks/2"
       },
-      "id": "a597a4c6-25b5-4129-b06d-1371221b568e",
-      "lastModified": "2018-08-31T15:04:46.829+08:00",
+      "id": "eb63c695-dc7b-49af-a72e-9fa3fdd67888",
+      "lastModified": "2018-09-03T22:15:37.964+08:00",
       "name": "更新",
       "headers": [
         {
@@ -1596,12 +2396,62 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
       },
-      "parentId": "92fc8296-e45f-4004-9da6-ba217c5d6ada"
+      "parentId": "d571040c-eb2b-4869-82b1-91169dca5aa9"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+        "name": "PUT"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"assign_user_id\":3\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "{domain}",
+        "path": "/task/2"
+      },
+      "id": "a3cbbada-37a1-46d9-aea6-3dd139c140d1",
+      "lastModified": "2018-08-14T22:42:14.729+08:00",
+      "name": "转移",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlpX2Rhb0BodW5saWppLmNvbSIsImV4cCI6MTUzNDMxOTM0OSwiaWQiOiJ5aWRhbyIsIm9yaWdfaWF0IjoxNTM0MjMyOTQ5LCJwaG9uZSI6IjEzNTY3MTE5MTAzIiwidWlkIjoxfQ._2WeKasA-73YUQ1pD89MaDMLrx8rgZbuBWHyyHtZuuM"
+        },
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "c64981a3-3090-4018-bcb6-ac77dd5dd1c7"
+      },
+      "parentId": "d571040c-eb2b-4869-82b1-91169dca5aa9"
     },
     {
       "type": "Scenario",
-      "id": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a",
-      "lastModified": "2018-08-15T19:46:43.149+08:00",
+      "id": "ec942577-c5d3-4d92-b053-fd23290c9372",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口",
       "requestOrder": [
         "接口详情",
@@ -1613,9 +2463,10 @@
         "模块创建",
         "模块列表",
         "接口发布",
-        "接口发布后修改"
+        "接口发布后修改",
+        "接口重构"
       ],
-      "parentId": "e18334d4-2cda-4c4e-b67e-3f40b993c31a"
+      "parentId": "289c5017-91c2-4561-bcc6-a37ade21e013"
     },
     {
       "type": "Request",
@@ -1645,8 +2496,8 @@
         "host": "{domain}",
         "path": "/doc/apis/2"
       },
-      "id": "f75da8da-32d6-43b0-b0ec-60fc38d22371",
-      "lastModified": "2018-08-15T16:21:12.510+08:00",
+      "id": "8116d94b-a737-4e0b-96d1-6d74cb438d7f",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口详情",
       "headers": [
         {
@@ -1658,7 +2509,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1688,8 +2539,8 @@
         "host": "{domain}",
         "path": "/doc/apis"
       },
-      "id": "072ae726-718f-4955-8d63-fd15ac0cb835",
-      "lastModified": "2018-08-15T16:22:22.443+08:00",
+      "id": "3d245dda-abd9-493e-9c26-821f7e054599",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口列表",
       "headers": [
         {
@@ -1701,7 +2552,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1733,8 +2584,8 @@
         "host": "{domain}",
         "path": "/doc/apis"
       },
-      "id": "8ad580c6-cab8-4b97-ae8b-a8d956eee92a",
-      "lastModified": "2018-08-15T16:33:15.717+08:00",
+      "id": "afd13459-e646-4b2d-8fcf-b5bfccbcf9fd",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口新增",
       "headers": [
         {
@@ -1751,7 +2602,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1782,8 +2633,8 @@
         "host": "{domain}",
         "path": "/doc/apis/1"
       },
-      "id": "b0ee57e5-3d0b-4baf-b71e-4a3eda00cccc",
-      "lastModified": "2018-08-15T16:22:47.038+08:00",
+      "id": "36f14d81-2377-4e75-9e09-fa8e889e11eb",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口删除",
       "headers": [
         {
@@ -1795,7 +2646,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1827,8 +2678,8 @@
         "host": "{domain}",
         "path": "/doc/apis/2"
       },
-      "id": "d19d1c8d-40df-4dfb-8715-4866ffdf7509",
-      "lastModified": "2018-08-15T17:26:51.153+08:00",
+      "id": "8ec3fd61-f8ea-4bb8-b79e-7c6112f668e8",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口更新",
       "headers": [
         {
@@ -1845,7 +2696,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1876,8 +2727,8 @@
         "host": "{domain}",
         "path": "/doc/modules/1"
       },
-      "id": "d6e5ce78-b049-4fbf-a8f4-f0ea569100f2",
-      "lastModified": "2018-08-15T16:33:25.178+08:00",
+      "id": "8085e501-c4b9-4047-9879-08130e454ff2",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "模块详情",
       "headers": [
         {
@@ -1889,7 +2740,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1921,8 +2772,8 @@
         "host": "{domain}",
         "path": "/doc/modules"
       },
-      "id": "fc5f29bf-6575-45c1-84a5-9b1f656b50d6",
-      "lastModified": "2018-08-15T17:27:05.655+08:00",
+      "id": "e2cf8c3b-c42a-4a3a-a54f-f0a301244c35",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "模块创建",
       "headers": [
         {
@@ -1939,7 +2790,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -1970,8 +2821,8 @@
         "host": "{domain}",
         "path": "/doc/modules"
       },
-      "id": "2c7f2ead-030a-43ff-8c0f-8ab13a528674",
-      "lastModified": "2018-08-15T17:30:54.874+08:00",
+      "id": "d44a17e9-3372-49ff-854e-9f5d5a134099",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "模块列表",
       "headers": [
         {
@@ -1983,7 +2834,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": "3e1a2269-e649-4f7b-90a7-1900b3cf8e91"
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -2015,8 +2866,8 @@
         "host": "{domain}",
         "path": "/doc/apis/2"
       },
-      "id": "a8d8ca1c-427c-4358-9a1f-2bd6af7698be",
-      "lastModified": "2018-08-15T19:30:42.446+08:00",
+      "id": "2965c668-f047-444c-8835-016ae1b5a52a",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口发布",
       "headers": [
         {
@@ -2033,7 +2884,7 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     },
     {
       "type": "Request",
@@ -2065,8 +2916,8 @@
         "host": "{domain}",
         "path": "/doc/apis/2"
       },
-      "id": "170fdf2f-ac04-4f35-81d9-ebf021af5b2b",
-      "lastModified": "2018-08-15T19:46:29.276+08:00",
+      "id": "ce65792e-1a71-4af3-83fa-e0ade52883fe",
+      "lastModified": "2018-09-25T21:35:48.117+08:00",
       "name": "接口发布后修改",
       "headers": [
         {
@@ -2083,7 +2934,52 @@
       "metaInfo": {
         "IS_FROM_HISTORY": null
       },
-      "parentId": "c9fe12f0-15b4-4a1a-a5cb-add263b0913a"
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"author_id\":1,\n  \"task_id\":1,\n  \"module_id\":1,\n  \"title\":\"test\",\n  \"request_url\":\"/doc/api/\",\n  \"request_method\":\"get\",\n  \"request_param\":{\n    \"Content-Type\":\"application/json-dft\"\n  },\n  \"request_header\": {\n    \"Content-Type\":\"application/json-dft\"\n  },\n  \"response_content\":{\n    \"Content-Type\":\"application/json-dft\"\n  }\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/doc/api/1/rebuild"
+      },
+      "id": "afae1909-6bc7-4bff-95e3-d321a5f87386",
+      "lastModified": "2018-08-14T22:42:14.731+08:00",
+      "name": "接口重构",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "IS_FROM_HISTORY": "59a8c372-8f51-47b8-9113-38d341ceda0a"
+      },
+      "parentId": "ec942577-c5d3-4d92-b053-fd23290c9372"
     }
   ]
 }

@@ -52,9 +52,11 @@ func Serve(engine *gin.Engine) {
 	}
 	//todo user Permission
 	test := engine.Group("/test")
-	//test.Use(middleware.AuthHandlerFunc)
+	test.Use(middleware.AuthHandlerFunc)
 	{
 		curdRoutes(test, endpoint.SceneController{}.Rester())
+		curdRoutes(test, endpoint.ProxyController{}.Rester())
+		curdRoutes(test, endpoint.ProxyChannelController{}.Rester())
 		test.GET("/no/:serial_no", endpoint.SceneController{}.Rester().Match)
 		test.GET("/record/:serial_no", endpoint.SceneController{}.Rester().Match)
 	}

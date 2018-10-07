@@ -1,4 +1,4 @@
-package handler
+package endpoint
 
 import (
 	"net/http"
@@ -8,12 +8,17 @@ import (
 	"time"
 	"io"
 	"io/ioutil"
-	)
-
-func Proxy() {
-	log.Print("Test Listening and Proxy serving on :8084")
+	"strconv"
+	"apibuilder-server/model"
+	"encoding/json"
+)
+var proxyChannelId int
+func Proxy(port, channelId int) {
+	proxyChannelId = channelId
+	addr := ":"+strconv.Itoa(port)
+	log.Print("Test Listening and Proxy serving on " + addr)
 	server := &http.Server{
-		Addr: ":8084",
+		Addr: addr,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.Method == http.MethodConnect {
 				handleTunneling(w, r)
@@ -57,6 +62,21 @@ func handleHTTP(w http.ResponseWriter, req *http.Request) {
 	t,_ := req.Body.Read(p)
 	log.Print(req.RequestURI, t, string(p), req.Header["Content-Type"][0], req.Header["Authorization"][0])
 	//to create model
+	proxyRequest := &model.ProxyReq{}
+	proxyRequest.ProxyChannelId = proxyChannelId
+	proxyRequest.RemoteAddr = req.RemoteAddr
+	proxyRequest.UserAgent = req.UserAgent()
+	proxyRequest.RequestUrl = req.RequestURI
+	proxyRequest.Method = req.Method
+	hader :=  model.JSON{}
+	hadbyte,_ := json.Marshal(req.Header)
+	hader.UnmarshalJSON(hadbyte)
+	proxyRequest.Headers = hader
+	param :=  model.JSON{}
+	param.UnmarshalJSON(p)
+	proxyRequest.Params = param
+	proxyRequest.Response = hader
+	model.Create(proxyRequest)
 	resp, err := http.DefaultTransport.RoundTrip(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)

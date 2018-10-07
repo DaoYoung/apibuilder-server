@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `bug_proofs` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  apibuilder.bug_proofs 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `bug_proofs` DISABLE KEYS */;
@@ -401,35 +401,39 @@ INSERT INTO `notifications` (`id`, `user_id`, `type`, `entity_type`, `entity_id`
 	(13, 2, 'task_develop', '', 0, '开发任务', 'yidao 分配了新开发任务（支付）给你', 0, '2018-08-31 19:09:40', '2018-08-31 19:09:40', NULL);
 /*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 
--- 导出  表 apibuilder.proxys 结构
-CREATE TABLE IF NOT EXISTS `proxys` (
+-- 导出  表 apibuilder.proxies 结构
+CREATE TABLE IF NOT EXISTS `proxies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `port` int(11) NOT NULL DEFAULT '0',
-  `user_id` int(10) NOT NULL DEFAULT '0',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1运行中 2锁定',
+  `hold_channel_id` int(10) NOT NULL DEFAULT '0',
+  `port` int(5) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  apibuilder.proxys 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `proxys` DISABLE KEYS */;
-/*!40000 ALTER TABLE `proxys` ENABLE KEYS */;
+-- 正在导出表  apibuilder.proxies 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `proxies` DISABLE KEYS */;
+INSERT INTO `proxies` (`id`, `hold_channel_id`, `port`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 8081, '2018-10-07 22:00:59', '2018-10-07 22:31:58', NULL);
+/*!40000 ALTER TABLE `proxies` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.proxy_channels 结构
 CREATE TABLE IF NOT EXISTS `proxy_channels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `proxy_id` int(11) NOT NULL DEFAULT '0',
-  `user_id` int(10) NOT NULL DEFAULT '0',
+  `author_id` int(10) NOT NULL DEFAULT '0',
+  `proxy_id` int(10) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1录制中 2已停止',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- 正在导出表  apibuilder.proxy_channels 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `proxy_channels` DISABLE KEYS */;
+INSERT INTO `proxy_channels` (`id`, `author_id`, `proxy_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 1, 1, 1, '2018-10-07 22:31:58', '2018-10-07 22:31:58', NULL);
 /*!40000 ALTER TABLE `proxy_channels` ENABLE KEYS */;
 
 -- 导出  表 apibuilder.proxy_reqs 结构
@@ -438,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `proxy_reqs` (
   `proxy_channel_id` int(11) NOT NULL DEFAULT '0',
   `remote_addr` varchar(50) NOT NULL DEFAULT '0',
   `user_agent` varchar(50) NOT NULL DEFAULT '0',
-  `url` varchar(255) NOT NULL DEFAULT '0',
+  `request_url` varchar(255) NOT NULL DEFAULT '0',
   `method` varchar(20) NOT NULL DEFAULT '0',
   `headers` json NOT NULL,
   `params` json NOT NULL,

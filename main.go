@@ -27,7 +27,7 @@ func main() {
 	//
 	//// Use the following code if you need to write the logs to file and console at the same time.
 	//gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
-	go handler.Proxy()
+	//go handler.Proxy()
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(endpoint.CatchErrors())

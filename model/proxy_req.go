@@ -8,6 +8,6 @@ type ProxyReq struct {
 	RequestUrl     string `request_url`
 	Method         string `method`
 	Headers        JSON   `json:"headers"`
-	Params         JSON   `json:"params"`
-	Response       JSON   `json:"response"`
+	Params         string   `json:"params"`
+	Response       string   `json:"response"`
 }

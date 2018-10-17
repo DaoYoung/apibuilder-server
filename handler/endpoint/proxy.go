@@ -34,7 +34,19 @@ func Proxy(port, channelId int) {
 func handleTunneling(w http.ResponseWriter, r *http.Request) {
 	by,_ := ioutil.ReadAll(r.Body)
 	log.Print(r.RequestURI, string(by),r.Header)
+	proxyRequest := &model.ProxyReq{}
+	proxyRequest.ProxyChannelId = proxyChannelId
+	proxyRequest.RemoteAddr = r.RemoteAddr
+	proxyRequest.UserAgent = r.UserAgent()
+	proxyRequest.RequestUrl = r.RequestURI
+	proxyRequest.Method = r.Method
+	headByte,_ := json.Marshal(r.Header)
+	proxyRequest.Headers = headByte
+	proxyRequest.Params = string(by)
 	destConn, err := net.DialTimeout("tcp", r.Host, 10*time.Second)
+	//response,_ := ioutil.ReadAll(destConn.)
+	//proxyRequest.Response = string(response)
+	model.Create(proxyRequest)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
@@ -60,28 +72,24 @@ func transfer(destination io.WriteCloser, source io.ReadCloser) {
 func handleHTTP(w http.ResponseWriter, req *http.Request) {
 	var p []byte
 	t,_ := req.Body.Read(p)
-	log.Print(req.RequestURI, t, string(p), req.Header["Content-Type"][0], req.Header["Authorization"][0])
-	//to create model
+	log.Print(req.RequestURI, t, string(p))
 	proxyRequest := &model.ProxyReq{}
 	proxyRequest.ProxyChannelId = proxyChannelId
 	proxyRequest.RemoteAddr = req.RemoteAddr
 	proxyRequest.UserAgent = req.UserAgent()
 	proxyRequest.RequestUrl = req.RequestURI
 	proxyRequest.Method = req.Method
-	hader :=  model.JSON{}
-	hadbyte,_ := json.Marshal(req.Header)
-	hader.UnmarshalJSON(hadbyte)
-	proxyRequest.Headers = hader
-	param :=  model.JSON{}
-	param.UnmarshalJSON(p)
-	proxyRequest.Params = param
-	proxyRequest.Response = hader
-	model.Create(proxyRequest)
+	headByte,_ := json.Marshal(req.Header)
+	proxyRequest.Headers = headByte
+	proxyRequest.Params = string(p)
 	resp, err := http.DefaultTransport.RoundTrip(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
 	}
+	response,_ := ioutil.ReadAll(resp.Body)
+	proxyRequest.Response = string(response)
+	model.Create(proxyRequest)
 	defer resp.Body.Close()
 	copyHeader(w.Header(), resp.Header)
 	w.WriteHeader(resp.StatusCode)
